@@ -58,7 +58,7 @@
       Q.start();
     });
     Q.asyncTest("Divs don't exist", 1, function() {
-      Q.equal(fixture.find('div').length, 6, "Divs exist");
+      Q.equal(fixture.find('div').length, 7, "Divs exist");
       
       Q.start();
     });
