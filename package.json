@@ -39,13 +39,16 @@
     "qunitjs": "~1.11.0"
   },
   "testling": {
-    "files": "_test_sources/index.testling.js",
+    "scripts": "_test/tests.js",
+    "preprocess": "./node_modules/jake/bin/cli.js compile tests=true testling=true --trace",
     "browsers": {
-      "ie": [ 8, 9 ],
-      "firefox": [ 13 ],
-      "chrome": [ 20 ],
-      "safari": [ 5.1 ],
-      "opera": [ 12 ]
+      "ie" : [ 8, 9, 10 ],
+      "ff" : [ 3.5, 10, 15.0, 16.0, 17.0 ],
+      "chrome" : [ 10, 20, 21, 22, 23 ],
+      "safari" : [ 5.1 ],
+      "opera" : [ 10, 11, 12 ],
+      "iphone" : [ 6 ],
+      "ipad" : [ 6 ]
     }
   },
   "optionalDependencies": {},

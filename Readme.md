@@ -3,6 +3,19 @@
 
 [![Build Status](https://travis-ci.org/ben-ng/tdk.png?branch=master)](https://travis-ci.org/ben-ng/tdk)
 
+[![Browser Support](https://ci.testling.com/ben-ng/tdk.png)](https://ci.testling.com/ben-ng/tdk)
+
+## CI
+
+We're set up for continuous development &amp; integration.
+
+ *  `jake` will serve your theme on port 8080
+ *  `jake tests=true` will test your theme on port 8080
+ *  `jake tests=true phantomjs=true` will test your theme on port 8080 with the phantomjs bridge
+ *  `jake tests=true testling=true` will test your theme on port 8080 printing TAP output to the console
+
+All the above commands will watch the file tree and reload the page when neccessary via websockets.
+
 ```sh
 # Install the Jake task runner
 $ npm install -g jake

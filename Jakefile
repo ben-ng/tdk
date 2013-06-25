@@ -283,7 +283,12 @@ task('browserify', ['selectQunit'], {async:true}, function () {
   bundle.require('jquery-browserify');
   
   if(tests) {
-    bundle.add('./'+path.join(testSrc, 'scripts', 'index.js'));
+    if(process.env.testling) {
+      bundle.add('./'+path.join(testSrc, 'scripts', 'index.testling.js'));
+    }
+    else {
+      bundle.add('./'+path.join(testSrc, 'scripts', 'index.js'));
+    }
   }
   else {
     bundle.add('./'+path.join(src, 'js', 'app', 'index.js'));

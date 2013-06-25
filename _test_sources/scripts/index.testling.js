@@ -21,8 +21,19 @@
   Backbone.$ = $;
   
   window.onload = function () {
-    var fixture = $('#qunit-fixture')
-      , testList = $("#qunit");
+    var fixtureElem = document.createElement("div")
+      , testListElem = document.createElement("div")
+      , fixture
+      , testList;
+    
+    fixtureElem.setAttribute('id', 'qunit-fixture');
+    testListElem.setAttribute('id', 'qunit');
+    
+    document.body.appendChild(fixtureElem);
+    document.body.appendChild(testListElem);
+    
+    fixture = $('#qunit-fixture')
+    testList = $("#qunit");
     
     // Move the fixture back on screen so we can see it
     fixture.css({
