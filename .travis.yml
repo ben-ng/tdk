@@ -4,4 +4,5 @@ node_js:
   - "0.8"
 before_script:
   - npm install -g grunt-cli
-  - jake browserify[tests]
+  - npm install -g jake
+  - jake compile tests=true
