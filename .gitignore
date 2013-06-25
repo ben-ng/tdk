@@ -1,0 +1,5 @@
+*.DS_Store
+_shared
+_test
+_shared_sources/js/app_old
+node_modules

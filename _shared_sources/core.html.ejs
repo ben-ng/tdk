@@ -1,0 +1,15 @@
+<script>
+  var TK = {
+    userVars: "<%= encodeURIComponent(JSON.stringify(user_vars)) %>",
+    debug: <%= process.env.PRODENV === 'development' ? "true" : "false" %>,
+    baseURL: "<%= geddy.config.baseURL %>",
+    userId: "<%= user.id %>",
+    filePickerKey: "<%= process.env.FILEPICKER_APIKEY %>"
+  };
+</script>
+<script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+<% if(process.env.PRODENV === 'development') { %>    
+  <div id="qunit"></div>
+  <div id="qunit-fixture"></div>
+<% } %>

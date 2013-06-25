@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>((-sitetitle))</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style type="text/css">
+      body {
+        font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+    </style>
+  </head>
+      <h1>Temporary Maintainence</h1>
+      <p>Please wait a few seconds while this website is updated</p>
+      <p>You will be redirected in <span id="timeleft">3</span> seconds.</p>
+      
+      <script type="text/javascript">
+        var timeLeft = document.getElementById("timeleft");
+        var duration = parseInt(timeLeft.innerHTML,10);
+        
+        for(var i=1; i<=duration; i++) {
+          (function(y) {
+            setTimeout(function(){
+              timeLeft.innerHTML = (duration-y);
+              
+              if(y==duration) {
+                window.location="/";
+              }
+            },y*1000);
+          }(i));
+        }
+      </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<div class="centered-boxes">
+  <ul id="mainnav" class="nav nav-boxes">
+    {{#if isHome}}
+      <li><a href="/" class="current app">{{sitetitle.value}}</a></li>
+    {{else}}
+      <li><a href="/" class="app">{{sitetitle.value}}</a></li>
+    {{/if}}
+    {{#each pages}}
+      {{#if active}}
+        <li><a href="{{href}}" class="current app">{{name}}</a></li>
+      {{else}}
+        <li><a href="{{href}}" class="app">{{name}}</a></li>
+      {{/if}}
+    {{/each}}
+  </ul>
+</div>
+{{#if isLoggedIn}}
+<div class="centered-boxes">
+  <ul class="nav nav-boxes actionable">
+    {{#if isPage}}
+      {{#if isAddingMedia}}
+        <li><a href="{{addMediaHref}}" id="addMediaLink" class="current app">Add Media</a></li>
+      {{else}}
+        <li><a href="{{addMediaHref}}" id="addMediaLink" class="app">Add Media</a></li>
+      {{/if}}
+      {{#if isEditingPage}}
+        <li><a href="{{editPageHref}}" class="current app">Edit Page</a></li>
+      {{else}}
+        <li><a href="{{editPageHref}}" class="app">Edit Page</a></li>
+      {{/if}}
+    {{/if}}
+    {{#if isCreatingPage}}
+      <li><a href="{{createHref}}" id="newPageLink" class="current app">New Page</a></li>
+    {{else}}
+      <li><a href="{{createHref}}" id="newPageLink" class="app">New Page</a></li>
+    {{/if}}
+    {{#if isReviewingUploads}}
+      <li><a href="{{reviewHref}}" class="current app">Review</a></li>
+    {{/if}}
+  </ul>
+</div>
+{{/if}}
+{{#unless isReviewingUploads}}
+  {{#if unprocessedCount}}
+  <div id="unprocessedPrompt" class="alert alert-info centered">
+    <a href="/review" class="btn btn-info btn-wide app">{{unprocessedPrompt}}</a>
+  </div>
+  {{/if}}
+{{/unless}}

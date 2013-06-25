@@ -1,0 +1,214 @@
+body.dark {
+  background-color: #000;
+  //Overrides the responsive padding
+  padding:0;
+}
+/* Navbar (Header) */
+#header {
+  margin: 20px 0 0 0;
+}
+/*Ginormous h1*/
+h1.title {
+  font-size: 100px;
+  color: #000;
+}
+/* Center text */
+.centered,.centered-boxes { text-align:center; }
+/*
+* Flat-UI Icons are 128x128px
+* We set them explicitly so that guiders can be
+* positioned correctly before the image loads
+*/
+img.flatIcon {
+  width:128px;
+  height:128px;
+}
+/* Center pills */
+@media (min-width: 480px) {
+  ul.nav-boxes li {
+    margin: 0 10px;
+    display:inline-block;
+  }
+  .centered-boxes ul.nav-boxes { display:block; }
+  .centered-boxes a { float:left; }
+  * html .centered-boxes ul.nav-boxes { display:inline; } /* IE6 */
+  *+html .centered-boxes ul.nav-boxes { display:inline; } /* IE7 */
+}
+ul.nav-boxes li a {
+  color:#222;
+  padding:10px;
+  text-transform: uppercase;
+  border:2px solid transparent;
+  transition: 0.4s;
+  -moz-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -o-transition: 0.4s;
+}
+ul.nav-boxes li a:hover,
+ul.nav-boxes li a:active,
+ul.nav-boxes li a.current {
+  border:2px solid #222;
+  background-color: #fff;
+}
+ul.nav-boxes.actionable li a {
+  color: @peter-river;
+}
+/* Utility class for padding profile pictures*/
+img.pull-left.padded { margin:0 20px 20px 0; }
+/* Media grid */
+ul.mediagrid li {
+  display: inline-block;
+  list-style-type: none;
+  float: left;
+  width: 360px;
+  height: 203px;
+  margin: 0;
+}
+ul.carousel .relfix,
+ul.mediagrid .relfix,
+ul.reelgrid .relfix {
+  position: relative;
+  z-index: 1;
+}
+ul.carousel .absfix,
+ul.mediagrid .absfix,
+ul.reelgrid .absfix {
+  position: absolute;
+  top:10px;
+  left:10px;
+  z-index: 999;
+}
+ul.carousel .absfix {
+  top:2px;
+  left:2px;
+}
+/* Reel grid */
+ul.reelgrid li {
+  display: inline-block;
+  list-style-type: none;
+  float: left;
+  width: 340px;
+  transition: border 0.4s;
+  -moz-transition: border 0.4s;
+  -webkit-transition: border 0.4s;
+  -o-transition: border 0.4s;
+  border: 2px solid #FFF;
+  padding: 5px 5px 40px 5px;
+  margin:20px 10px;
+}
+ul.reelgrid li:hover {
+  border: 2px solid #000;
+}
+ul.reelgrid h2 {
+  font-size: 24px;
+  color: #000;
+}
+/* The big close button */
+.previewPadding {
+  padding: 20px;
+}
+.sliderWrap {
+  height: 121px;
+  width: 100%;
+}
+a.carouselControl:link,
+a.carouselControl:hover,
+a.carouselControl:active,
+a.carouselControl:visited {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  line-height: 50px;
+  font-weight: lighter;
+  color: #CCC;
+  transition: border 0.4s;
+  -moz-transition: border 0.4s;
+  -webkit-transition: border 0.4s;
+  -o-transition: border 0.4s;
+}
+a.carouselControl:hover,
+a.carouselControl:active {
+  color: #FFF;
+  transition: border 0.4s;
+  -moz-transition: border 0.4s;
+  -webkit-transition: border 0.4s;
+  -o-transition: border 0.4s;
+}
+a.carouselControl.reelToggle {
+  text-align: center;
+  background-color: #333;
+  color: #FFF;
+  line-height: 20px;
+  font-size: 25px;
+  width: 80px;
+  margin-left: -40px;
+  -webkit-border-bottom-right-radius: 7px;
+  -webkit-border-bottom-left-radius: 7px;
+  -moz-border-radius-bottomright: 7px;
+  -moz-border-radius-bottomleft: 7px;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+a.carouselControl.reelToggle small {
+  font-size: 10px;
+  line-height: 14px;
+}
+/* Carousel */
+.elastislide-list img {
+  width: 180px;
+  height:101px;
+}
+.elastislide-horizontal {
+	background-color: #333;
+}
+.elastislide-wrapper nav span {
+	background-color: #000;
+}
+.elastislide-carousel ul li {
+	padding: 0 10px;
+}
+.elastislide-carousel ul li a img {
+	border: none;
+}
+.elastislide-horizontal.elastislide-loading {
+	background-image: url(/img/loading_dark.gif);
+}
+@media screen and (max-width: 460px) {
+	.elastislide-horizontal {
+		padding: 10px 40px;
+	}
+}
+/* Micro buttons */
+.btn.btn-micro {
+  padding:4px 6px;
+}
+/* Center videojs */
+#media_video {
+  margin: 0 auto;
+}
+/* Media player meta data*/
+.media_meta {
+  color: #FFF;
+  margin-top: 40px;
+}
+
+.media_meta ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.media_meta li {
+  color: #CCC;
+  font-size: 20px;
+}
+
+/* Shrinks size of text in switches */
+.has-switch span {
+  font-size:11.994px;
+}
+
+/* Bottom Menu */
+.bottom-menu {
+  background: transparent;
+}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title><%= video.name %></title>
+  <link rel="stylesheet" href="http://vjs.zencdn.net/c/video-js.css">
+  <script src="http://vjs.zencdn.net/c/video.js"></script>
+  <style>
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0}
+body{line-height:1}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+nav ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:none}
+a{font-size:100%;vertical-align:baseline;background:transparent;margin:0;padding:0}
+ins{background-color:#ff9;color:#000;text-decoration:none}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:700}
+del{text-decoration:line-through}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}
+table{border-collapse:collapse;border-spacing:0}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
+input,select{vertical-align:middle}
+body{background-color:#000;}
+#vid_wrap{position:absolute;top:50%;left:50%;}
+@-o-viewport { width: device-width; }
+@-moz-viewport { width: device-width; }
+@-ms-viewport { width: device-width; }
+@-webkit-viewport { width: device-width; }
+@viewport { width: device-width; }
+  </style>
+</head>
+<body>
+<%
+var trueWidth;
+var trueHeight;
+var trueSrc;
+
+if(video.isHighDefinition) {
+  trueWidth = video.highWidth;
+  trueHeight = video.highHeight;
+  trueSrc = mediaURLs.high;
+}
+else {
+  trueWidth = video.lowWidth;
+  trueHeight = video.lowHeight;
+  trueSrc = mediaURLs.low;
+}
+%>
+<div id="vid_wrap">
+  <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" poster="<%= mediaURLs.poster %>">
+    <source src="<%= trueSrc %>" type="video/mp4" />
+</div>
+<script>
+var vid = "video-player";
+var vid_wrap = "vid_wrap";
+_V_(vid, { "controls": true, "autoplay": true, "preload": "auto" }).ready(function(){
+  
+  var myPlayer = this;    // Store the video object
+  var aspectRatio = <%= trueHeight %>/<%= trueWidth %>; // Make up an aspect ratio
+  
+  function resizeVideoJS(){
+    // Get the parent element's actual width
+    var width = document.body.offsetWidth;
+    var height = Math.max(
+        Math.max(document.body.scrollHeight, document.documentElement.scrollHeight),
+        Math.max(document.body.offsetHeight, document.documentElement.offsetHeight),
+        Math.max(document.body.clientHeight, document.documentElement.clientHeight)
+    );
+    
+    //What is the constraining dimension?
+    if(height/width < aspectRatio) {
+      //This means allowable width was greater than height, so height is the constraint here
+      width = height / aspectRatio;
+    }
+    else {
+      //Width is the constraint
+      height = width * aspectRatio;
+    }
+    
+    // Set width to fill parent element, Set height
+    myPlayer.width(width);
+    myPlayer.height(height);
+    
+    document.getElementById(vid_wrap).style.height = height+"px";
+    document.getElementById(vid_wrap).style.width = width+"px";
+    document.getElementById(vid_wrap).style.marginTop = "-"+(height/2)+"px";
+    document.getElementById(vid_wrap).style.marginLeft = "-"+(width/2)+"px";
+  }
+  
+  resizeVideoJS(); // Initialize the function
+  window.onresize = resizeVideoJS; // Call the function on resize
+});
+</script>
+</body>
+</html>
