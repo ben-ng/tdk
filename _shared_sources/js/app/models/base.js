@@ -1,5 +1,5 @@
 (function () {
-  var Backbone = require('Backbone')
+  var Backbone = require('backbone')
     , BaseModel = Backbone.Model.extend({
         initialize: function(opts) {
           this.app = opts.app || {};
