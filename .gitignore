@@ -2,4 +2,5 @@
 _shared
 _test
 _shared_sources/js/app_old
+_test_sources/qunit/qunit.selected.js
 node_modules

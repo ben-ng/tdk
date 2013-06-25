@@ -3,7 +3,12 @@ module.exports = function (grunt) {
 
 	grunt.initConfig({
 		qunit: {
-			all: ['_test/index.html']
+		  all: {
+  		  options: {
+          urls: ['http://localhost:8080']
+        , inject: ""
+  		  }
+		  }
 		}
 	});
 

@@ -1,43 +1,43 @@
 {
-  "author": "Ben Ng <me@benng.me> (http://benng.me)"
-, "name": "tdk"
-, "description": "Theme Developer Kit from http://toolkitt.com"
-, "keywords": [
-    "toolkitt"
-  , "theme"
-  , "browserify"
-  ]
-, "version": "0.0.1"
-, "repository": {
-    "type": "git"
-  , "url": "git://github.com/ben-ng/tdk.git"
-  }
-, "scripts": {
+  "author": "Ben Ng <me@benng.me> (http://benng.me)",
+  "name": "tdk",
+  "description": "Theme Developer Kit from http://toolkitt.com",
+  "keywords": [
+    "toolkitt",
+    "theme",
+    "browserify"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ben-ng/tdk.git"
+  },
+  "scripts": {
     "test": "grunt test"
-  }
-, "dependencies": {
-    "jake": "0.5.x"
-  , "utilities": "0.0.x"
-  , "browserify": "2.21.x"
-  , "cli-color": "0.2.x"
-  , "lodash": "1.3.x"
-  , "async": "0.2.x"
-  , "node-minify": "0.7.x"
-  , "less": "1.4.x"
-  , "node-static": "0.6.x"
-  , "backbone": "1.0.x"
-  , "jquery-browserify": "1.8.x"
-  , "hbsfy": "0.1.x"
-  , "ribcage-view": "0.0.x"
-  , "handlebars": "1.0.x"
-  }
-, "devDependencies": {
+  },
+  "dependencies": {
+    "jake": "0.5.x",
+    "utilities": "0.0.x",
+    "browserify": "2.21.x",
+    "cli-color": "0.2.x",
+    "lodash": "1.3.x",
+    "async": "0.2.x",
+    "node-minify": "0.7.x",
+    "less": "1.4.x",
+    "node-static": "0.6.x",
+    "backbone": "1.0.x",
+    "jquery-browserify": "1.8.x",
+    "hbsfy": "0.1.x",
+    "ribcage-view": "0.0.x",
+    "handlebars": "1.0.x"
+  },
+  "devDependencies": {
     "qunit": "~0.5.15",
-    "grunt-contrib-qunit": "~0.2.1",
+    "grunt-contrib-qunit": "~0.2.2",
     "qunitjs": "~1.11.0"
-  }
-, "optionalDependencies": {}
-, "engines": {
+  },
+  "optionalDependencies": {},
+  "engines": {
     "node": "0.10.x"
   }
 }

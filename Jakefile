@@ -30,6 +30,8 @@ var browserify    = require('browserify')
   , testFrameLess = path.join(testSrc, 'qunit', 'qunit.css')
   , testJsFile    = path.join(testBuild, 'tests.js')
   , testLessFile  = path.join(testBuild, 'styles.css')
+  , qunitSelected = path.join(testSrc, 'qunit', process.env.phantomjs ? 'qunit.bridged.js' : 'qunit.unbridged.js')
+  , qunitBridge   = path.join(testSrc, 'qunit', 'qunit.selected.js')
   
   /* Handle test tasks */
   , tests         = process.env.tests ? true : false
@@ -216,7 +218,7 @@ file(lessFile, lessFiles, {async:true}, function () {
 });
 
 desc('Browserifies the JS into _shared');
-task('browserify', {async:true}, function () {
+task('browserify', ['selectQunit'], {async:true}, function () {
   var bundle
     , precompile = require('handlebars').precompile
     , handlebarsPlugin = function (body, file) {
@@ -268,11 +270,17 @@ task('browserify', {async:true}, function () {
   });
 });
 
+desc('Selects the bridged or unbridged QUnit');
+task('selectQunit', function () {
+  utils.file.cpR(qunitSelected, qunitBridge, {silent:true});
+});
+
 desc('Cleans the _shared directory');
 task('clean', function () {
   utils.file.rmRf(build, {silent: true});
   utils.file.rmRf(testBuild, {silent: true});
   utils.file.rmRf(testLessFile, {silent: true});
+  utils.file.rmRf(qunitBridge, {silent: true});
 });
 
 desc('Creates the build directory');
