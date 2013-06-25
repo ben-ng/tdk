@@ -30,7 +30,7 @@ var browserify    = require('browserify')
   , testFrameLess = path.join(testSrc, 'qunit', 'qunit.css')
   , testJsFile    = path.join(testBuild, 'tests.js')
   , testLessFile  = path.join(testBuild, 'styles.css')
-  , qunitSelected = path.join(testSrc, 'qunit', process.env.phantomjs ? 'qunit.bridged.js' : 'qunit.unbridged.js')
+  , qunitSelected = path.join(testSrc, 'qunit', process.env.phantomjs ? 'qunit.phantomjs.js' : (process.env.browserling ? 'qunit.testling.js' : 'qunit.unbridged.js'))
   , qunitBridge   = path.join(testSrc, 'qunit', 'qunit.selected.js')
   
   /* Handle test tasks */

@@ -30,12 +30,23 @@
     "hbsfy": "0.1.x",
     "ribcage-view": "0.0.x",
     "handlebars": "1.0.x",
-    "ws": "0.4.x"
+    "ws": "0.4.x",
+    "qunit-tap": "1.3.x"
   },
   "devDependencies": {
     "qunit": "~0.5.15",
     "grunt-contrib-qunit": "~0.2.2",
     "qunitjs": "~1.11.0"
+  },
+  "testling": {
+    "files": "_test_sources/index.testling.js",
+    "browsers": {
+      "ie": [ 8, 9 ],
+      "firefox": [ 13 ],
+      "chrome": [ 20 ],
+      "safari": [ 5.1 ],
+      "opera": [ 12 ]
+    }
   },
   "optionalDependencies": {},
   "engines": {
