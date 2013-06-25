@@ -71,21 +71,35 @@ task('default', function () {
   
   var timeout
     , delay = 500
-    , init = jake.Task.compile
+    , task = jake.Task.compile
     , serverStarted = false
     , fileServer
     , tests = process.env.tests?true:false
+    , WebSocketServer = require('ws').Server
+    , wss = new WebSocketServer({port: 8081})
+    , clients = []
     , recompile = function () {
-      clearTimeout(timeout);
-      
-      timeout = setTimeout( function () {
         clearTimeout(timeout);
-        init.reenable(true);
-        init.invoke();
-      }, delay);
-    };
+        
+        timeout = setTimeout( function () {
+          clearTimeout(timeout);
+          task.reenable(true);
+          task.invoke();
+        }, delay);
+      };
   
-  init.addListener('complete', function () {
+  wss.on('connection', function(ws) {
+    clients.push(ws);
+    console.log(info(' A client connected to the testing server'));
+    
+    ws.on('message', function(message) {
+        console.log(info(' Client message: ' + message));
+    });
+  });
+  
+  task.addListener('complete', function () {
+    var clientsLeft = [];
+    
     console.log(success('Compiled at ' + (new Date)));
     
     if(!serverStarted) {
@@ -105,6 +119,19 @@ task('default', function () {
       
       console.log(success('Server running on localhost:8080'));
     }
+    
+    /* Notify clients */
+    _.each(clients, function (ws, index) {
+      try {
+        ws.send('reload');
+        clientsLeft.push(ws);
+      }
+      catch(e) {
+        console.log(info(' A client disconnected from the testing server'));
+      }
+    });
+    
+    clients = clientsLeft;
   });
   
   utils.file.watch(src, recompile);
@@ -124,8 +151,33 @@ task('compile', ['clean', build, buildLess, buildJs, testBuild, 'resources', 'br
 
 desc('Copies resources into _shared');
 task('resources', [lessFile], function () {
-  var toCopy =        ['img', 'fonts', 'swf', 'helper.html', 'favicon.ico', 'index.html']
-    , toCopyForTest = ['img', 'fonts', 'swf', 'helper.html', 'favicon.ico']
+  var toCopy =        [
+                      'img'
+                      , 'fonts'
+                      , 'swf'
+                      , 'helper.html'
+                      , 'favicon.ico'
+                      , 'index.html'
+                      , 'apple-touch-icon.png'
+                      , 'apple-touch-icon-57x57.png'
+                      , 'apple-touch-icon-72x72.png'
+                      , 'apple-touch-icon-114x114.png'
+                      , 'apple-touch-icon-144x144.png'
+                      , 'apple-touch-icon-precomposed.png'
+                      ]
+    , toCopyForTest = [
+                      'img'
+                      , 'fonts'
+                      , 'swf'
+                      , 'helper.html'
+                      , 'favicon.ico'
+                      , 'apple-touch-icon.png'
+                      , 'apple-touch-icon-57x57.png'
+                      , 'apple-touch-icon-72x72.png'
+                      , 'apple-touch-icon-114x114.png'
+                      , 'apple-touch-icon-144x144.png'
+                      , 'apple-touch-icon-precomposed.png'
+                      ]
     , testCopy =      ['index.html'];
   
   if(tests) {
@@ -184,7 +236,7 @@ file(lessFile, lessFiles, {async:true}, function () {
               complete();
             }
             else {
-              if(process.env.minify==='true') {
+              if(process.env.minify) {
                 new compressor.minify({
                     type: 'yui-css',
                     fileIn: lessFile,
@@ -245,7 +297,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
     else {
       fs.writeFileSync(target, src);
       
-      if(process.env.minify==='true') {
+      if(process.env.minify) {
         new compressor.minify({
             type: 'yui-js',
             fileIn: target,
@@ -256,7 +308,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
                 complete();
               }
               else {
-                console.log(success(' JS Browserified + Minified'));
+                console.log(success(' '+(tests?'Tests':'Script')+' Browserified + Minified'));
                 complete();
               }
             }

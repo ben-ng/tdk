@@ -24,7 +24,7 @@ var _ = require('lodash')
       this.$el = $(el);
       
       /* Start the database store */
-      this.db = new db();
+      this.db = new db(this);
     }
     
     /**

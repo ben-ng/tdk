@@ -5,7 +5,9 @@
     , Page = Model.extend(
       {
         name:'page'
-      , urlRoot:TK.baseURL+'/pages'
+      , urlRoot:function () {
+        return this.app.config.baseUrl + '/pages';
+      }
       , defaults: {
           name:'Untitled',
           items:[],
@@ -14,11 +16,11 @@
           errors:null
         }
       , initialize: function(opts) {
-          if(opts.name) {
-            this.set("name",opts.name);
-          }
           
-          this.media = new Website.Collections.PageMedia([],{page:this});
+          this.attributes.name = opts.name || null;
+          this.app = opts.app || {};
+          
+          this.media = this.app.db.loadCollection('pageMedia', {pageId: this.id});
         }
       , validate: function(attrs,options) {
           var errors = [];
@@ -91,8 +93,8 @@
             location:'s3',
             path:Website.user.attributes.path,
             access:'public'
-        , }
-          function(FPFiles) {
+          }
+        , function(FPFiles) {
             if(Object.prototype.toString.call( FPFiles ) !== '[object Array]') {
               FPFiles = [FPFiles]; //wrap in an array.
             }
@@ -120,8 +122,8 @@
             for(var i=0, ii=FPFiles.length; i<ii; i++) {
               //Save the file to the server
               (function(FPFile) {
-                var model;
-                  , type;
+                var model
+                  , type
                   , opts = {
                     name: FPFile.filename,
                     fpkey: FPFile.url,

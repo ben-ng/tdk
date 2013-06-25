@@ -1,15 +1,19 @@
 (function (){
-  
   var path = require('path')
   , Q = require('../qunit/qunit.selected.js')
   , Backbone = require('backbone')
   , $ = require('jquery-browserify')
   , App = require('../../_shared_sources/js/app/app.js')
+  , host = window.document.location.host.replace(/:.*/, '')
+  , ws = new WebSocket('ws://'+host+':8081')
+  
+  //TESTS
+  , db = require('./db.js')
   
   /*
   * Testing config options
   */
-  , previewSize = 70 //% of screen the preview should occupy
+  , testRunnerSize = 50 //% of screen the test runner should occupy
   , delay = 500;    //milliseconds between each test?
   
   /* Hook up jquery to backbone */
@@ -22,45 +26,30 @@
     // Move the fixture back on screen so we can see it
     fixture.css({
       position: 'absolute'
-    , width: previewSize + '%'
+    , width: '100%'
     , top: 0
     , left: 0
+    , zIndex: 0
     });
     
     testList.css({
       position: 'absolute'
-    , width: (100-previewSize) + '%'
+    , width: testRunnerSize + '%'
     , top: 0
-    , left: previewSize + "%"
+    , left: (100 - testRunnerSize) + "%"
+    , zIndex: 1
     });
     
     window.App = new App(fixture[0]);
     window.App.start();
     
-    Q.module("Index", {
-      setup: function () {
-        Backbone.history.fragment = null;
-        Backbone.history.navigate('', true);
+    db(window.App, Q, Backbone, fixture, delay);
+    
+    /* Hot-reload code */
+    ws.onmessage = function(event) {
+      if(event.data == 'reload') {
+        window.location.reload(true);
       }
-    , teardown: function () {
-        Q.stop();
-        
-        setTimeout(function () {
-          Backbone.history.fragment = null;
-          Backbone.history.navigate('', true);
-          Q.start();
-        }, delay);
-      }
-    });
-    Q.asyncTest("Divs exist", 1, function() {
-      Q.equal(fixture.find('div').length, 7, "Divs exist");
-      
-      Q.start();
-    });
-    Q.asyncTest("Divs don't exist", 1, function() {
-      Q.equal(fixture.find('div').length, 7, "Divs exist");
-      
-      Q.start();
-    });
+    };
   };
 }());

@@ -1,8 +1,10 @@
 (function () {
   var Model = require('./base')
-    , Video = Model.extend({
+    , Media = Model.extend({
         name:'media'
-      , urlRoot:TK.baseURL+'/Media_is_an_abstract_class_do_not_use_it'
+      , urlRoot: function () {
+        return this.app.config.baseUrl + '/Media_is_an_abstract_class_do_not_use_it';
+      }
       , defaults: {
         name: 'Untitled',
         s3key: null,
@@ -251,5 +253,5 @@
       }
     });
   
-  module.exports = Video;
+  module.exports = Media;
 }());

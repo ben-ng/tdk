@@ -29,7 +29,8 @@
     "jquery-browserify": "1.8.x",
     "hbsfy": "0.1.x",
     "ribcage-view": "0.0.x",
-    "handlebars": "1.0.x"
+    "handlebars": "1.0.x",
+    "ws": "0.4.x"
   },
   "devDependencies": {
     "qunit": "~0.5.15",

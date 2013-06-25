@@ -2,7 +2,9 @@
   var Media = require('./media')
     , Image = Media.extend({
         name:'image'
-      , urlRoot:TK.baseURL+'/images'
+      , urlRoot:function () {
+        return this.app.config.baseUrl + '/images';
+      }
       });
   
   module.exports = Image;
