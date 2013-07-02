@@ -1,5 +1,6 @@
   /* Modules */
 var browserify    = require('browserify')
+  , envify        = require('envify/custom')
   , _             = require('lodash')
   , path          = require('path')
   , utils         = require('utilities')
@@ -280,6 +281,12 @@ task('browserify', ['selectQunit'], {async:true}, function () {
   
   bundle = browserify();
   bundle.transform(require('hbsfy'));
+  bundle.transform(envify({
+    NODE_ENV: process.env.NODE_ENV
+  , STAGING_PASS: process.env.STAGING_PASS
+  , CI: process.env.CI
+  }));
+  
   bundle.require('jquery-browserify');
   
   if(tests) {

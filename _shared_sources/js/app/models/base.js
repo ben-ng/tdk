@@ -1,21 +1,31 @@
 (function () {
-  var Backbone = require('backbone')
+  var Backbone = require('../helpers/CorsBackbone.js')
     , BaseModel = Backbone.Model.extend({
-        initialize: function(opts) {
+        initialize: function(attributes, opts) {
+          this.set(attributes);
           this.app = opts.app || {};
         }
       , methodUrl: function(method) {
+          var root;
+          
+          if(typeof this.urlRoot === 'function') {
+            root = this.urlRoot();
+          }
+          else if(this.urlRoot) {
+            root = this.urlRoot;
+          }
+          
           if(method == "delete"){
-            return this.urlRoot + "/" +this.attributes.id+".json";
+            return root + "/" +this.attributes.id+".json";
           }
           else if(method == "update"){
-            return this.urlRoot + "/" +this.attributes.id+".json";
+            return root + "/" +this.attributes.id+".json";
           }
           else if(method == "read"){
-            return this.urlRoot + "/" +this.attributes.id+".json";
+            return root + "/" +this.attributes.id+".json";
           }
           else if(method == "create"){
-            return this.urlRoot + ".json";
+            return root + ".json";
           } 
           return false;
         }

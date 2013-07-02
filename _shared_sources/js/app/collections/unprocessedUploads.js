@@ -1,13 +1,15 @@
 (function () {
   var Collection = require('./base')
+    , Image = require('../models/image.js')
+    , Video = require('../models/video.js')
     , UnprocessedUploads = Collection.extend({
         name:'media',
         url: function () { return this.app.baseURL+'/unprocessed.json'; },
         model: function(attrs, options) {
           if (attrs.type === 'image') {
-            return new Website.Models.Image(attrs, options);
+            return new Image(attrs, options);
           } else {
-            return new Website.Models.Video(attrs, options);
+            return new Video(attrs, options);
           }
         },
         parse: function(data, options) {

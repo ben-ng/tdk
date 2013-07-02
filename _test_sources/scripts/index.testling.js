@@ -4,7 +4,7 @@
 (function (){
   var path = require('path')
   , Q = require('../qunit/qunit.testling.js')
-  , Backbone = require('backbone')
+  , Backbone = require('../../_shared_sources/js/app/helpers/CorsBackbone.js')
   , $ = require('jquery-browserify')
   , App = require('../../_shared_sources/js/app/app.js')
   

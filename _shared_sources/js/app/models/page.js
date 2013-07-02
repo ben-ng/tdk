@@ -15,9 +15,9 @@
           isPublished:false,
           errors:null
         }
-      , initialize: function(opts) {
+      , initialize: function(attributes, opts) {
           
-          this.attributes.name = opts.name || null;
+          this.set(attributes);
           this.app = opts.app || {};
           
           this.media = this.app.db.loadCollection('pageMedia', {pageId: this.id});

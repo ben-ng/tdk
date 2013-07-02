@@ -31,7 +31,9 @@
     "ribcage-view": "0.0.x",
     "handlebars": "1.0.x",
     "ws": "0.4.x",
-    "qunit-tap": "1.3.x"
+    "qunit-tap": "1.3.x",
+    "uglifyify": "0.0.x",
+    "envify": "0.0.x"
   },
   "devDependencies": {
     "qunit": "~0.5.15",

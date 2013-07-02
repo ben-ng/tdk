@@ -26,6 +26,17 @@
       Q.ok(model, "Loaded user");
     });
     
+    Q.test("load User Unique", function() {
+      var model = db.loadModel('User')
+        , model2 = db.loadModel('User');
+      
+      Q.deepEqual(model.attributes, model2.attributes, "Users should be identical");
+      
+      model.set('username','chicken');
+      
+      Q.notDeepEqual(model.attributes, model2.attributes, "Users should be different");
+    });
+    
     Q.test("load Image", function() {
       var model = db.loadModel('image');
       Q.ok(model, "Loaded image");
@@ -56,7 +67,7 @@
       Q.ok(collection, "Loaded pages");
     });
     
-    Q.test("load UnprocessedUplaods", function() {
+    Q.test("load UnprocessedUploads", function() {
       var collection = db.loadCollection('unprocessedUploads');
       Q.ok(collection, "Loaded unprocessedUploads");
     });

@@ -1,20 +1,24 @@
 (function (){
   var path = require('path')
+  , _ = require('lodash')
   , Q = require('../qunit/qunit.selected.js')
-  , Backbone = require('backbone')
+  , Backbone = require('../../_shared_sources/js/app/helpers/CorsBackbone.js')
   , $ = require('jquery-browserify')
   , App = require('../../_shared_sources/js/app/app.js')
   , host = window.document.location.host.replace(/:.*/, '')
   , ws = new WebSocket('ws://'+host+':8081')
   
-  //TESTS
-  , db = require('./db.js')
+  // TESTS
+  , tests = {
+      db: require('./db.js')
+    , user: require('./user.js')
+    }
   
   /*
   * Testing config options
   */
   , testRunnerSize = 50 //% of screen the test runner should occupy
-  , delay = 500;    //milliseconds between each test?
+  , delay = 500;        //milliseconds between each test?
   
   /* Hook up jquery to backbone */
   Backbone.$ = $;
@@ -43,7 +47,9 @@
     window.App = new App(fixture[0]);
     window.App.start();
     
-    db(window.App, Q, Backbone, fixture, delay);
+    _.each(tests, function (test) {
+      test(window.App, Q, Backbone, fixture, delay);
+    });
     
     /* Hot-reload code */
     ws.onmessage = function(event) {

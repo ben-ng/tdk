@@ -2,7 +2,7 @@
 var _ = require('lodash')
   , $ = require('jquery-browserify')
   , path = require('path')
-  , Backbone = require('backbone')
+  , Backbone = require('./helpers/CorsBackbone.js')
   
   /* Database Stuff */
   , db = require('./db')
@@ -14,7 +14,7 @@ var _ = require('lodash')
     /**
     * Ctor
     */
-    initialize: function (el) {
+    initialize: function (el, config) {
       /* Routes */
       this.route('', _.bind(Index, this));
       
@@ -25,6 +25,9 @@ var _ = require('lodash')
       
       /* Start the database store */
       this.db = new db(this);
+      
+      /* Load configuration */
+      this.config = _.clone(require('./config/config.js'));
     }
     
     /**
