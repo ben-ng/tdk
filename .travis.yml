@@ -9,4 +9,4 @@ before_script:
   - npm install -g grunt-cli
   - npm install -g jake
   - jake tests=true phantomjs=true &
-  - sleep 7
+  - sleep 15
