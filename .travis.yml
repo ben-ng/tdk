@@ -2,7 +2,9 @@ language: node_js
 node_js:
   - "0.10"
   - "0.8"
-secure: "qJyuu+nI6sc/YL0FN3XT3fDcAwHDt5qho3GsFbXHN5CmSNvBLpAKZfjiExEK\nKM+NOPMGvIuCWPhFKP0SRtFoqMJRrNu5eOeDwrxjsrOmS8nhokGGjzQLKZy5\nvo8lF1FG0U7FJjkiIYAa2dEC6WFVxndkhcUlfktVjt3ZZMr6IDo="
+env:
+  global:
+    - secure: "qJyuu+nI6sc/YL0FN3XT3fDcAwHDt5qho3GsFbXHN5CmSNvBLpAKZfjiExEK\nKM+NOPMGvIuCWPhFKP0SRtFoqMJRrNu5eOeDwrxjsrOmS8nhokGGjzQLKZy5\nvo8lF1FG0U7FJjkiIYAa2dEC6WFVxndkhcUlfktVjt3ZZMr6IDo="
 before_script:
   - npm install -g grunt-cli
   - npm install -g jake
