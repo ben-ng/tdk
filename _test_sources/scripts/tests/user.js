@@ -7,12 +7,12 @@
         //Force a log out
         Q.stop();
         
-        var auser = db.loadModel('user');
+        var auser = db.createModel('user');
         auser.save({id:'logout'},{
           success: function(model) {
             Q.strictEqual(model.attributes.token, false, 'User token is clear');
           
-            var cleanuser = db.loadModel('user');
+            var cleanuser = db.createModel('user');
             cleanuser.fetch({
               success:function(freshuser) {
                 Q.strictEqual(freshuser.attributes.token, false, 'User is logged out');
@@ -33,7 +33,7 @@
     });
     
     Q.asyncTest("Log In (Wrong Password)", 4, function() {
-      var user = db.loadModel('user');
+      var user = db.createModel('user');
       
       user.set({username:'test',password:'badpass'});
       
@@ -41,7 +41,7 @@
         success:function(usermodel) {
           Q.strictEqual(usermodel.attributes.token, false, 'User was not logged in');
           
-          var afreshuser = db.loadModel('user');
+          var afreshuser = db.createModel('user');
           afreshuser.fetch({
             success:function(freshmodel) {
               Q.strictEqual(freshmodel.attributes.token, false, 'User is still logged out');
@@ -60,7 +60,7 @@
       });
     });
     Q.asyncTest("Log In (Correct Password)", 7, function() {
-      var user = db.loadModel('user');
+      var user = db.createModel('user');
       user.set({username:'test',password:process.env.STAGING_PASS || 'passpass'});
       user.save(null,{
         success:function(usermodel) {
@@ -69,7 +69,7 @@
           Q.notEqual(usermodel.attributes.signature, '', 'User signature is set');
           Q.notEqual(usermodel.attributes.path, '', 'User path is set');
           
-          var bfreshuser = new db.loadModel('user');
+          var bfreshuser = new db.createModel('user');
           bfreshuser.fetch({
             success:function(freshmodel) {
               Q.notEqual(freshmodel.attributes.token,false, 'User is logged in');

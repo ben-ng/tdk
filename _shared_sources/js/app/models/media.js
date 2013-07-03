@@ -34,8 +34,8 @@
             filepicker.stat(self.thumbnailFpfile(),
               {
                 path:true,
-                policy:Website.user.attributes.policy,
-                signature:Website.user.attributes.signature
+                policy:self.db.fetchModel('user').attributes.policy,
+                signature:self.db.fetchModel('user').attributes.signature
               },
               function(metadata) {
                 model.set('thumbnailS3key',metadata.path);
@@ -53,8 +53,8 @@
           filepicker.stat(self.fpfile(),
             {
               path:true,
-              policy:Website.user.attributes.policy,
-              signature:Website.user.attributes.signature
+              policy:self.db.fetchModel('user').attributes.policy,
+              signature:self.db.fetchModel('user').attributes.signature
             },
             function(metadata) {
               model.set('s3key',metadata.path);
@@ -73,7 +73,7 @@
           var oldcb = options.success;
           options.success = function() {
             //Reload unprocessed files
-            self.app.db.loadCollection('unprocessedUploads',{id:'singleton'}).fetch();
+            self.app.db.fetchCollection('unprocessedUploads').fetch();
             
             if(oldcb) {
               oldcb();
@@ -108,9 +108,9 @@
         
         filepicker.pick({
           extensions:Website.imageExts,
-          path:Website.user.attributes.path,
-          signature:Website.user.attributes.signature,
-          policy:Website.user.attributes.policy,
+          path:self.db.fetchModel('user').attributes.path,
+          signature:self.db.fetchModel('user').attributes.signature,
+          policy:self.db.fetchModel('user').attributes.policy,
           services:[
             'COMPUTER',
             'DROPBOX',
@@ -143,8 +143,8 @@
         filepicker.convert(FPFile,
           //Convert options
           {
-            signature:Website.user.attributes.signature,
-            policy:Website.user.attributes.policy,
+            signature:self.db.fetchModel('user').attributes.signature,
+            policy:self.db.fetchModel('user').attributes.policy,
             width:Website.thumbnailDims.width,
             height:Website.thumbnailDims.height,
             fit:'crop'

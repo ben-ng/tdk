@@ -21,7 +21,7 @@
           this.set(attributes);
           this.app = opts.app || {};
           
-          this.media = this.app.db.loadCollection('pageMedia', {pageId: this.id});
+          this.media = this.app.db.createCollection('pageMedia', {pageId: this.id});
         }
       , validate: function(attrs,options) {
           var errors = [];
@@ -32,7 +32,7 @@
           
           if(!attrs.id) {
             //Check for duplicate page
-            var pages = window.App.db.loadCollection('pages', {name:attrs.name});
+            var pages = window.App.db.createCollection('pages', {name:attrs.name});
             if(pages && pages.length > 0) {
               errors.push({attr:"name",message:"Another page already exists with this name"});
             }
@@ -65,7 +65,7 @@
           }
           //Set the page media collection if needed
           if(!this.media || !this.media.pageId) {
-            this.media = self.app.db.loadCollection('pageMedia',{pageId:this.id});
+            this.media = self.app.db.createCollection('pageMedia',{pageId:this.id});
           }
           return data;
         }

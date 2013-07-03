@@ -7,7 +7,7 @@
         setup: function() {
           if(!_page_user) {
             Q.stop();
-            _page_user = db.loadModel('user').set({id:'test'});
+            _page_user = db.createModel('user').set({id:'test'});
             _page_user.save(null,{
               success:function() {
                 Q.notEqual(_page_user.attributes.token, false);
@@ -26,11 +26,11 @@
         }
       });
       Q.test("Initialize", 2, function() {
-        var page = db.loadModel('page');
+        var page = db.createModel('page');
         Q.ok(page != null);
       });
       Q.asyncTest("Save, Update & Delete", 5, function() {
-        var page = db.loadModel('page');
+        var page = db.createModel('page');
         
         page.set({
           name:'Test Page',

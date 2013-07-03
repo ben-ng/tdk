@@ -17,9 +17,9 @@
         },
         model: function(attrs, options) {
           if (attrs.type === 'image') {
-            return this.app.db.loadModel('image').set(attrs);
+            return this.app.db.createModel('image').set(attrs);
           } else {
-            return this.app.db.loadModel('video').set(attrs);
+            return this.app.db.createModel('video').set(attrs);
           }
         },
         parse: function(data, options) {

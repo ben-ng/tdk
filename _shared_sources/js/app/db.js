@@ -32,81 +32,124 @@
     this.cache = {};
     
     /**
-    * Loads a model with the conditions
+    * Creates a new model
+    * @param {string} modelName - The name of the model you want (e.g. 'posts')
     */
-    this.loadModel = function (modelName, conditions) {
-      var cacheKey;
-      
+    this.createModel = function (modelName) {
       modelName = modelName.toLowerCase();
       
-      if(conditions) {
-        conditions = _.cloneDeep(conditions);
-        
-        cacheKey = 'model://' + modelName + ':' + JSON.stringify(conditions);
-        
-        conditions = _.extend(conditions, {app:App});
-        
-        if(self.cache[cacheKey]) {
-          return self.cache[cacheKey];
-        }
-        else {
-          if(_.find(models, function (v,key) { return key === modelName;})) {
-            self.cache[cacheKey] = new models[modelName]({}, conditions);
-            return self.cache[cacheKey];
-          }
-          else {
-            throw new Error('Cannot find Model "' + modelName + '"');
-          }
-        }
+      if(_.find(models, function (v,key) { return key === modelName;})) {
+        return new models[modelName]({}, {app:App});
       }
       else {
-        if(_.find(models, function (v,key) { return key === modelName;})) {
-          return new models[modelName]({}, {app:App});
-        }
-        else {
-          throw new Error('Cannot find Model "' + modelName + '"');
-        }
+        throw new Error('Cannot find Model "' + modelName + '"');
       }
     };
     
     /**
-    * Loads a collection with the conditions
-    * @param {string} collectionName - The name of the model you want (e.g. 'post')
-    * @param {string} [conditions] - The query hash you want to pass, most likely {id:'some string'}. Leave null if you don't want to cache the object
+    * Creates a new collection
+    * @param {string} collectionName - The name of the collection you want (e.g. 'posts')
+    * @param {object} options - The options to supply the constructor
     */
-    this.loadCollection = function (collectionName, conditions) {
-      var cacheKey;
-      
+    this.createCollection = function (collectionName, attributes) {
       collectionName = collectionName.toLowerCase();
       
-      if(conditions) {
-        conditions = _.cloneDeep(conditions);
-        
-        cacheKey = 'collection://' + collectionName + ':' + JSON.stringify(conditions);
-        
-        conditions = _.extend(conditions, {app:App});
+      attributes = attributes || {};
+      attributes = _.clone(attributes);
+      attributes.app = App;
       
-        if(self.cache[cacheKey]) {
-          return self.cache[cacheKey];
-        }
-        else {
-          if(_.find(collections, function (v,key) { return key === collectionName;})) {
-            self.cache[cacheKey] = new collections[collectionName]([], conditions);
-            return self.cache[cacheKey];
-          }
-          else {
-            throw new Error('Cannot find Collection "' + collectionName + '"');
-          }
-        }
+      if(_.find(collections, function (v,key) { return key === collectionName;})) {
+        return new collections[collectionName]([], attributes);
       }
       else {
-        if(_.find(collections, function (v,key) { return key === collectionName;})) {
-          return new collections[collectionName]([], {app:App});
-        }
-        else {
-          throw new Error('Cannot find Collection "' + collectionName + '"');
-        }
+        throw new Error('Cannot find Collection "' + collectionName + '"');
       }
+    };
+    
+    /**
+    * Fetches a model by ID
+    * Under the surface, this will try to use the local cache if possible
+    * @param {string} modelName - The name of the model you want (e.g. 'posts')
+    * @param {string} [id] - The id of the model you want
+    */
+    this.fetchModel = function (modelName, id) {
+      modelName = modelName.toLowerCase();
+      
+      var cacheKey = 'uuid://models/' + modelName + '/' + id
+        , modelObj;
+      
+      // Is the model already in the cache?
+      if(self.cache[cacheKey]) {
+        modelObj = self.cache[cacheKey];
+        
+        // Trigger the fetch event on the next cycle
+        // Which will give our user time to .listenTo() etc
+        setTimeout(function () {
+          modelObj.trigger('ready');
+        }, 10);
+      }
+      // If not, create a new model, set the id, and fetch!
+      else {
+        modelObj = this.createModel(modelName);
+        
+        if(id) {
+          modelObj.set({id:id});
+        }
+        
+        // Trigger the fetch event on the next cycle
+        // Which will give our user time to .listenTo() etc
+        setTimeout(function () {
+          modelObj.fetch({
+            success: function () {
+              // Trigger the `ready` event after data has loaded
+              modelObj.trigger('ready');
+            }
+          });
+        }, 10);
+      }
+      
+      return modelObj;
+    };
+    
+    /**
+    * Fetches a collection by attributes
+    * Under the surface, this will try to use the local cache if possible
+    * @param {string} collectionName - The name of the collection you want (e.g. 'posts')
+    * @param {object} attributes - The attributes to initialize the collection with
+    */
+    this.fetchCollection = function (collectionName, attributes) {
+      collectionName = collectionName.toLowerCase();
+      
+      var cacheKey = 'uuid://collections/' + collectionName + '/' + JSON.stringify(attributes)
+        , collectionObj;
+      
+      // Is the collection already in the cache?
+      if(self.cache[cacheKey]) {
+        collectionObj = self.cache[cacheKey];
+        
+        // Trigger the fetch event on the next cycle
+        // Which will give our user time to .listenTo() etc
+        setTimeout(function () {
+          collectionObj.trigger('ready');
+        }, 10);
+      }
+      // If not, create a new collection, set the id, and fetch!
+      else {
+        collectionObj = this.createCollection(collectionName, attributes);
+        
+        // Trigger the fetch event on the next cycle
+        // Which will give our user time to .listenTo() etc
+        setTimeout(function () {
+          collectionObj.fetch({
+            success: function () {
+              // Trigger the `ready` event after data has loaded
+              collectionObj.trigger('ready');
+            }
+          });
+        }, 10);
+      }
+      
+      return collectionObj;
     };
   };
   

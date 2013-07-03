@@ -7,7 +7,7 @@
       setup: function() {
         if(!_image_user) {
           Q.stop();
-          _image_user = db.loadModel('user').set({id:'test'});
+          _image_user = db.createModel('user').set({id:'test'});
           _image_user.save(null,{
             success:function() {
               Q.notEqual(_image_user.attributes.token, false);
@@ -26,11 +26,11 @@
       }
     });
     Q.test("Initialize", 2, function() {
-      var image = db.loadModel('image');
+      var image = db.createModel('image');
       Q.ok(image != null);
     });
     Q.asyncTest("Save, Update & Delete", 18, function() {
-      var image = db.loadModel('image').set({
+      var image = db.createModel('image').set({
         name:'Test Image',
         fpkey:'baz',
         mimeType:'image/png',
