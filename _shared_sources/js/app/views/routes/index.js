@@ -1,14 +1,18 @@
 (function () {
-  var View = require('./base')
-    , NavbarView = require('./navbar.js')
+  var View = require('../base')
+    , NavbarView = require('../layout/navbar.js')
+    , FooterView = require('../layout/footer.js')
     , IndexView = View.extend({
-        template: require('../templates/index.hbs')
+        template: require('../../templates/routes/index.hbs')
       , initialize: function (options) {
           this.app = options.app;
         }
       , afterRender: function () {
         this.navbar = new NavbarView({app:this.app});
         this.appendSubview(this.navbar, this.$('#header'));
+        
+        this.footer = new FooterView({app:this.app});
+        this.appendSubview(this.footer, this.$('#footer'));
         
         //Render all the subviews
         this.eachSubview(function (subview) {

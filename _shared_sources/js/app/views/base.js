@@ -26,12 +26,16 @@
             thing.once('ready', next, self);
           });
         }
-      
-      , getContext: function () {
-          var additions = Array.prototype.slice.call(arguments)
+      // Nice function that mixes in custom attrs to the standard context
+      , getContext: function (additions) {
+          var additions = additions || {}
             , context = _.clone(this.app.bootstrap.userVars);
           
           return _.extend(context, additions);
+        }
+      // By default just return the standard context
+      , context: function () {
+          return this.getContext();
         }
       });
   

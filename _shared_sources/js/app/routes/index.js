@@ -1,5 +1,5 @@
 (function () {
-  var IndexView = require('../views/index')
+  var IndexView = require('../views/routes/index')
   , Index = function () {
     var view = new IndexView({app:this, el:this.el});
     

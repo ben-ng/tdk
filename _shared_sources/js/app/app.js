@@ -52,6 +52,22 @@ var _ = require('lodash')
       
       Backbone.history.start();
     }
+    
+    /**
+    * Handles a link that is really a route
+    */
+  , handleAppLink: function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      var target = e.target;
+      
+      while(target.pathname == null) {
+        target = target.parentElement;
+      }
+      
+      this.navigate(target.pathname, {trigger:true});
+    }
   });
   
   module.exports = App;
