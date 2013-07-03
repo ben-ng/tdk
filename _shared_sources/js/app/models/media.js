@@ -1,5 +1,6 @@
 (function () {
   var Model = require('./base')
+    , Backbone = require('backbone')
     , Media = Model.extend({
         name:'media'
       , urlRoot: function () {
@@ -66,11 +67,13 @@
         }
       }
       , destroy: function(options) {
+        var self = this;
+        
         if(options.success) {
           var oldcb = options.success;
           options.success = function() {
             //Reload unprocessed files
-            Website.unprocessed.fetch();
+            self.app.db.loadCollection('unprocessedUploads',{id:'singleton'}).fetch();
             
             if(oldcb) {
               oldcb();
