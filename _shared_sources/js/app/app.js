@@ -5,7 +5,7 @@ var _ = require('lodash')
   , Backbone = require('./helpers/CorsBackbone.js')
   
   /* Database Stuff */
-  , db = require('./db')
+  , db = require('./helpers/db')
   
   /* Routes */
   , Index = require('./routes/index')
