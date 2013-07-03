@@ -86,7 +86,7 @@
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
           modelObj.trigger('ready');
-        }, 10);
+        }, 0);
       }
       // If not, create a new model, set the id, and fetch!
       else {
@@ -105,7 +105,7 @@
               modelObj.trigger('ready');
             }
           });
-        }, 10);
+        }, 0);
       }
       
       return modelObj;
@@ -131,7 +131,7 @@
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
           collectionObj.trigger('ready');
-        }, 10);
+        }, 0);
       }
       // If not, create a new collection, set the id, and fetch!
       else {
@@ -146,7 +146,7 @@
               collectionObj.trigger('ready');
             }
           });
-        }, 10);
+        }, 0);
       }
       
       return collectionObj;
