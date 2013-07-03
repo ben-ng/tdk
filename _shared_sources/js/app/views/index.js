@@ -1,10 +1,13 @@
 (function () {
-  var View = require('ribcage-view')
+  var View = require('./base')
     , NavbarView = require('./navbar.js')
     , IndexView = View.extend({
         template: require('../templates/index.hbs')
+      , initialize: function (options) {
+          this.app = options.app;
+        }
       , afterRender: function () {
-        this.navbar = new NavbarView();
+        this.navbar = new NavbarView({app:this.app});
         this.appendSubview(this.navbar, this.$('#header'));
         
         //Render all the subviews
@@ -12,6 +15,9 @@
           subview.render();
         });
       }
+      , context: function () {
+          return this.getContext();
+        }
       });
   
   module.exports = IndexView;

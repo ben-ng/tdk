@@ -6,5 +6,6 @@ window.onload = function () {
   var App = require('./app');
   
   window.app = new App(document.getElementById("app"));
-  window.app.start();
+  
+  window.app.start(window.bootstrap);
 };

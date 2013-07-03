@@ -75,7 +75,7 @@
     this.fetchModel = function (modelName, id) {
       modelName = modelName.toLowerCase();
       
-      var cacheKey = 'uuid://models/' + modelName + '/' + id
+      var cacheKey = 'uuid://models/' + modelName + (id ? '/' + id : '')
         , modelObj;
       
       // Is the model already in the cache?

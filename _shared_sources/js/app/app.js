@@ -26,14 +26,30 @@ var _ = require('lodash')
       /* Start the database store */
       this.db = new db(this);
       
+      /*
+      * The One True User (tm) convenience function
+      * better than this.app.db.fetchModel('user') all over the place.
+      * 
+      * This is a method so that we can rely on the `ready` event
+      * after a view or something fetches the user.
+      */
+      this.getUser = function () { return this.db.fetchModel('user'); };
+      
       /* Load configuration */
       this.config = _.clone(require('./config/config.js'));
+      
+      /* Load utilities */
+      this.util = _.clone(require('./helpers/util.js'));
+      
+      return this;
     }
     
     /**
     * Starts the app
     */
-  , start: function () {
+  , start: function (bootstrap) {
+      this.bootstrap = bootstrap || {};
+      
       Backbone.history.start();
     }
   });

@@ -1,7 +1,7 @@
 (function () {
   var IndexView = require('../views/index')
   , Index = function () {
-    var view = new IndexView({el:this.el});
+    var view = new IndexView({app:this, el:this.el});
     
     view.render();
   };
