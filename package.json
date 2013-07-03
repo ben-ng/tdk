@@ -18,7 +18,7 @@
   "dependencies": {
     "jake": "0.5.x",
     "utilities": "0.0.x",
-    "browserify": "2.21.x",
+    "browserify": "2.22.x",
     "cli-color": "0.2.x",
     "lodash": "1.3.x",
     "async": "0.2.x",
@@ -41,8 +41,7 @@
     "qunitjs": "~1.11.0"
   },
   "testling": {
-    "scripts": "_test/tests.js",
-    "preprocess": "./node_modules/jake/bin/cli.js compile tests=true testling=true --trace",
+    "files": "_test_sources/scripts/index.testling.js",
     "browsers": {
       "ie" : [ 8, 9, 10 ],
       "ff" : [ 3.5, 10, 15.0, 16.0, 17.0 ],
@@ -52,6 +51,9 @@
       "iphone" : [ 6 ],
       "ipad" : [ 6 ]
     }
+  },
+  "browserify": {
+    "transform": ["hbsfy"]
   },
   "optionalDependencies": {},
   "engines": {
