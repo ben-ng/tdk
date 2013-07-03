@@ -4,18 +4,22 @@
         name:'media',
         initialize: function(models, opts) {
           this.app = opts.app || {};
-          this.page = opts.page || null;
           
           this.models = models;
         },
         url: function() {
-          return TK.baseURL+'/pages/'+this.page.attributes.id+'/media.json'
+          if(this.attributes) {
+            return this.app.config.baseURL+'/pages/'+this.attributes.pageId+'/media.json'
+          }
+          else {
+            return this.app.config.baseURL+'/pages/undefined/media.json'
+          }
         },
         model: function(attrs, options) {
           if (attrs.type === 'image') {
-            return new Website.Models.Image(attrs, options);
+            return this.app.db.loadModel('image').set(attrs);
           } else {
-            return new Website.Models.Video(attrs, options);
+            return this.app.db.loadModel('video').set(attrs);
           }
         },
         parse: function(data, options) {

@@ -2,6 +2,7 @@
   var Model = require('./base')
     , Video = require('./video')
     , Image = require('./image')
+    , Backbone = require('backbone')
     , Page = Model.extend(
       {
         name:'page'
@@ -31,7 +32,7 @@
           
           if(!attrs.id) {
             //Check for duplicate page
-            var pages = Website.pages.findWhere({name:attrs.name});
+            var pages = window.App.db.loadCollection('pages', {name:attrs.name});
             if(pages && pages.length > 0) {
               errors.push({attr:"name",message:"Another page already exists with this name"});
             }
@@ -49,6 +50,8 @@
           Backbone.sync(method, model, options);
         }
       , parse: function(data, options) {
+          var self = this;
+          
           data = data.page;
           delete data.page;
           try {
@@ -61,12 +64,8 @@
             delete data.itemList;
           }
           //Set the page media collection if needed
-          if(!this.media || !this.media.page.id) {
-            this.media = new Website.Collections.PageMedia([],{page:this});
-            this.media.fetch();
-          }
-          else {
-            this.media.fetch();
+          if(!this.media || !this.media.pageId) {
+            this.media = self.app.db.loadCollection('pageMedia',{pageId:this.id});
           }
           return data;
         }

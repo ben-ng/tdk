@@ -1,4 +1,4 @@
-/**
+/*
 * Dumbed-down index.js for testling
 */
 (function (){
@@ -6,16 +6,20 @@
   , Q = require('../qunit/qunit.testling.js')
   , Backbone = require('../../_shared_sources/js/app/helpers/CorsBackbone.js')
   , $ = require('jquery-browserify')
+  , _ = require('lodash')
   , App = require('../../_shared_sources/js/app/app.js')
   
   //TESTS
-  , db = require('./db.js')
+  , tests = require('./tests')
+  
+  //Tests that can't run on testling go here
+  , exclude = ['user']
   
   /*
   * Testing config options
   */
   , testRunnerSize = 50 //% of screen the test runner should occupy
-  , delay = 500;    //milliseconds between each test?
+  , delay = 0;    //milliseconds between each test?
   
   /* Hook up jquery to backbone */
   Backbone.$ = $;
@@ -55,6 +59,10 @@
     window.App = new App(fixture[0]);
     window.App.start();
     
-    db(window.App, Q, Backbone, fixture, delay);
+    _.each(tests, function (test, key) {
+      if(exclude.indexOf(key) < 0) {
+        test(window.App, Q, Backbone, fixture, delay);
+      }
+    });
   };
 }());

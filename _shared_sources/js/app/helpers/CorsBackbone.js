@@ -10,14 +10,14 @@
     options.timeout = options.timeout || 3000;
     options.parse = options.parse || true;
     
-    if(typeof model.url === 'function') {
+    if (model.urlRoot && model.methodUrl) {
+      options.url = model.methodUrl(method.toLowerCase());
+    }
+    else if(typeof model.url === 'function') {
       options.url = model.url();
     }
     else if(model.url) {
       options.url = model.url;
-    }
-    else if (model.methodUrl) {
-      options.url = model.methodUrl(method.toLowerCase());
     }
     
     if (!options.crossDomain) {

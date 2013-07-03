@@ -1,4 +1,7 @@
-(function (){
+/*
+* Travis and local test entry file
+*/
+(function () {
   var path = require('path')
   , _ = require('lodash')
   , Q = require('../qunit/qunit.selected.js')
@@ -9,16 +12,13 @@
   , ws = new WebSocket('ws://'+host+':8081')
   
   // TESTS
-  , tests = {
-      db: require('./db.js')
-    , user: require('./user.js')
-    }
+  , tests = require('./tests')
   
   /*
   * Testing config options
   */
   , testRunnerSize = 50 //% of screen the test runner should occupy
-  , delay = 500;        //milliseconds between each test?
+  , delay = 0;        //milliseconds between each test?
   
   /* Hook up jquery to backbone */
   Backbone.$ = $;
