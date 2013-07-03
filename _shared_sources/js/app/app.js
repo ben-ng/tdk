@@ -9,6 +9,8 @@ var _ = require('lodash')
   
   /* Routes */
   , Index = require('./routes/index')
+  , Login = require('./routes/login')
+  , Logout = require('./routes/logout')
   
   , App = Backbone.Router.extend({
     /**
@@ -17,6 +19,8 @@ var _ = require('lodash')
     initialize: function (el, config) {
       /* Routes */
       this.route('', _.bind(Index, this));
+      this.route('login', _.bind(Login, this));
+      this.route('logout', _.bind(Logout, this));
       
       /* What element to render in? */
       el = el || document.body;
@@ -67,6 +71,33 @@ var _ = require('lodash')
       }
       
       this.navigate(target.pathname, {trigger:true});
+    }
+    
+    /**
+    * Returns true if logged in
+    */
+  , isLoggedIn: function() {
+      return this.getUser().attributes && this.getUser().attributes.token;
+    }
+    
+    /**
+    * Shows a view, does the dirty work of cleaning up
+    * old events so they don't fire repeatedly etc
+    */
+  , show: function (view) {
+      this.currentView = view;
+      view.render();
+    }
+    /**
+    * Disposes of the active view
+    */
+  , dispose: function () {
+      if(this.currentView) {
+        this.currentView.undelegateEvents();
+        this.currentView.$el.removeData().unbind(); 
+        this.currentView.$el.empty();
+        this.currentView = null;
+      }
     }
   });
   

@@ -8,10 +8,13 @@
           this.app = options.app;
         }
       , afterRender: function () {
-        this.navbar = new NavbarView({app:this.app});
-        this.appendSubview(this.navbar, this.$('#header'));
+        this.navbar = this.navbar || new NavbarView({app:this.app});
+        this.footer = this.footer || new FooterView({app:this.app});
         
-        this.footer = new FooterView({app:this.app});
+        this.navbar.remove();
+        this.footer.remove();
+        
+        this.appendSubview(this.navbar, this.$('#header'));
         this.appendSubview(this.footer, this.$('#footer'));
         
         //Render all the subviews

@@ -26,16 +26,31 @@
             thing.once('ready', next, self);
           });
         }
+      
       // Nice function that mixes in custom attrs to the standard context
       , getContext: function (additions) {
-          var additions = additions || {}
+          var userAdditions = additions || {}
+            , ourAdditions = {
+              isLoggedIn: this.app.isLoggedIn()
+            }
             , context = _.clone(this.app.bootstrap.userVars);
           
-          return _.extend(context, additions);
+          return _.extend(context, ourAdditions, userAdditions);
         }
+      
       // By default just return the standard context
       , context: function () {
           return this.getContext();
+        }
+      
+      // Used by a.app links
+      , handleAppLink: function (e) {
+          this.app.handleAppLink(e);
+        }
+      
+      // App links with a class of `app` are treated as routes
+      , events: {
+          'click a.app': 'handleAppLink'
         }
       });
   
