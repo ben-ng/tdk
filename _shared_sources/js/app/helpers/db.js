@@ -6,19 +6,19 @@
   * Model definitions
   */
   , models = {
-      'user': require('./models/user')
-    , 'image': require('./models/image')
-    , 'video': require('./models/video')
-    , 'page': require('./models/page')
+      'user': require('../models/user')
+    , 'image': require('../models/image')
+    , 'video': require('../models/video')
+    , 'page': require('../models/page')
     }
   
   /**
   * Collection definitions
   */
   , collections = {
-      'pagemedia': require('./collections/pageMedia')
-    , 'pages': require('./collections/pages')
-    , 'unprocesseduploads': require('./collections/unprocessedUploads')
+      'pagemedia': require('../collections/pageMedia')
+    , 'pages': require('../collections/pages')
+    , 'unprocesseduploads': require('../collections/unprocessedUploads')
     }
   
   /**
@@ -91,6 +91,7 @@
       // If not, create a new model, set the id, and fetch!
       else {
         modelObj = this.createModel(modelName);
+        self.cache[cacheKey] = modelObj;
         
         if(id) {
           modelObj.set({id:id});
@@ -136,6 +137,7 @@
       // If not, create a new collection, set the id, and fetch!
       else {
         collectionObj = this.createCollection(collectionName, attributes);
+        self.cache[cacheKey] = collectionObj;
         
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
