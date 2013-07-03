@@ -5,5 +5,6 @@
   , page: require('./page.js')
   , image: require('./image.js')
   , video: require('./video.js')
+  , pages: require('./pages.js')
   };
 }());

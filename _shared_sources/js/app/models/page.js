@@ -17,7 +17,6 @@
           errors:null
         }
       , initialize: function(attributes, opts) {
-          
           this.set(attributes);
           this.app = opts.app || {};
           
@@ -50,8 +49,6 @@
           Backbone.sync(method, model, options);
         }
       , parse: function(data, options) {
-          var self = this;
-          
           data = data.page;
           delete data.page;
           try {
@@ -65,7 +62,7 @@
           }
           //Set the page media collection if needed
           if(!this.media || !this.media.pageId) {
-            this.media = self.app.db.createCollection('pageMedia',{pageId:this.id});
+            this.media = this.app.db.createCollection('pageMedia',{pageId:this.id});
           }
           return data;
         }

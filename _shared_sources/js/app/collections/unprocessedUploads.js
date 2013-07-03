@@ -4,16 +4,23 @@
     , Video = require('../models/video.js')
     , _ = require('lodash')
     , UnprocessedUploads = Collection.extend({
-        name:'media',
-        url: function () { return this.app.config.baseUrl+'/unprocessed.json'; },
-        model: function(attrs, options) {
-          if (attrs.type === 'image') {
-            return this.app.db.createModel('image').set(attrs);
-          } else {
-            return this.app.db.createModel('video').set(attrs);
-          }
-        },
-        parse: function(data, options) {
+        name:'media'
+      , url: function () { return this.app.config.baseUrl+'/unprocessed.json'; }
+      , initialize: function(models, opts) {
+          this.set(models);
+          this.app = opts.app || {};
+          
+          // FIXME: This awful situation is because `this` inside
+          // the model function refers to a model, not the collection
+          this.model = function(attrs, options) {
+            if (attrs.type === 'image') {
+              return opts.app.db.createModel('image').set(attrs);
+            } else {
+              return opts.app.db.createModel('video').set(attrs);
+            }
+          };
+        }
+      , parse: function(data, options) {
           return _.isEmpty(data.media) ? [] : data.media;
         }
       });
