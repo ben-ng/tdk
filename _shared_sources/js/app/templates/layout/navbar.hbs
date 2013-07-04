@@ -47,3 +47,9 @@
   </div>
   {{/if}}
 {{/unless}}
+{{#flash}}
+<div class="alert alert-{{type}}">
+  <button type="button" class="close fui-cross" data-dismiss="alert"></button>
+  {{message}}
+</div>
+{{/flash}}

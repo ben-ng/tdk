@@ -14,7 +14,7 @@ var _ = require('lodash')
   
   , App = Backbone.Router.extend({
     /**
-    * Ctor
+    * Constructs a new app
     */
     initialize: function (el, config) {
       /* Routes */
@@ -55,6 +55,8 @@ var _ = require('lodash')
       this.bootstrap = bootstrap || {};
       
       Backbone.history.start();
+      
+      return this;
     }
     
     /**
@@ -71,6 +73,8 @@ var _ = require('lodash')
       }
       
       this.navigate(target.pathname, {trigger:true});
+      
+      return this;
     }
     
     /**
@@ -87,7 +91,10 @@ var _ = require('lodash')
   , show: function (view) {
       this.currentView = view;
       view.render();
+      
+      return this;
     }
+    
     /**
     * Disposes of the active view
     */
@@ -98,6 +105,39 @@ var _ = require('lodash')
         this.currentView.$el.empty();
         this.currentView = null;
       }
+      
+      return this;
+    }
+    
+    /**
+    * Shows a flash message
+    */
+  , flash: null
+  , setFlash: function (type, message) {
+      if(!type) {
+        type='info';
+      }
+      
+      this.flash = {message: message, type: type};
+      
+      this.trigger('flash');
+      
+      //Clear the flash on the next route change
+      this.listenToOnce(this,"route",function(route, router, params) {
+        this.clearFlash();
+      });
+      
+      return this;
+    }
+    /**
+    * Clears the flash message
+    */
+  , clearFlash: function () {
+      this.flash=null;
+      
+      this.trigger('flash');
+      
+      return this;
     }
   });
   

@@ -9,11 +9,14 @@
           this.pages = this.app.db.fetchCollection('pages');
           this.unprocessed = this.app.db.fetchCollection('unprocessedUploads');
           
-          this.listenTo(this.pages, 'change add remove sort',this.render,this);
-          this.listenTo(this.unprocessed, 'change add remove',this.render,this);
+          this.listenTo(this.pages, 'change add remove sort', this.render, this);
+          this.listenTo(this.unprocessed, 'change add remove', this.render, this);
           this.listenTo(this.app.getUser(), 'change', function () {
             this.pages.fetch();
-          },this);
+          }, this);
+          this.listenTo(this.app, 'flash', function () {
+            alert('hi');
+          }, this);
           
           this.renderOnReady(this.pages, this.unprocessed, this.app.getUser());
         }

@@ -1,6 +1,7 @@
 (function () {
   var path = require('path')
     , _ = require('lodash')
+    , delay = 1
   
   /**
   * Model definitions
@@ -85,8 +86,12 @@
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
-          modelObj.trigger('ready');
-        }, 0);
+          // Only trigger if already loaded. Otherwise wait for
+          // the fetch operation to do it for us
+          if(modelObj.isFetched) {
+            modelObj.trigger('ready');
+          }
+        }, delay);
       }
       // If not, create a new model, set the id, and fetch!
       else {
@@ -103,10 +108,11 @@
           modelObj.fetch({
             success: function () {
               // Trigger the `ready` event after data has loaded
+              modelObj.isFetched = true;
               modelObj.trigger('ready');
             }
           });
-        }, 0);
+        }, delay);
       }
       
       return modelObj;
@@ -131,8 +137,12 @@
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
-          collectionObj.trigger('ready');
-        }, 0);
+          // Only trigger if already loaded. Otherwise wait for
+          // the fetch operation to do it for us
+          if(collectionObj.isFetched) {
+            collectionObj.trigger('ready');
+          }
+        }, delay);
       }
       // If not, create a new collection, set the id, and fetch!
       else {
@@ -145,10 +155,11 @@
           collectionObj.fetch({
             success: function () {
               // Trigger the `ready` event after data has loaded
+              collectionObj.isFetched = true;
               collectionObj.trigger('ready');
             }
           });
-        }, 0);
+        }, delay);
       }
       
       return collectionObj;

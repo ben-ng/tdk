@@ -17,14 +17,16 @@
             , next = function () {
                 thingCount--;
                 
-                if(thingCount === 0) {
+                if(thingCount<0) {
                   self.render();
                 }
               };
           
           _.each(things, function (thing) {
-            thing.once('ready', next, self);
+            thing.once('ready', next, thing);
           });
+          
+          next();
         }
       
       // Nice function that mixes in custom attrs to the standard context
@@ -32,6 +34,7 @@
           var userAdditions = additions || {}
             , ourAdditions = {
               isLoggedIn: this.app.isLoggedIn()
+            , flash: _.clone(this.app.flash)
             }
             , context = _.clone(this.app.bootstrap.userVars);
           

@@ -151,5 +151,37 @@
       
       buff = buff + '4';
     });
+    
+    Q.asyncTest("fetch multiple instances of model", 4, function() {
+      var buff = ''
+        , modelA = db.fetchModel('user')
+        , modelB = db.fetchModel('user')
+        , modelC = db.fetchModel('user')
+        , timeout
+        , next = function (entry) {
+            buff = buff + entry;
+            
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+              // Ensure that only one of each character is in buff
+              Q.strictEqual(buff.length, 3, buff + ' should be "ABC" or similar');
+              Q.ok(buff.indexOf('A')>=0);
+              Q.ok(buff.indexOf('B')>=0);
+              Q.ok(buff.indexOf('C')>=0);
+              
+              Q.start();
+            }, 1000);
+          };
+      
+      modelA.once('ready', function () {
+        next('A');
+      });
+      modelB.once('ready', function () {
+        next('B');
+      });
+      modelC.once('ready', function () {
+        next('C');
+      });
+    });
   };
 }());
