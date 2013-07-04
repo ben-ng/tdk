@@ -5,19 +5,15 @@
     , NavbarView = View.extend({
         template: require('../../templates/layout/navbar.hbs')
       , initialize: function (options) {
-          this.app = options.app || {};
+          this.app = options.app;
           this.pages = this.app.db.fetchCollection('pages');
           this.unprocessed = this.app.db.fetchCollection('unprocessedUploads');
-          
+
           this.listenTo(this.pages, 'change add remove sort', this.render, this);
           this.listenTo(this.unprocessed, 'change add remove', this.render, this);
-          this.listenTo(this.app.getUser(), 'change', function () {
-            this.pages.fetch();
-          }, this);
-          this.listenTo(this.app, 'flash', function () {
-            alert('hi');
-          }, this);
-          
+          this.listenTo(this.app.getUser(), 'change', this.render, this);
+          this.listenTo(this.app, 'flash', this.render, this);
+
           this.renderOnReady(this.pages, this.unprocessed, this.app.getUser());
         }
       , context: function () {
@@ -30,7 +26,7 @@
             , antiPluralS = (this.unprocessed.length!==1?"":"s")
             , unprocessedPrompt = "Choose thumbnail" + antiPluralS + " for " + this.unprocessed.length + " upload" + pluralS;
 
-          
+
           //Load page attrs etc
           this.pages.forEach(function(model) {
             var safename = encodeURIComponent(model.attributes.name)
@@ -52,7 +48,7 @@
             }
             modelAttrs.push(attrs);
           });
-          
+
           //Mixin our template vars
           return this.getContext({
             pages:modelAttrs,
@@ -72,6 +68,6 @@
           });
         }
       });
-  
+
   module.exports = NavbarView;
 }());

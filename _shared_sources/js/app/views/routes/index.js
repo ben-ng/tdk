@@ -6,19 +6,19 @@
         template: require('../../templates/routes/index.hbs')
       , initialize: function (options) {
           this.app = options.app;
-          
+
           this.listenTo(this.app.getUser(), 'change', this.render, this);
         }
       , afterRender: function () {
-        this.navbar = this.navbar || new NavbarView({app:this.app});
-        this.footer = this.footer || new FooterView({app:this.app});
-        
-        this.navbar.remove();
-        this.footer.remove();
-        
-        this.appendSubview(this.navbar, this.$('#header'));
-        this.appendSubview(this.footer, this.$('#footer'));
-        
+        var navbar = new NavbarView({app:this.app})
+          , footer = new FooterView({app:this.app});
+
+        navbar.remove();
+        footer.remove();
+
+        this.appendSubview(navbar, this.$('#header'));
+        this.appendSubview(footer, this.$('#footer'));
+
         //Render all the subviews
         this.eachSubview(function (subview) {
           subview.render();
@@ -28,6 +28,6 @@
           return this.getContext();
         }
       });
-  
+
   module.exports = IndexView;
 }());

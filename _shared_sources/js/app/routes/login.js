@@ -1,12 +1,9 @@
 (function () {
   var LoginView = require('../views/routes/login')
   , Login = function () {
-    this.dispose();
-    
-    var view = new LoginView({app:this, el:this.el});
-    
+    var view = new LoginView({app:this});
     this.show(view);
   };
-  
+
   module.exports = Login;
 }());

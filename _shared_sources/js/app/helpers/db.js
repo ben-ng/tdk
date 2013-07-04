@@ -2,7 +2,7 @@
   var path = require('path')
     , _ = require('lodash')
     , delay = 1
-  
+
   /**
   * Model definitions
   */
@@ -13,7 +13,7 @@
     , 'page': require('../models/page')
     , 'customization': require('../models/customization')
     }
-  
+
   /**
   * Collection definitions
   */
@@ -22,24 +22,24 @@
     , 'pages': require('../collections/pages')
     , 'unprocesseduploads': require('../collections/unprocessedUploads')
     }
-  
+
   /**
   * db (database, but not really)
-  * 
+  *
   * Makes models and collections managable.
   */
   , db = function (App) {
     var self = this;
-    
+
     this.cache = {};
-    
+
     /**
     * Creates a new model
     * @param {string} modelName - The name of the model you want (e.g. 'posts')
     */
     this.createModel = function (modelName) {
       modelName = modelName.toLowerCase();
-      
+
       if(_.find(models, function (v,key) { return key === modelName;})) {
         return new models[modelName]({}, {app:App});
       }
@@ -47,7 +47,7 @@
         throw new Error('Cannot find Model "' + modelName + '"');
       }
     };
-    
+
     /**
     * Creates a new collection
     * @param {string} collectionName - The name of the collection you want (e.g. 'posts')
@@ -55,11 +55,11 @@
     */
     this.createCollection = function (collectionName, attributes) {
       collectionName = collectionName.toLowerCase();
-      
+
       attributes = attributes || {};
       attributes = _.clone(attributes);
       attributes.app = App;
-      
+
       if(_.find(collections, function (v,key) { return key === collectionName;})) {
         return new collections[collectionName]([], attributes);
       }
@@ -67,7 +67,7 @@
         throw new Error('Cannot find Collection "' + collectionName + '"');
       }
     };
-    
+
     /**
     * Fetches a model by ID
     * Under the surface, this will try to use the local cache if possible
@@ -76,14 +76,14 @@
     */
     this.fetchModel = function (modelName, id) {
       modelName = modelName.toLowerCase();
-      
+
       var cacheKey = 'uuid://models/' + modelName + (id ? '/' + id : '')
         , modelObj;
-      
+
       // Is the model already in the cache?
       if(self.cache[cacheKey]) {
         modelObj = self.cache[cacheKey];
-        
+
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
@@ -98,11 +98,11 @@
       else {
         modelObj = this.createModel(modelName);
         self.cache[cacheKey] = modelObj;
-        
+
         if(id) {
           modelObj.set({id:id});
         }
-        
+
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
@@ -115,10 +115,10 @@
           });
         }, delay);
       }
-      
+
       return modelObj;
     };
-    
+
     /**
     * Fetches a collection by attributes
     * Under the surface, this will try to use the local cache if possible
@@ -127,14 +127,14 @@
     */
     this.fetchCollection = function (collectionName, attributes) {
       collectionName = collectionName.toLowerCase();
-      
+
       var cacheKey = 'uuid://collections/' + collectionName + '/' + JSON.stringify(attributes)
         , collectionObj;
-      
+
       // Is the collection already in the cache?
       if(self.cache[cacheKey]) {
         collectionObj = self.cache[cacheKey];
-        
+
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
@@ -149,7 +149,7 @@
       else {
         collectionObj = this.createCollection(collectionName, attributes);
         self.cache[cacheKey] = collectionObj;
-        
+
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
@@ -162,10 +162,10 @@
           });
         }, delay);
       }
-      
+
       return collectionObj;
     };
   };
-  
+
   module.exports = db;
 }());

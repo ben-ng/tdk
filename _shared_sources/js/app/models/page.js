@@ -19,24 +19,26 @@
       , initialize: function(attributes, opts) {
           this.set(attributes);
           this.app = opts.app || {};
-          
+
           this.media = this.app.db.createCollection('pageMedia', {pageId: this.id});
         }
       , validate: function(attrs,options) {
           var errors = [];
-          
+
           if(!attrs.name || attrs.name.length == 0) {
             errors.push({attr:"name",message:"Page title cannot be empty"});
           }
-          
+
           if(!attrs.id) {
             //Check for duplicate page
-            var pages = window.App.db.createCollection('pages', {name:attrs.name});
+            var pages = this.app.db.fetchCollection('pages').filter(function(page) {
+              return page.attributes.name.toLowerCase() === attrs.name.toLowerCase();
+            });
             if(pages && pages.length > 0) {
               errors.push({attr:"name",message:"Another page already exists with this name"});
             }
           }
-          
+
           if(errors.length) {
             return errors;
           }
@@ -68,7 +70,7 @@
         }
       , addMedia: function(cb, debug_cb) {
           var self = this;
-          
+
         //Start filepicker
           filepicker.pickAndStore({
             extensions:Website.videoExts.concat(Website.imageExts),
@@ -94,10 +96,10 @@
             if(Object.prototype.toString.call( FPFiles ) !== '[object Array]') {
               FPFiles = [FPFiles]; //wrap in an array.
             }
-            
+
             var newItems = _.clone(self.attributes.items)
               , itemsToGo = FPFiles.length
-              
+
               //Called after all files have been saved
               , afterItemCompete = function(new_id, new_name, type, after_save_cb) {
                   newItems.push({ID:new_id,NAME:new_name,TYPE:type,THUMB:"http://placehold.it/320x180"});
@@ -114,7 +116,7 @@
                     });
                   }
                 };
-            
+
             for(var i=0, ii=FPFiles.length; i<ii; i++) {
               //Save the file to the server
               (function(FPFile) {
@@ -129,7 +131,7 @@
                     attribs: [],
                     status: 0
                   };
-                
+
                 //Create the correct type of model
                 if(Website.util.isVideo(FPFile.filename)) {
                   model = new Video();
@@ -139,15 +141,15 @@
                   model = new Image();
                   type="image";
                 }
-                
+
                 //Set the attributes
                 model.set(opts);
-                
+
                 //If this is a testfile, mark it as so
                 if(debug_cb) {
                   model.set('debug',true);
                 }
-                
+
                 //Save the model to the server
                 model.save(null,{
                   success:function(savedModel, resp) {
@@ -159,7 +161,7 @@
                     else {
                       after_cb=function(){};
                     }
-                    
+
                     //Call the completion function
                     afterItemCompete(savedModel.attributes.id, savedModel.attributes.name, type, after_cb);
                   },
@@ -173,6 +175,6 @@
           });
         }
       });
-  
+
   module.exports = Page;
 }());

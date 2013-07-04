@@ -16,19 +16,19 @@
             , thingCount = things.length
             , next = function () {
                 thingCount--;
-                
+
                 if(thingCount<0) {
                   self.render();
                 }
               };
-          
+
           _.each(things, function (thing) {
             thing.once('ready', next, thing);
           });
-          
+
           next();
         }
-      
+
       // Nice function that mixes in custom attrs to the standard context
       , getContext: function (additions) {
           var userAdditions = additions || {}
@@ -38,25 +38,35 @@
             , debug: this.app.bootstrap.debug ? true : false
             }
             , context = this.app.getUserVars();
-          
+
           return _.extend({}, context, ourAdditions, userAdditions);
         }
-      
+
       // By default just return the standard context
       , context: function () {
           return this.getContext();
         }
-      
+
       // Used by a.app links
       , handleAppLink: function (e) {
           this.app.handleAppLink(e);
         }
-      
+
       // App links with a class of `app` are treated as routes
       , events: {
           'click a.app': 'handleAppLink'
         }
+
+      // Clean up subviews in beforeRender as we'll add new
+      // ones in afterRender
+      , beforeRender: function () {
+          //Close all the subviews
+          this.eachSubview(function (subview) {
+            subview.close();
+          });
+          this.$el.empty();
+        }
       });
-  
+
   module.exports = View;
 }());

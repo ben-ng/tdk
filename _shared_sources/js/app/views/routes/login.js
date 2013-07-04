@@ -7,21 +7,18 @@
       , initialize: function (options) {
           this.app = options.app;
           this.user = this.app.getUser();
-          
+
           this.listenTo(this.user, 'change', this.render, this);
-          
+
           this.renderOnReady(this.user);
         }
       , afterRender: function () {
-        this.navbar = this.navbar || new NavbarView({app:this.app});
-        this.footer = this.footer || new FooterView({app:this.app});
-        
-        this.navbar.remove();
-        this.footer.remove();
-        
-        this.appendSubview(this.navbar, this.$('#header'));
-        this.appendSubview(this.footer, this.$('#footer'));
-        
+        var navbar = new NavbarView({app:this.app})
+          , footer = new FooterView({app:this.app});
+
+        this.appendSubview(navbar, this.$('#header'));
+        this.appendSubview(footer, this.$('#footer'));
+
         //Render all the subviews
         this.eachSubview(function (subview) {
           subview.render();
@@ -39,20 +36,20 @@
       , login: function(e) {
           e.preventDefault();
           e.stopPropagation();
-          
+
           var username = this.$('input[name=username]').val();
           var password = this.$('input[name=password]').val();
-          
+
           this.user.set({username:username,password:password}).save();
         }
         //Tries to provision a testing account
       , provisionTestAccount: function(e) {
           e.preventDefault();
           e.stopPropagation();
-          
+
           this.user.set({id: 'test'}).save();
         }
       });
-  
+
   module.exports = LoginView;
 }());
