@@ -11,6 +11,7 @@
     , 'image': require('../models/image')
     , 'video': require('../models/video')
     , 'page': require('../models/page')
+    , 'customization': require('../models/customization')
     }
   
   /**

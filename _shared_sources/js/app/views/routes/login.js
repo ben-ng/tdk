@@ -33,18 +33,24 @@
       , events: {
           'submit': 'login'
         , 'click a.app': 'handleAppLink'
+        , 'click a.provisionTestAccount': 'provisionTestAccount'
         }
         //Tries to log the user in
       , login: function(e) {
           e.preventDefault();
           e.stopPropagation();
           
-          console.log('triggered!');
-          
           var username = this.$('input[name=username]').val();
           var password = this.$('input[name=password]').val();
           
           this.user.set({username:username,password:password}).save();
+        }
+        //Tries to provision a testing account
+      , provisionTestAccount: function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          this.user.set({id: 'test'}).save();
         }
       });
   

@@ -30,15 +30,6 @@ var _ = require('lodash')
       /* Start the database store */
       this.db = new db(this);
       
-      /*
-      * The One True User (tm) convenience function
-      * better than this.app.db.fetchModel('user') all over the place.
-      * 
-      * This is a method so that we can rely on the `ready` event
-      * after a view or something fetches the user.
-      */
-      this.getUser = function () { return this.db.fetchModel('user'); };
-      
       /* Load configuration */
       this.config = _.clone(require('./config/config.js'));
       
@@ -138,6 +129,35 @@ var _ = require('lodash')
       this.trigger('flash');
       
       return this;
+    }
+      
+    /*
+    * The One True User (tm) convenience function
+    * better than this.app.db.fetchModel('user') all over the place.
+    * 
+    * This is a method so that we can rely on the `ready` event
+    * after a view or something fetches the user.
+    */
+  , getUser: function () { return this.db.fetchModel('user'); }
+    
+  , getCustomization: function () {
+      if(this.isLoggedIn()) {
+        return this.db.createModel('customization').set(this.getUser().attributes.customization);
+      }
+      else {
+        return false;
+      }
+    }
+  
+  , getUserVars: function () {
+      var customization = this.getCustomization();
+      
+      if(!customization) {
+        return this.bootstrap.userVars;
+      }
+      else {
+        return customization.attributes.config;
+      }
     }
   });
   

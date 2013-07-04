@@ -35,10 +35,11 @@
             , ourAdditions = {
               isLoggedIn: this.app.isLoggedIn()
             , flash: _.clone(this.app.flash)
+            , debug: this.app.bootstrap.debug ? true : false
             }
-            , context = _.clone(this.app.bootstrap.userVars);
+            , context = this.app.getUserVars();
           
-          return _.extend(context, ourAdditions, userAdditions);
+          return _.extend({}, context, ourAdditions, userAdditions);
         }
       
       // By default just return the standard context

@@ -11,6 +11,13 @@
           <a href="/logout" class="btn btn-danger btn-wide app">Log Out</a>
         </div>
       {{else}}
+        {{#if debug}}
+          <div class="alert alert-info">
+            <h3>Test Account Available</h3>
+            <p>This app is running in debug mode. Click the button below to provision a temporary account.</p>
+            <a class="provisionTestAccount btn btn-info btn-block">Create Test Account</a>
+          </div>
+        {{/if}}
         {{#if user.error}}
           <div class="alert alert-error">
             {{user.error}}

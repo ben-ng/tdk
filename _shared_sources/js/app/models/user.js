@@ -15,6 +15,7 @@ var user = db.createModel('user').set({id:'test'});
 */
 (function () {
   var Model = require('./base')
+    , Customization = require('./customization')
     , User = Model.extend({
         name:'user'
       , url: function () {
@@ -22,6 +23,13 @@ var user = db.createModel('user').set({id:'test'});
         }
       , parse: function(data, options) {
           data = data.user;
+          try {
+            data.customization =  (new Customization({},{app:this.app})).parse({customization: data.customization});
+          }
+          catch(e) {
+            data.customization = null;
+          }
+
           return data;
         }
       , defaults: {
@@ -31,9 +39,10 @@ var user = db.createModel('user').set({id:'test'});
           policy:'',
           signature:'',
           path:'',
+          customization:{},
           error:null
         }
       });
-  
+
   module.exports = User;
 }());

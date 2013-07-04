@@ -6,6 +6,8 @@
         template: require('../../templates/routes/index.hbs')
       , initialize: function (options) {
           this.app = options.app;
+          
+          this.listenTo(this.app.getUser(), 'change', this.render, this);
         }
       , afterRender: function () {
         this.navbar = this.navbar || new NavbarView({app:this.app});
