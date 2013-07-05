@@ -1,6 +1,7 @@
 (function () {
   var Model = require('./base')
     , Backbone = require('backbone')
+    , _ = require('lodash')
     , Media = Model.extend({
         name:'media'
       , urlRoot: function () {
@@ -107,7 +108,7 @@
         var self = this;
 
         filepicker.pick({
-          extensions:Website.imageExts,
+          extensions:self.app.config.imageExts,
           path:self.db.fetchModel('user').attributes.path,
           signature:self.db.fetchModel('user').attributes.signature,
           policy:self.db.fetchModel('user').attributes.policy,
@@ -127,7 +128,7 @@
         },
         function(FPError) {
           if(FPError.code !== 101) {
-            Website.error(FPError);
+            self.app.error(FPError);
           }
         });
       }
@@ -139,19 +140,19 @@
           FPFile = self.fpfile();
         }
 
-        Website.setFlash("Please wait while we process the image...","info");
+        self.app.setFlash('info', 'Please wait while we process the image...');
         filepicker.convert(FPFile,
           //Convert options
           {
             signature:self.db.fetchModel('user').attributes.signature,
             policy:self.db.fetchModel('user').attributes.policy,
-            width:Website.thumbnailDims.width,
-            height:Website.thumbnailDims.height,
+            width:self.app.config.thumbnailDims.width,
+            height:self.app.config.thumbnailDims.height,
             fit:'crop'
           },
           //Store options
           {
-            path:Website.user.attributes.path,
+            path:self.app.getUser().attributes.path,
             location:'s3',
             access:'public'
           },
@@ -159,14 +160,14 @@
             //Set s3key to null to force a re-stat
             self.save({thumbnailFpkey:FPFileThumb.url, thumbnailS3key:null},{
               success:function() {
-                Website.setFlash("Thumbnail Saved!", "success");
-                Website.unprocessed.fetch();
+                self.app.setFlash('success', 'Thumbnail saved!');
+                self.app.db.fetchCollection('unprocessedUploads').fetch();
               },
-              error: Website.handleError
+              error: self.app.error
             });
           },
           function(FPError) {
-            Website.error(FPError);
+            self.app.error(FPError);
           }
         );
       }
@@ -176,31 +177,31 @@
       , useThumbnail: function(base64Data) {
         var self = this;
 
-        Website.setFlash("Please wait while we process the image...","info");
+        self.app.setFlash('info', 'Please wait while we process the image...');
 
         filepicker.store(base64Data,
           //Convert options
           {
-            signature:Website.user.attributes.signature,
-            policy:Website.user.attributes.policy,
-            mimetype:'image/png',
+            signature: self.app.getUser().attributes.signature,
+            policy: self.app.getUser().attributes.policy,
+            mimetype: 'image/png',
             base64decode: true,
-            path:Website.user.attributes.path,
-            location:'s3',
-            access:'public'
+            path: self.app.getUser().attributes.path,
+            location: 's3',
+            access: 'public'
           },
           function(FPFileThumb) {
             //Set s3key to null to force a re-stat
             self.save({thumbnailFpkey:FPFileThumb.url, thumbnailS3key:null},{
               success:function() {
-                Website.setFlash("Thumbnail Saved!", "success");
-                Website.unprocessed.fetch();
+                self.app.setFlash('success', 'Thumbnail saved!');
+                self.app.db.fetchCollection('unprocessedUploads').fetch();
               },
-              error: Website.handleError
+              error: self.app.error
             });
           },
           function(FPError) {
-            Website.error(FPError);
+            self.app.error(FPError);
           }
         );
       }
@@ -231,18 +232,18 @@
         var attrs = _.clone(this.attributes);
 
         if(attrs.s3key) {
-          attrs.url = Website.s3prefix + attrs.s3key;
+          attrs.url = self.app.config.s3prefix + attrs.s3key;
         }
         else {
-          attrs.thumbnailUrl = Website.placeholderThumbnail();
+          attrs.thumbnailUrl = self.app.util.placeholderThumbnail();
         }
 
         if(attrs.thumbnailS3key) {
-          attrs.thumbnailUrl = Website.s3prefix + attrs.thumbnailS3key;
+          attrs.thumbnailUrl = self.app.config.s3prefix + attrs.thumbnailS3key;
         }
         else {
           //Halfsized with the true option
-          attrs.thumbnailUrl = Website.placeholderThumbnail();
+          attrs.thumbnailUrl = self.app.util.placeholderThumbnail();
         }
 
         attrs.isImage = attrs.type === 'image';

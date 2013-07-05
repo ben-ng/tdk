@@ -14,8 +14,9 @@ var _ = require('lodash')
     , 'logout': require('./routes/logout')
     , 'createPage': require('./routes/pages/create')
     , 'page/:name': require('./routes/pages/show')
-    , 'page/:name/addMedia': require('./routes/pages/addMedia')
+    , 'page/:name/addMedia': require('./routes/media/add')
     , 'review': require('./routes/review')
+    , 'media/:type/:id/edit': require('./routes/media/edit')
     }
   , App = Backbone.Router.extend({
     /**

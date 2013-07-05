@@ -1,0 +1,49 @@
+<div class="container">
+  <div id="header">
+  </div>
+  <div id="content" class="row">
+  {{#with media}}
+    <form>
+      <fieldset>
+        <legend>Edit {{name}}</legend>
+        <label class="control-label" for="name">Title</label>
+        <input type="text" id="fileNameField" name="name" placeholder="Untitled {{type}}" value="{{name}}">
+        <label class="control-label" for="attributes">Attributes <span data-toggle="tooltip" data-title="Example Attributes" data-content="These appear on your website. You can use single words like &quot;&lt;strong&gt;Superbowl&lt;/strong&gt;&quot; or &quot;&lt;strong&gt;Director:&lt;/strong&gt; Michael Bay&quot; to get additional formatting.&lt;/p&gt;" class="fui-question"></span></label>
+        <input name="attribs" class="tagsinput tagsinput-primary" value="{{attributeList}}" id="tags1371235017630" style="display: none;" />
+        <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Set A Thumbnail</legend>
+        {{#if thumbnailS3key}}
+          <p>
+            <img src="{{thumbnailUrl}}" class="thumbHolder img-polaroid" alt="{{name}} Thumbnail" />
+          </p>
+        {{else}}
+          <div class="alert alert-warning">
+            <big>No thumbnail yet! Select or upload one.</big>
+          </div>
+        {{/if}}
+        <div class="control-group">
+          <div class="controls">
+            {{#if isImage}}
+              <a id="useOriginalButton" href="#" class="btn btn-info crop">Use Original</a>
+            {{/if}}
+            {{#if isVideo}}
+              <a id="useCaptureButton" href="#" class="btn btn-info capture">Use Current Frame</a>
+            {{/if}}
+            <a id="useCustomButton" href="#" class="btn btn-success upload">Upload Thumbnail</a>
+          </div>
+        </div>
+        <input type="hidden" id="thumbnail" name="thumbnail" value="{{thumbnail}}">
+      </fieldset>
+    </form>
+  {{/with}}
+  </div>
+</div>
+<div id="footer" class="bottom-menu">
+</div>

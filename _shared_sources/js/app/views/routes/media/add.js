@@ -3,7 +3,7 @@
     , NavbarView = require('../../layout/navbar.js')
     , FooterView = require('../../layout/footer.js')
     , IndexView = View.extend({
-        template: require('../../../templates/routes/pages/addMedia.hbs')
+        template: require('../../../templates/routes/media/add.hbs')
       , events: {
           'click a.filepicker':'startFilepicker'
         , 'click a.app': 'handleAppLink'
