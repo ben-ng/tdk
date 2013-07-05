@@ -1,5 +1,5 @@
 (function () {
-  var View = require('../views/routes/index')
+  var View = require('../views/routes/review')
   , Action = function () {
     var view = new View({app:this});
     this.show(view);

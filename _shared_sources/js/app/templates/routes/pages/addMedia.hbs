@@ -1,0 +1,40 @@
+<div class="container">
+  <div id="header">
+  </div>
+  <div id="content" class="row">
+    {{#if page.id}}
+    <div class="span2 offset5 centered">
+
+  <!--
+      <div class="tooltip-trigger" data-title="Upload a new file from your computer or elsewhere" data-placement="left">
+  -->
+      <div id="uploadFileLink">
+        <p>
+          <a href="#" class="filepicker">
+            <img class="flatIcon" src="/img/file_upload.png" alt="upload-file" />
+          </a>
+        </p>
+        <p>
+          <a href="#" class="filepicker btn btn-success">Upload File</a>
+        </p>
+      </div>
+    </div>
+  <!--
+    <div class="span2 centered">
+      <div class="tooltip-trigger" data-title="Use a file on another page" data-placement="right">
+        <p>
+          <a href="#" class="useExisting">
+            <img class="flatIcon" src="/img/folder.png" alt="upload-file" />
+          </a>
+        </p>
+        <p>
+          <a href="#" class="useExisting btn btn-info">Use Existing</a>
+        </p>
+      </div>
+    </div>
+  -->
+    {{/if}}
+  </div>
+</div>
+<div id="footer" class="bottom-menu">
+</div>

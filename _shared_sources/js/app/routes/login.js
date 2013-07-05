@@ -1,9 +1,9 @@
 (function () {
-  var LoginView = require('../views/routes/login')
-  , Login = function () {
-    var view = new LoginView({app:this});
+  var View = require('../views/routes/login')
+  , Action = function () {
+    var view = new View({app:this});
     this.show(view);
   };
 
-  module.exports = Login;
+  module.exports = Action;
 }());

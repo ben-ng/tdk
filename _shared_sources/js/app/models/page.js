@@ -3,6 +3,7 @@
     , Video = require('./video')
     , Image = require('./image')
     , Backbone = require('backbone')
+    , _ = require('lodash')
     , Page = Model.extend(
       {
         name:'page'
@@ -73,10 +74,10 @@
 
         //Start filepicker
           filepicker.pickAndStore({
-            extensions:Website.videoExts.concat(Website.imageExts),
+            extensions:self.app.config.videoExts.concat(self.app.config.imageExts),
             multiple:true,
-            signature:Website.user.attributes.signature,
-            policy:Website.user.attributes.policy,
+            signature:self.app.getUser().attributes.signature,
+            policy:self.app.getUser().attributes.policy,
             services:[
               'COMPUTER',
               'DROPBOX',
@@ -89,7 +90,7 @@
         //Filepicker Options
         , {
             location:'s3',
-            path:Website.user.attributes.path,
+            path:self.app.getUser().attributes.path,
             access:'public'
           }
         , function(FPFiles) {
@@ -108,7 +109,7 @@
                     self.set("items",newItems);
                     self.save(null,{
                       success:function() {
-                        Website.unprocessed.fetch();
+                        self.app.db.fetchCollection('unprocessedUploads').fetch();
                         after_save_cb();
                         cb(null, FPFiles);
                       },
@@ -133,12 +134,12 @@
                   };
 
                 //Create the correct type of model
-                if(Website.util.isVideo(FPFile.filename)) {
-                  model = new Video();
+                if(self.app.util.isVideo(FPFile.filename)) {
+                  model = new Video({},{app: self.app});
                   type="video";
                 }
-                else if(Website.util.isImage(FPFile.filename)) {
-                  model = new Image();
+                else if(self.app.util.isImage(FPFile.filename)) {
+                  model = new Image({},{app: self.app});
                   type="image";
                 }
 
@@ -165,7 +166,7 @@
                     //Call the completion function
                     afterItemCompete(savedModel.attributes.id, savedModel.attributes.name, type, after_cb);
                   },
-                  error: Website.handleError
+                  error: self.app.error
                 });
               })(FPFiles[i]);
             }

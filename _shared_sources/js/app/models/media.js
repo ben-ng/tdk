@@ -22,20 +22,20 @@
       }
       , sync: function(method, model, options) {
         var self = this;
-        
+
         if(method === 'create' || method === 'update') {
           //For the create method we should stringify the items before sending to the server
           model.set("userAttributes",JSON.stringify(model.get("attribs")));
         }
-        
+
         var afterCheckingMedia = function() {
           //Now check the thumbnail
           if(!model.attributes.thumbnailS3key && model.attributes.thumbnailFpkey && model.attributes.debug !== true) {
             filepicker.stat(self.thumbnailFpfile(),
               {
                 path:true,
-                policy:self.db.fetchModel('user').attributes.policy,
-                signature:self.db.fetchModel('user').attributes.signature
+                policy:self.app.db.fetchModel('user').attributes.policy,
+                signature:self.app.db.fetchModel('user').attributes.signature
               },
               function(metadata) {
                 model.set('thumbnailS3key',metadata.path);
@@ -47,14 +47,14 @@
             Backbone.sync(method, model, options);
           }
         }
-        
+
         //If the s3key is unknown, try and find it first
         if(!model.attributes.s3key && model.attributes.fpkey && model.attributes.debug !== true) {
           filepicker.stat(self.fpfile(),
             {
               path:true,
-              policy:self.db.fetchModel('user').attributes.policy,
-              signature:self.db.fetchModel('user').attributes.signature
+              policy:self.app.db.fetchModel('user').attributes.policy,
+              signature:self.app.db.fetchModel('user').attributes.signature
             },
             function(metadata) {
               model.set('s3key',metadata.path);
@@ -68,13 +68,13 @@
       }
       , destroy: function(options) {
         var self = this;
-        
+
         if(options.success) {
           var oldcb = options.success;
           options.success = function() {
             //Reload unprocessed files
             self.app.db.fetchCollection('unprocessedUploads').fetch();
-            
+
             if(oldcb) {
               oldcb();
             }
@@ -105,7 +105,7 @@
       /* Lets the user pick a thumbnail */
       , pickThumbnail: function() {
         var self = this;
-        
+
         filepicker.pick({
           extensions:Website.imageExts,
           path:self.db.fetchModel('user').attributes.path,
@@ -134,11 +134,11 @@
       /* Crops a thumbnail with filepicker.io */
       , cropThumbnail: function(FPFile) {
         var self = this;
-        
+
         if(!FPFile) {
           FPFile = self.fpfile();
         }
-        
+
         Website.setFlash("Please wait while we process the image...","info");
         filepicker.convert(FPFile,
           //Convert options
@@ -175,9 +175,9 @@
       */
       , useThumbnail: function(base64Data) {
         var self = this;
-        
+
         Website.setFlash("Please wait while we process the image...","info");
-        
+
         filepicker.store(base64Data,
           //Convert options
           {
@@ -229,14 +229,14 @@
       */
       , templateVars: function () {
         var attrs = _.clone(this.attributes);
-        
+
         if(attrs.s3key) {
           attrs.url = Website.s3prefix + attrs.s3key;
         }
         else {
           attrs.thumbnailUrl = Website.placeholderThumbnail();
         }
-          
+
         if(attrs.thumbnailS3key) {
           attrs.thumbnailUrl = Website.s3prefix + attrs.thumbnailS3key;
         }
@@ -244,17 +244,17 @@
           //Halfsized with the true option
           attrs.thumbnailUrl = Website.placeholderThumbnail();
         }
-        
+
         attrs.isImage = attrs.type === 'image';
         attrs.isVideo = attrs.type === 'video';
-        
+
         attrs.attribs = _.map(attrs.attribs, function (attrib) {
           return attrib.replace(/^(.*:)/, '<strong>$1</strong>');
         });
-        
+
         return attrs;
       }
     });
-  
+
   module.exports = Media;
 }());

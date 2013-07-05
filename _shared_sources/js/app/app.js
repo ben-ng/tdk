@@ -13,6 +13,9 @@ var _ = require('lodash')
     , 'login': require('./routes/login')
     , 'logout': require('./routes/logout')
     , 'createPage': require('./routes/pages/create')
+    , 'page/:name': require('./routes/pages/show')
+    , 'page/:name/addMedia': require('./routes/pages/addMedia')
+    , 'review': require('./routes/review')
     }
   , App = Backbone.Router.extend({
     /**
@@ -36,7 +39,7 @@ var _ = require('lodash')
       this.config = _.clone(require('./config/config.js'));
 
       /* Load utilities */
-      this.util = _.clone(require('./helpers/util.js'));
+      this.util = require('./helpers/util.js')(this.config);
 
       return this;
     }
