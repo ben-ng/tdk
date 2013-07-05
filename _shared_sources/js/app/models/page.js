@@ -20,8 +20,6 @@
       , initialize: function(attributes, opts) {
           this.set(attributes);
           this.app = opts.app || {};
-
-          this.media = this.app.db.createCollection('pageMedia', {pageId: this.id});
         }
       , validate: function(attrs,options) {
           var errors = [];
@@ -63,11 +61,10 @@
           finally {
             delete data.itemList;
           }
-          //Set the page media collection if needed
-          if(!this.media || !this.media.pageId) {
-            this.media = this.app.db.createCollection('pageMedia',{pageId:this.id});
-          }
           return data;
+        }
+      , getMedia: function () {
+          return this.app.db.fetchCollection('pageMedia', {app:this.app, pageId: this.id});
         }
       , addMedia: function(cb, debug_cb) {
           var self = this;

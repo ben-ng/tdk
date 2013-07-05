@@ -1,12 +1,12 @@
 <html>
-  <body onload="parentIframeResize()"> 
-    <script> 
+  <body onload="parentIframeResize()">
+    <script>
       // Tell the parent iframe what height the iframe needs to be
       function parentIframeResize()
       {
          var height = getParam('height');
          // This works as our parent's parent is on our domain..
-         parent.parent.Website.trigger("iframeResize", height);
+         parent.parent.app.trigger("iframeResize", height);
       }
 
       // Helper function, parse param from request string
@@ -21,6 +21,6 @@
         else
           return results[1];
       }
-    </script> 
-  </body> 
+    </script>
+  </body>
 </html>

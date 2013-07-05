@@ -2,7 +2,8 @@
   var View = require('../../base')
     , NavbarView = require('../../layout/navbar.js')
     , FooterView = require('../../layout/footer.js')
-    , IndexView = View.extend({
+    , ThumbView = require('../../routes/media/thumb.js')
+    , EditView = View.extend({
         template: require('../../../templates/routes/media/edit.hbs')
       , events: {
           'submit':'performSave'
@@ -14,6 +15,8 @@
         }
       , initialize: function (options) {
           this.app = options.app;
+          this.mediaType = options.mediaType;
+          this.mediaId = options.mediaId;
 
           this.media = this.app.db.fetchModel(options.mediaType, options.mediaId);
 
@@ -25,9 +28,15 @@
         var inputElem;
 
         var navbar = new NavbarView({app:this.app})
+          , thumber = new ThumbView({
+              app:this.app
+            , mediaType:this.mediaType
+            , mediaId:this.mediaId
+            })
           , footer = new FooterView({app:this.app});
 
         this.appendSubview(navbar, this.$('#header'));
+        this.appendSubview(thumber, this.$('#thumber'));
         this.appendSubview(footer, this.$('#footer'));
 
         //Render all the subviews
@@ -119,5 +128,5 @@
         }
       });
 
-  module.exports = IndexView;
+  module.exports = EditView;
 }());

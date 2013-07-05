@@ -109,9 +109,9 @@
 
         filepicker.pick({
           extensions:self.app.config.imageExts,
-          path:self.db.fetchModel('user').attributes.path,
-          signature:self.db.fetchModel('user').attributes.signature,
-          policy:self.db.fetchModel('user').attributes.policy,
+          path:self.app.db.fetchModel('user').attributes.path,
+          signature:self.app.db.fetchModel('user').attributes.signature,
+          policy:self.app.db.fetchModel('user').attributes.policy,
           services:[
             'COMPUTER',
             'DROPBOX',
@@ -144,8 +144,8 @@
         filepicker.convert(FPFile,
           //Convert options
           {
-            signature:self.db.fetchModel('user').attributes.signature,
-            policy:self.db.fetchModel('user').attributes.policy,
+            signature:self.app.db.fetchModel('user').attributes.signature,
+            policy:self.app.db.fetchModel('user').attributes.policy,
             width:self.app.config.thumbnailDims.width,
             height:self.app.config.thumbnailDims.height,
             fit:'crop'

@@ -37,11 +37,12 @@
     * Creates a new model
     * @param {string} modelName - The name of the model you want (e.g. 'posts')
     */
-    this.createModel = function (modelName) {
+    this.createModel = function (modelName, attrs) {
       modelName = modelName.toLowerCase();
+      attrs = attrs || {};
 
       if(_.find(models, function (v,key) { return key === modelName;})) {
-        return new models[modelName]({}, {app:App});
+        return new models[modelName](attrs, {app:App});
       }
       else {
         throw new Error('Cannot find Model "' + modelName + '"');
@@ -128,7 +129,8 @@
     this.fetchCollection = function (collectionName, attributes) {
       collectionName = collectionName.toLowerCase();
 
-      var cacheKey = 'uuid://collections/' + collectionName + '/' + JSON.stringify(attributes)
+      var safeAttrs = _.filter(attributes, function (v, k) {return k != 'app';})
+        , cacheKey = 'uuid://collections/' + collectionName + '/' + JSON.stringify(safeAttrs)
         , collectionObj;
 
       // Is the collection already in the cache?

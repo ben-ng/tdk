@@ -3,6 +3,7 @@ var _ = require('lodash')
   , $ = require('jquery-browserify')
   , path = require('path')
   , Backbone = require('./helpers/CorsBackbone.js')
+  , Messenger = require('./helpers/messenger.js')
 
   /* Database Stuff */
   , db = require('./helpers/db')
@@ -41,6 +42,9 @@ var _ = require('lodash')
 
       /* Load utilities */
       this.util = require('./helpers/util.js')(this.config);
+
+      /* Load messenger */
+      this.messenger = new Messenger(null, this.config.s3prefix, 'thumbnailer');
 
       return this;
     }

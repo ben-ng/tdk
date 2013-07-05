@@ -12,7 +12,7 @@
           // FIXME: This awful situation is because `this` inside
           // the model function refers to a model, not the collection
           this.model = function(attrs, options) {
-            return opts.app.db.createModel('page').set(attrs.page);
+            return opts.app.db.createModel('page', attrs.page);
           };
         }
       , parse: function(data, options) {

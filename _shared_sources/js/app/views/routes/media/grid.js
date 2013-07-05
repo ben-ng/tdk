@@ -1,21 +1,14 @@
 (function () {
   var View = require('../../base')
-    , NavbarView = require('../../layout/navbar.js')
-    , FooterView = require('../../layout/footer.js')
-    , GridView = require('../../routes/media/grid.js')
-    , ShowView = View.extend({
-        template: require('../../../templates/routes/pages/show.hbs')
+    , IndexView = View.extend({
+        template: require('../../../templates/routes/media/grid.hbs')
       , initialize: function (options) {
           this.app = options.app;
           this.page = this.app.db.createModel('page').set({
             name: 'Loading...'
           });
-
-          this.pageName = options.pageName;
-
           var pages = this.app.db.fetchCollection('pages');
 
-          this.listenTo(this.app.getUser(), 'change', this.render, this);
           this.listenTo(this.page, 'change', this.render, this);
 
           // First make sure we can load the pages collection
@@ -32,26 +25,29 @@
               this.page.set({name:'404'});
               this.app.error('Error 404: The page could not be found');
             }
+
+            this.media = this.page.getMedia();
+
+            this.listenTo(this.media, 'change add remove sort', this.render, this);
+            this.media.once('ready', this.render, this);
           }, this);
         }
-      , afterRender: function () {
-        var navbar = new NavbarView({app:this.app})
-          , grid = new GridView({app:this.app, pageName:this.pageName})
-          , footer = new FooterView({app:this.app});
-
-        this.appendSubview(navbar, this.$('#header'));
-        this.appendSubview(grid, this.$('#content'));
-        this.appendSubview(footer, this.$('#footer'));
-
-        //Render all the subviews
-        this.eachSubview(function (subview) {
-          subview.render();
-        });
-      }
       , context: function () {
-          return this.getContext();
+          var media = [];
+          var safeName = encodeURIComponent(this.page.attributes.name);
+
+          if(this.media) {
+            this.media.forEach(function(model) {
+              media.push(model.templateVars());
+            });
+          }
+
+          return this.getContext({
+            media: media
+          , page: this.page.attributes
+          });
         }
       });
 
-  module.exports = ShowView;
+  module.exports = IndexView;
 }());

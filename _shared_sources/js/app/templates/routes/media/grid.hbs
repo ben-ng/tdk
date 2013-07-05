@@ -1,0 +1,19 @@
+<ul class="reelgrid">
+{{#each media}}
+  <li>
+    <div class="relfix">
+      <a href="{{playerUrl}}" class="app">
+        <img src="{{thumbnailUrl}}" alt="{{name}}" />
+        {{#if editHref}}
+          <p class="absfix">
+            <a href="{{editHref}}" class="app btn btn-mini btn-info">Edit</a>
+          </p>
+        {{/if}}
+        <div class="captions">
+          <h2>{{name}}</h2>
+        </div>
+      </a>
+    </div>
+  </li>
+{{/each}}
+</ul>
