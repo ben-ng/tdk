@@ -1,5 +1,5 @@
 (function () {
-  var Backbone = require('../helpers/CorsBackbone.js')
+  var Backbone = require('../helpers/BackboneLoader.js')
     , BaseModel = Backbone.Model.extend({
         initialize: function(attributes, opts) {
           this.set(attributes);

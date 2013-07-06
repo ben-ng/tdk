@@ -228,7 +228,7 @@
       /**
       * Helper function for templating
       */
-      , templateVars: function () {
+      , templateVars: function (safePageName) {
         var attrs = _.clone(this.attributes);
 
         if(attrs.s3key) {
@@ -252,6 +252,14 @@
         attrs.attribs = _.map(attrs.attribs, function (attrib) {
           return attrib.replace(/^(.*:)/, '<strong>$1</strong>');
         });
+
+        if(this.app.isLoggedIn()) {
+          attrs.editHref = '/media/'+attrs.type+'/'+attrs.id+'/edit';
+        }
+
+        if(safePageName) {
+          attrs.playerUrl = 'page/'+safePageName+'/'+attrs.type+'/'+attrs.id;
+        }
 
         return attrs;
       }

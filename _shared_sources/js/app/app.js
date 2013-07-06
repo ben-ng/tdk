@@ -1,9 +1,9 @@
 (function () {
 var _ = require('lodash')
-  , $ = require('jquery-browserify')
+  , $ = require('./helpers/JqueryLoader')
   , path = require('path')
-  , Backbone = require('./helpers/CorsBackbone.js')
-  , Messenger = require('./helpers/messenger.js')
+  , Backbone = require('./helpers/BackboneLoader.js')
+  , Messenger = require('./helpers/lib/messenger.js')
 
   /* Database Stuff */
   , db = require('./helpers/db')
@@ -17,6 +17,7 @@ var _ = require('lodash')
     , 'page/:name': require('./routes/pages/show')
     , 'page/:name/addMedia': require('./routes/media/add')
     , 'review': require('./routes/review')
+    , 'page/:name/:type/:id': require('./routes/media/show')
     , 'media/:type/:id/edit': require('./routes/media/edit')
     }
   , App = Backbone.Router.extend({

@@ -1,0 +1,22 @@
+<div class="sliderWrap">
+  <ul class="carousel elastislide-list">
+  {{#each media}}
+    <li>
+      <div class="relfix">
+        <a href="{{playerUrl}}" class="app">
+          <img src="{{thumbnailUrl}}" alt="{{name}}" />
+        </a>
+        {{#if editHref}}
+          <p class="absfix">
+            <a href="{{editHref}}" class="app btn btn-micro btn-info">Edit</a>
+          </p>
+        {{/if}}
+      </div>
+    </li>
+  {{/each}}
+  </ul>
+</div>
+<div class="controls clearfix centered">
+  <a href="#" class="carouselControl bigClose pull-left">&times;</a>
+  <a href="#" class="carouselControl reelToggle"><span class="symbol">&and;</span><br /><small>Reel</small></a>
+</div>

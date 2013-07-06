@@ -1,0 +1,26 @@
+<div id="carouselWrapper">
+</div>
+<div id="content" class="container">
+  <div class="row">
+    <div id="preview" class="span12 centered previewPadding">
+    {{#with media}}
+      {{#if isVideo}}
+        <video id="media_video" class="video-js vjs-default-skin"
+        controls preload="auto" width="auto" height="auto">
+        <source src="{{url}}" type='video/mp4' />
+        </video>
+      {{else}}
+        <img id="media_image" class="pickerHolder img-polaroid" alt="{{name}}" src="{{url}}" />
+      {{/if}}
+      <div class="media_meta">
+        <h4>{{name}}</h4>
+        <ul>
+        {{#each attribs}}
+          <li>{{{this}}}</li>
+        {{/each}}
+        </ul>
+      </div>
+    {{/with}}
+    </div>
+  </div>
+</div>

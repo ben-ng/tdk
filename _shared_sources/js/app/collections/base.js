@@ -1,5 +1,5 @@
 (function () {
-  var Backbone = require('../helpers/CorsBackbone.js')
+  var Backbone = require('../helpers/BackboneLoader.js')
     , Collection = Backbone.Collection.extend({
         initialize: function(models, opts) {
           this.set(models);

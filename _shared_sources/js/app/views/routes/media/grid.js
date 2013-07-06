@@ -38,7 +38,7 @@
 
           if(this.media) {
             this.media.forEach(function(model) {
-              media.push(model.templateVars());
+              media.push(model.templateVars(safeName));
             });
           }
 
