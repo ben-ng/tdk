@@ -1,5 +1,6 @@
 (function () {
   var View = require('../../base')
+    , Holder = require('../../../helpers/lib/holder.js')
     , CarouselView = View.extend({
         template: require('../../../templates/routes/media/carousel.hbs')
       , events: {
@@ -45,7 +46,7 @@
 
           if(this.media) {
             this.media.forEach(function(model) {
-              media.push(model.templateVars(safeName));
+              media.push(model.templateVars(safeName, true));
             });
           }
 
@@ -63,7 +64,7 @@
             this.toggleReel(null,false);
           }
 
-          //Holder.run();
+          Holder.run();
         }
 
       , advance: function (lastMedia) {

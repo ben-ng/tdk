@@ -1,5 +1,6 @@
 (function () {
   var View = require('../../base')
+    , Holder = require('../../../helpers/lib/holder.js')
     , IndexView = View.extend({
         template: require('../../../templates/routes/media/grid.hbs')
       , initialize: function (options) {
@@ -46,6 +47,9 @@
             media: media
           , page: this.page.attributes
           });
+        }
+      , afterRender: function () {
+          Holder.run();
         }
       });
 

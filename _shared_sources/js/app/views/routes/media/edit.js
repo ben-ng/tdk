@@ -1,5 +1,6 @@
 (function () {
   var View = require('../../base')
+    , _ = require('lodash')
     , NavbarView = require('../../layout/navbar.js')
     , FooterView = require('../../layout/footer.js')
     , ThumbView = require('../../routes/media/thumb.js')
@@ -43,6 +44,16 @@
         this.eachSubview(function (subview) {
           subview.render();
         });
+
+        //Pretty stupid, but the tags plugin won't work until the thing
+        //is actually on the DOM... so we have to defer here
+        _.defer(function () {
+          // Wipe out all previous instances
+          this.$('div.tagsinput').remove();
+
+          // Enhance
+          this.$("input[name=attribs]").tagsInput();
+        }, this);
       }
       , context: function () {
           return this.getContext({

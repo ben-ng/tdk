@@ -99,7 +99,7 @@
               , itemsToGo = FPFiles.length
 
               //Called after all files have been saved
-              , afterItemCompete = function(new_id, new_name, type, after_save_cb) {
+              , afterItemComplete = function(new_id, new_name, type, after_save_cb) {
                   newItems.push({ID:new_id,NAME:new_name,TYPE:type,THUMB:"http://placehold.it/320x180"});
                   itemsToGo--;
                   if(itemsToGo===0) {
@@ -107,6 +107,7 @@
                     self.save(null,{
                       success:function() {
                         self.app.db.fetchCollection('unprocessedUploads').fetch();
+                        self.app.db.fetchCollection('pages').fetch();
                         after_save_cb();
                         cb(null, FPFiles);
                       },
@@ -161,7 +162,7 @@
                     }
 
                     //Call the completion function
-                    afterItemCompete(savedModel.attributes.id, savedModel.attributes.name, type, after_cb);
+                    afterItemComplete(savedModel.attributes.id, savedModel.attributes.name, type, after_cb);
                   },
                   error: self.app.error
                 });

@@ -228,14 +228,16 @@
       /**
       * Helper function for templating
       */
-      , templateVars: function (safePageName) {
+      , templateVars: function (safePageName, halfSizeThumbnails) {
         var attrs = _.clone(this.attributes);
+
+        halfSizeThumbnails = (halfSizeThumbnails===true);
 
         if(attrs.s3key) {
           attrs.url = self.app.config.s3prefix + attrs.s3key;
         }
         else {
-          attrs.thumbnailUrl = self.app.util.placeholderThumbnail();
+          attrs.thumbnailUrl = self.app.util.placeholderThumbnail(halfSizeThumbnails);
         }
 
         if(attrs.thumbnailS3key) {
@@ -243,7 +245,7 @@
         }
         else {
           //Halfsized with the true option
-          attrs.thumbnailUrl = self.app.util.placeholderThumbnail();
+          attrs.thumbnailUrl = self.app.util.placeholderThumbnail(halfSizeThumbnails);
         }
 
         attrs.isImage = attrs.type === 'image';
