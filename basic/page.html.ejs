@@ -1,0 +1,41 @@
+<% include head.html.ejs %>
+      <!-- Jumbotron -->
+      <div class="jumbotron small">
+        <h1 id="reel_heading" data-reelid="<%= reel.id %>"><%= reel.name %></h1>
+      </div>
+      <!-- Thumbnails -->
+      <ul id="reelThumbList" class="thumbnails connectedSortable">
+        <%
+        if(items!==undefined && items!==null) {
+          for(var i=0; i<items.length; i++) { 
+            if(items[i].type == 'video') {
+          %>
+              <li data-id="<%= items[i].item.id %>" data-name="<%= items[i].item.name %>" data-thumb="<%= items[i].item.thumb %>">
+                <a href="<%= baseURL %>/<%=items[i].item.sitekey%>" class="fancybox" data-fancybox-type="iframe"
+                <% if(items[i].item.isHighDefinition) { -%>
+                  data-fancybox-width="<%= items[i].item.highWidth%>" data-fancybox-height="<%= items[i].item.highHeight%>"
+                <% } else { -%>
+                  data-fancybox-width="<%= items[i].item.lowWidth%>" data-fancybox-height="<%= items[i].item.lowHeight%>"
+                <% } -%>
+                >
+                  <img src="<%= items[i].item.getMediaURLs().thumbnail %>" alt="<%= items[i].item.name %>" class="thumbnail">
+                </a>
+              </li>
+          <%
+            }//End video rendering
+            //Image rendering
+            else {
+              %>
+              <li data-id="<%= items[i].item.id %>" data-name="<%= items[i].item.name %>" data-thumb="<%= items[i].item.thumb %>">
+                <a href="<%=items[i].item.getMediaURLs().original%>" class="fancybox" data-fancybox-type="image"
+                >
+                  <img src="<%= items[i].item.getMediaURLs().thumbnail %>" alt="<%= items[i].item.name %>" class="thumbnail">
+                </a>
+              </li>
+              <%
+            }
+          }
+        }
+        %>
+      </ul>
+<% include foot.html.ejs %>
