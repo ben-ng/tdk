@@ -18,6 +18,7 @@
           var pages = this.app.db.fetchCollection('pages');
 
           this.listenTo(this.page, 'change', this.render, this);
+          this.listenTo(this.app,'videoEnded',this.advance,this);
 
           // First make sure we can load the pages collection
           pages.once('ready', function () {
@@ -76,11 +77,12 @@
             , safeName = encodeURIComponent(self.page.attributes.name)
             , i
             , ii
-            , curModel;
+            , curModel
+            , media = this.page.getMedia();
 
-          if(this.page && this.page.media) {
-            for(i=0, ii=this.page.media.models.length; i<ii; i++) {
-              curModel = this.page.media.models[i];
+          if(this.page && media) {
+            for(i=0, ii=media.models.length; i<ii; i++) {
+              curModel = media.models[i];
 
               if(lastMedia.id === curModel.id) {
                 lastElementWasMatch = true;
@@ -93,10 +95,10 @@
             }
 
             if(matchedElement) {
-              playerUrl = matchedElement.templateVars().playerUrl;
+              playerUrl = matchedElement.templateVars(safeName).playerUrl;
 
               setTimeout(function () {
-                self.navigate(playerUrl, {trigger:true});
+                self.app.navigate(playerUrl, {trigger:true});
               }, 1000);
             }
           }

@@ -1,6 +1,8 @@
 (function () {
   var View = require('../../base')
+    , _ = require('lodash')
     , CarouselView = require('./carousel')
+    , vjs = require('../../../helpers/lib/video')
     , ShowView = View.extend({
         template: require('../../../templates/routes/media/show.hbs')
       , events: {
@@ -38,10 +40,38 @@
           }, this);
         }
       , afterRender: function () {
-        var carouselView = new CarouselView({
-          app:this.app
-        , pageName:this.pageName
-        });
+        var self = this
+          , carouselView = new CarouselView({
+              app:this.app
+            , pageName:this.pageName
+            })
+          , waitFor = 2
+          , afterVideoLoad = function(e) {
+              waitFor--;
+
+              //Metadata Loaded Callback
+              if(e) {
+                videoDims = {height:this.videoHeight, width:this.videoWidth};
+              }
+
+              if(waitFor === 0) {
+                //Limit to 960x540
+                if(videoDims.width>960) {
+                  videoDims.height = videoDims.height * (960 / videoDims.width);
+                  videoDims.width = 960;
+                }
+
+                player = vjs(self.app.config.videoPlayerId);
+                player.width(videoDims.width);
+                player.height(videoDims.height);
+                player.on("ended",function () {
+                  self.app.trigger("videoEnded",self.media);
+                });
+                setTimeout(function () {
+                  player.play();
+                }, 1000);
+              }
+            };
 
         this.appendSubview(carouselView, this.$('#carouselWrapper'));
 
@@ -49,6 +79,16 @@
         this.eachSubview(function (subview) {
           subview.render();
         });
+
+        //Activate VJS
+        if(this.media.attributes.type === 'video') {
+          _.defer(function () {
+            //Reset players object, otherwise it won't be initialized properly by VJS
+            vjs.players = {};
+            vjs(this.app.config.videoPlayerId,{preload:true},afterVideoLoad);
+            this.$("video").on('loadedmetadata', afterVideoLoad);
+          }, this);
+        }
       }
       , context: function () {
           return this.getContext({
