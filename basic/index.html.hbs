@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{sitetitle}}</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+    <script>
+      // Bootstrapped vars get mixed into app.bootstrap on app start
+      window.bootstrap = {
+        userVars: JSON.parse(decodeURIComponent("{{userVars}}")),
+        debug: false
+      };
+      filepicker.setKey('{{fpkey}}');
+    </script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
