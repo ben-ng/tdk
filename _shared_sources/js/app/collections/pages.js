@@ -4,7 +4,9 @@
     , _ = require('lodash')
     , Pages = Collection.extend({
         name:'page'
-      , url: function () { return this.app.config.baseUrl+'/pages.json'; }
+      , url: function () {
+          return this.app.config.baseUrl+'/pages.json?userId='+this.app.bootstrap.userId;
+        }
       , initialize: function(models, opts) {
           this.set(models);
           this.app = opts.app || {};
