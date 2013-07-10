@@ -87,7 +87,10 @@
             isPublished:isPublished
           }, {
             success:function() {
+
+              // Don't forget to re-fetch the pages collection!
               self.app.db.fetchCollection('pages').fetch();
+
               self.app.setFlash('success', 'Page Saved!');
             },
             error: self.app.error

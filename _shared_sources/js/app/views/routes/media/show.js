@@ -18,6 +18,14 @@
           this.page = this.app.db.fetchModel('page', options.mediaId);
           this.media = this.app.db.fetchModel(options.mediaType, options.mediaId);
 
+          // Re-fetch if not fresh
+          if(this.page.id) {
+            this.page.fetch();
+          }
+          if(this.media.id) {
+            this.media.fetch();
+          }
+
           this.listenTo(this.app.getUser(), 'change', this.render, this);
           this.listenTo(this.page, 'change', this.render, this);
           this.listenTo(this.media, 'change', this.render, this);

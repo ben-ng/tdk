@@ -29,6 +29,9 @@
 
             this.media = this.page.getMedia();
 
+            // Re-fetch, things might have been updated.
+            this.media.fetch();
+
             this.listenTo(this.media, 'change add remove sort', this.render, this);
             this.media.once('ready', this.render, this);
           }, this);

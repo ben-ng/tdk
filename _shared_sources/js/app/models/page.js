@@ -108,7 +108,9 @@
                       success:function() {
                         self.app.db.fetchCollection('unprocessedUploads').fetch();
                         self.app.db.fetchCollection('pages').fetch();
+
                         after_save_cb();
+
                         cb(null, FPFiles);
                       },
                       error: cb
