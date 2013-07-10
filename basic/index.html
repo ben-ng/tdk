@@ -10,7 +10,7 @@
     <script>
       // Bootstrapped vars get mixed into app.bootstrap on app start
       window.bootstrap = {
-        userVars: JSON.parse(decodeURIComponent("{{userVars}}")),
+        userVars: JSON.parse(decodeURIComponent("{{userVarsSerialized}}")),
         debug: false
       };
       filepicker.setKey('{{fpkey}}');
