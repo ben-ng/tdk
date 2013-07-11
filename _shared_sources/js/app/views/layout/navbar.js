@@ -29,6 +29,11 @@
 
           //Load page attrs etc
           this.pages.forEach(function(model) {
+            if(!this.app.isLoggedIn() && !model.attributes.isPublished) {
+              // Don't show pages that aren't published to logged out users
+              return;
+            }
+
             var safename = encodeURIComponent(model.attributes.name)
               , attrs = _.extend(_.clone(model.attributes), {
                   href: '/page/'+safename,
@@ -47,7 +52,7 @@
               addMediaHref = attrs.addHref;
             }
             modelAttrs.push(attrs);
-          });
+          }, this);
 
           //Mixin our template vars
           return this.getContext({
