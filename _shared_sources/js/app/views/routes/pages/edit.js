@@ -3,8 +3,11 @@
     , Holder = require('../../../helpers/lib/holder.js')
     , NavbarView = require('../../layout/navbar.js')
     , FooterView = require('../../layout/footer.js')
-    , ShowView = View.extend({
+    , EditView = View.extend({
         template: require('../../../templates/routes/pages/edit.hbs')
+      , events: {
+          'submit': 'performSave'
+        }
       , initialize: function (options) {
           this.app = options.app;
           this.page = this.app.db.createModel('page').set({
@@ -152,5 +155,5 @@
         }
       });
 
-  module.exports = ShowView;
+  module.exports = EditView;
 }());
