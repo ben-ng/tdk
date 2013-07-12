@@ -10,12 +10,12 @@ var browserify    = require('browserify')
   , compressor    = require('node-minify')
   , less          = require('less')
   , server        = require('node-static')
-  
+
   /* Logging convenience functions */
   , error         = clicolor.red.bold
   , success       = clicolor.green
   , info          = clicolor.blue
-  
+
   /* Paths */
   , src           = path.relative(__dirname, '_shared_sources')
   , build         = path.relative(__dirname, '_shared')
@@ -23,7 +23,7 @@ var browserify    = require('browserify')
   , buildLess     = path.join(build, 'css')
   , buildJsFile   = path.join(build, 'js', 'scripts.js')
   , buildLessFile = path.join(build, 'css', 'styles.css')
-  
+
   /* Test stuff */
   , testSrc       = path.relative(__dirname, '_test_sources')
   , testBuild     = path.relative(__dirname, '_test')
@@ -33,11 +33,11 @@ var browserify    = require('browserify')
   , testLessFile  = path.join(testBuild, 'styles.css')
   , qunitSelected = path.join(testSrc, 'qunit', process.env.phantomjs ? 'qunit.phantomjs.js' : (process.env.browserling ? 'qunit.testling.js' : 'qunit.unbridged.js'))
   , qunitBridge   = path.join(testSrc, 'qunit', 'qunit.selected.js')
-  
+
   /* Handle test tasks */
   , tests         = process.env.tests ? true : false
   , lessFile      = tests ? testLessFile : buildLessFile
-  
+
   /* LESS/CSS files, in order, relative to source dir */
   , lessFiles     = [
                       "css/video-js.css"
@@ -69,7 +69,7 @@ if(tests) {
 
 desc('Watches the source dir and recompiles on change, serves theme on localhost:8080');
 task('default', function () {
-  
+
   var timeout
     , delay = 500
     , task = jake.Task.compile
@@ -81,33 +81,33 @@ task('default', function () {
     , clients = []
     , recompile = function () {
         clearTimeout(timeout);
-        
+
         timeout = setTimeout( function () {
           clearTimeout(timeout);
           task.reenable(true);
           task.invoke();
         }, delay);
       };
-  
+
   wss.on('connection', function(ws) {
     clients.push(ws);
     console.log(info(' A client connected to the testing server'));
-    
+
     ws.on('message', function(message) {
         console.log(info(' Client message: ' + message));
     });
   });
-  
+
   task.addListener('complete', function () {
     var clientsLeft = [];
-    
+
     console.log(success('Compiled at ' + (new Date)));
-    
+
     if(!serverStarted) {
       serverStarted = true;
-      
+
       fileServer = new server.Server(tests ? testBuild : build, {cache: 1});
-      
+
       require('http').createServer(function (request, response) {
         request.addListener('end', function () {
           fileServer.serve(request, response, function (err) {
@@ -117,10 +117,10 @@ task('default', function () {
           });
         }).resume();
       }).listen(8080);
-      
+
       console.log(success('Server running on localhost:8080'));
     }
-    
+
     /* Notify clients */
     _.each(clients, function (ws, index) {
       try {
@@ -131,18 +131,18 @@ task('default', function () {
         console.log(info(' A client disconnected from the testing server'));
       }
     });
-    
+
     clients = clientsLeft;
   });
-  
+
   utils.file.watch(src, recompile);
   utils.file.watch(testScripts, recompile);
-  
+
   console.log(info('Watching ' + src + ' for changes'));
   if(tests) {
     console.log(info('Watching ' + testScripts + ' for changes'));
   }
-  
+
   recompile();
 });
 
@@ -180,12 +180,12 @@ task('resources', [lessFile], function () {
                       , 'apple-touch-icon-precomposed.png'
                       ]
     , testCopy =      ['index.html'];
-  
+
   if(tests) {
     _.each(toCopyForTest, function (file) {
       utils.file.cpR(path.join(src,file), path.join(testBuild,file), {silent:true});
     });
-    
+
     _.each(testCopy, function (file) {
       utils.file.cpR(path.join(testSrc,file), path.join(testBuild,file), {silent:true});
     });
@@ -211,21 +211,21 @@ file(lessFile, lessFiles, {async:true}, function () {
         paths: [path.join(src,'less')]  // Specify search paths for @import directives
       , filename: 'styles.css'          // Specify a filename, for better error messages
       });
-  
+
   _.each(lessFiles, function (file) {
     readFile(file);
   });
-  
+
   async.parallel(fileReaders, function(err, pieces) {
     if(err) {
       console.log(error(' Could not concat LESS: ' + err));
       complete();
     }
     else {
-      
+
       parser.parse(Buffer.concat(pieces).toString(), function (err, tree) {
         var css = tree.toCSS();
-        
+
         if(err) {
           console.log(error(' Could not compile LESS: ' + err));
           complete();
@@ -278,7 +278,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
         return 'var Handlebars = require(\'handlebars\');\nmodule.exports = ' + precompile(body) + ';';
       }
     , target = tests ? testJsFile : buildJsFile;
-  
+
   bundle = browserify();
   bundle.transform(require('hbsfy'));
   bundle.transform(envify({
@@ -286,9 +286,9 @@ task('browserify', ['selectQunit'], {async:true}, function () {
   , STAGING_PASS: process.env.STAGING_PASS
   , CI: process.env.CI
   }));
-  
+
   bundle.require('jquery-browserify');
-  
+
   if(tests) {
     if(process.env.testling) {
       bundle.add('./'+path.join(testSrc, 'scripts', 'index.testling.js'));
@@ -300,7 +300,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
   else {
     bundle.add('./'+path.join(src, 'js', 'app', 'index.js'));
   }
-  
+
   bundle.bundle({debug: true}, function (err, src) {
     if(err) {
       console.log(' Could not browserify: ' + error(err));
@@ -308,10 +308,10 @@ task('browserify', ['selectQunit'], {async:true}, function () {
     }
     else {
       fs.writeFileSync(target, src);
-      
+
       if(process.env.minify) {
         new compressor.minify({
-            type: 'yui-js',
+            type: 'uglifyjs',
             fileIn: target,
             fileOut: target,
             callback: function(err) {
