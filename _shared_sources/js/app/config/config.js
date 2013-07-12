@@ -9,7 +9,7 @@
     config.baseUrl = "http://localdev.toolkitt.com:4000";
   }
   else {
-    config.baseUrl = 'http://toolkitt.com';
+    config.baseUrl = 'http://www.toolkitt.com';
   }
 
   config.videoExts = ['.mp4', '.m4v', '.f4v', '.webm', '.ogv','.flv','.mov'];
