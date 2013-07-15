@@ -311,7 +311,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
 
       if(process.env.minify) {
         new compressor.minify({
-            type: 'uglifyjs',
+            type: 'yui-js',
             fileIn: target,
             fileOut: target,
             callback: function(err) {
