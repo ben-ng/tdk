@@ -1,5 +1,4 @@
 *.DS_Store
-_shared
 _test
 _shared_sources/js/app_old
 _shared_sources/js/lib

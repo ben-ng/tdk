@@ -48,3 +48,6 @@ $ jake compile
 
 $ jake compile tests=true
 ```
+
+## Before Commits
+Run `jake compile minify=true environment=production` to update the _shared folder.
