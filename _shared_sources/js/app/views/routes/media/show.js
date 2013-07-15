@@ -54,7 +54,7 @@
               app:this.app
             , pageName:this.pageName
             })
-          , afterVideoLoad = function (e) {
+          , afterVideoLoad = function (e, player) {
               player.on("ended",function () {
                 self.app.trigger("videoEnded",self.media);
               });
