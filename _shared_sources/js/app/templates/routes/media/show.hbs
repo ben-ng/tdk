@@ -5,10 +5,7 @@
     <div id="preview" class="span12 centered previewPadding">
     {{#with media}}
       {{#if isVideo}}
-        <video id="media_video" class="video-js vjs-default-skin"
-        controls preload="auto" width="auto" height="auto">
-        <source src="{{url}}" type='video/mp4' />
-        </video>
+        <div id="vid_placeholder" />
       {{else}}
         <img id="media_image" class="pickerHolder img-polaroid" alt="{{name}}" src="{{url}}" />
       {{/if}}

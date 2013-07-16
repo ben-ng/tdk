@@ -50,14 +50,20 @@
         }
       , afterRender: function () {
         var self = this
+          , mediaTemplateVars = this.media.templateVars()
           , carouselView = new CarouselView({
               app:this.app
             , pageName:this.pageName
             })
-          , afterVideoLoad = function (e, player) {
-              player.on("ended",function () {
-                self.app.trigger("videoEnded",self.media);
-              });
+          , afterVideoLoad = function (err, player) {
+              if(err) {
+                self.app.error(err);
+              }
+              else {
+                player.on("ended",function () {
+                  self.app.trigger("videoEnded",self.media);
+                });
+              }
             };
 
         this.appendSubview(carouselView, this.$('#carouselWrapper'));
@@ -70,10 +76,14 @@
         //Activate VJS
         if(this.media.attributes.type === 'video') {
           _.defer(function () {
-            jst.loadVideo(this.$('video')[0]
+            jst.loadVideo(this.$('#vid_placeholder')[0]
               , {
                   autoplay: true
                 , resize: true
+                , sources: [
+                    src: mediaTemplateVars.url
+                  , type: this.app.util.mime(this.media.attributes.mimeType)
+                  ]
                 }
               , afterVideoLoad);
           }, this);
@@ -81,7 +91,7 @@
       }
       , context: function () {
           return this.getContext({
-            media: this.media.templateVars()
+            media: mediaTemplateVars
           });
         }
       });
