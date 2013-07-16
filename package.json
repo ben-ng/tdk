@@ -34,7 +34,8 @@
     "qunit-tap": "1.3.x",
     "uglifyify": "0.0.x",
     "envify": "0.0.x",
-    "js-thumb": "0.0.x"
+    "js-thumb": "0.0.x",
+    "videojs": "0.0.x"
   },
   "devDependencies": {
     "qunit": "~0.5.15",

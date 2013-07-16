@@ -3,7 +3,7 @@
     , _ = require('lodash')
     , jst = require('js-thumb')
     , CarouselView = require('./carousel')
-    , vjs = require('../../../helpers/lib/video')
+    , vjs = require('videojs')
     , ShowView = View.extend({
         template: require('../../../templates/routes/media/show.hbs')
       , events: {
@@ -70,9 +70,6 @@
         //Activate VJS
         if(this.media.attributes.type === 'video') {
           _.defer(function () {
-            // Inject vjs
-            jst._videoJs = vjs;
-
             jst.loadVideo(this.$('video')[0]
               , {
                   autoplay: true
