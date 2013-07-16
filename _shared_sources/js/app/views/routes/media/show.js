@@ -81,8 +81,10 @@
                   autoplay: true
                 , resize: true
                 , sources: [
-                    src: mediaTemplateVars.url
-                  , type: this.app.util.mime(this.media.attributes.mimeType)
+                    {
+                      src: mediaTemplateVars.url
+                    , type: this.app.util.mime(this.media.attributes.mimeType)
+                    }
                   ]
                 }
               , afterVideoLoad);
