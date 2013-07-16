@@ -55,7 +55,7 @@
               app:this.app
             , pageName:this.pageName
             })
-          , afterVideoLoad = function (err, player) {
+          , afterVideoLoad = function (err, elem, player) {
               if(err) {
                 self.app.error(err);
               }
