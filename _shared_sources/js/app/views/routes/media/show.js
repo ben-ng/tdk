@@ -83,7 +83,7 @@
                 , sources: [
                     {
                       src: mediaTemplateVars.url
-                    , type: this.app.util.mime(this.media.attributes.mimeType)
+                    , type: self.app.util.mime(self.media.attributes.mimeType)
                     }
                   ]
                 }
