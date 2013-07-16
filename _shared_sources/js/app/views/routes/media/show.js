@@ -70,6 +70,9 @@
         //Activate VJS
         if(this.media.attributes.type === 'video') {
           _.defer(function () {
+            // Inject vjs
+            jst._videoJs = vjs;
+
             jst.loadVideo(this.$('video')[0]
               , {
                   autoplay: true
