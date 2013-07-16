@@ -93,7 +93,7 @@
       }
       , context: function () {
           return this.getContext({
-            media: mediaTemplateVars
+            media: this.media.templateVars()
           });
         }
       });
