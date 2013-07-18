@@ -272,13 +272,15 @@ file(lessFile, lessFiles, {async:true}, function () {
 
 desc('Browserifies the JS into _shared');
 task('browserify', ['selectQunit'], {async:true}, function () {
-  var bundle
+  var handle
+    , bundle
     , precompile = require('handlebars').precompile
     , handlebarsPlugin = function (body, file) {
         return 'var Handlebars = require(\'handlebars\');\nmodule.exports = ' + precompile(body) + ';';
       }
     , target = tests ? testJsFile : buildJsFile
-    , finalTarget = target;
+    , finalTarget = target
+    , targetMap =  finalTarget + '.map';
 
   if(process.env.minify) {
     // A temp file for minification
@@ -320,14 +322,21 @@ task('browserify', ['selectQunit'], {async:true}, function () {
             type: 'gcc'
           , fileIn: target
           , fileOut: finalTarget
-          , options: ['--create_source_map="' + finalTarget + '.map"']
+          , options: ['--create_source_map="' + targetMap + '"']
           , callback: function(err) {
               if(err) {
                 console.log(error(' Could not compress JS: ' + err));
                 complete();
               }
               else {
+
+                // remove temp file
                 fs.unlinkSync(target);
+
+                // Add source mapping URL
+                handle = fs.createWriteStream(finalTarget, {flags: 'a'});
+                handle.end('/*\n//@ sourceMappingURL='+targetMap+'\n*/');
+
                 console.log(success(' '+(tests?'Tests':'Script')+' Browserified + Minified'));
                 complete();
               }
