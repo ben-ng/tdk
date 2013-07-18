@@ -336,7 +336,9 @@ task('browserify', ['selectQunit'], {async:true}, function () {
 
                 // Add source mapping URL
                 handle = fs.createWriteStream(finalTarget, {flags: 'a'});
-                handle.end('\n//# sourceMappingURL='+targetMapUrl+'\n');
+
+                // FIXME: Go back to //# when support is better..
+                handle.end('/*\n//@ sourceMappingURL='+targetMapUrl+'\n*/');
 
                 console.log(success(' '+(tests?'Tests':'Script')+' Browserified + Minified'));
                 complete();
