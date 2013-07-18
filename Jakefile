@@ -331,8 +331,10 @@ task('browserify', ['selectQunit'], {async:true}, function () {
               }
               else {
 
-                // remove temp file
-                // fs.unlinkSync(target);
+                // FIXME: rename temp file to the stupid path sourcemaps expects it to be at
+                fs.mkdirSync(path.join(buildJs, '_shared'));
+                fs.mkdirSync(path.join(buildJs, '_shared', 'js'));
+                fs.renameSync(target, path.join(buildJs, target));
 
                 // Add source mapping URL
                 handle = fs.createWriteStream(finalTarget, {flags: 'a'});
