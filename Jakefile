@@ -280,7 +280,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
       }
     , target = tests ? testJsFile : buildJsFile
     , finalTarget = target
-    , targetMap =  finalTarget + '.map';
+    , targetMap =  'source.map';
 
   if(process.env.minify) {
     // A temp file for minification
@@ -335,7 +335,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
 
                 // Add source mapping URL
                 handle = fs.createWriteStream(finalTarget, {flags: 'a'});
-                handle.end('/*\n//# sourceMappingURL='+path.basename(targetMap)+'\n*/');
+                handle.end('\n//# sourceMappingURL=/js/'+targetMap+'\n');
 
                 console.log(success(' '+(tests?'Tests':'Script')+' Browserified + Minified'));
                 complete();
