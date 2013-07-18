@@ -19,7 +19,7 @@
         attribs: [],
         reviewIssue: null,
         status: 0,
-        type: 'unknown',
+        type: 'unknown'
       }
       , sync: function(method, model, options) {
         var self = this;

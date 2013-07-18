@@ -277,7 +277,13 @@ task('browserify', ['selectQunit'], {async:true}, function () {
     , handlebarsPlugin = function (body, file) {
         return 'var Handlebars = require(\'handlebars\');\nmodule.exports = ' + precompile(body) + ';';
       }
-    , target = tests ? testJsFile : buildJsFile;
+    , target = tests ? testJsFile : buildJsFile
+    , finalTarget = target;
+
+  if(process.env.minify) {
+    // A temp file for minification
+    target = target + '.out';
+  }
 
   bundle = browserify();
   bundle.transform(require('hbsfy'));
@@ -311,15 +317,17 @@ task('browserify', ['selectQunit'], {async:true}, function () {
 
       if(process.env.minify) {
         new compressor.minify({
-            type: 'yui-js',
-            fileIn: target,
-            fileOut: target,
-            callback: function(err) {
+            type: 'gcc'
+          , fileIn: target
+          , fileOut: finalTarget
+          , options: ['--create_source_map="' + finalTarget + '.map"']
+          , callback: function(err) {
               if(err) {
                 console.log(error(' Could not compress JS: ' + err));
                 complete();
               }
               else {
+                fs.unlinkSync(target);
                 console.log(success(' '+(tests?'Tests':'Script')+' Browserified + Minified'));
                 complete();
               }
