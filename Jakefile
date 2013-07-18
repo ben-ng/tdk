@@ -285,7 +285,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
 
   if(process.env.minify) {
     // A temp file for minification
-    target = target + '.out';
+    target = target.split('.')[0]+'.browserified.js';
   }
 
   bundle = browserify();
@@ -332,7 +332,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
               else {
 
                 // remove temp file
-                fs.unlinkSync(target);
+                // fs.unlinkSync(target);
 
                 // Add source mapping URL
                 handle = fs.createWriteStream(finalTarget, {flags: 'a'});
