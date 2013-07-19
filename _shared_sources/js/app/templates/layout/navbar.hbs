@@ -1,16 +1,26 @@
 <div class="centered-boxes">
   <ul id="mainnav" class="nav nav-boxes">
     {{#if isHome}}
-      <li><a href="/" class="current app">{{sitetitle.value}}</a></li>
+      <li><a href="/" class="current app boxed">{{sitetitle.value}}</a></li>
     {{else}}
-      <li><a href="/" class="app">{{sitetitle.value}}</a></li>
+      <li><a href="/" class="app boxed">{{sitetitle.value}}</a></li>
     {{/if}}
     {{#each pages}}
+      <li>
       {{#if active}}
-        <li><a href="{{href}}" class="current app">{{name}}</a></li>
+        <a href="{{href}}" class="current app boxed">{{name}}</a>
       {{else}}
-        <li><a href="{{href}}" class="app">{{name}}</a></li>
+        <a href="{{href}}" class="app boxed">{{name}}</a>
       {{/if}}
+      {{#if ../isLoggedIn}}
+        <br />
+        {{#if isPublished}}
+          <a href="{{editHref}}" class="app pageStatus">Public</a>
+        {{else}}
+          <a href="{{editHref}}" class="app pageStatus">Private</a>
+        {{/if}}
+      {{/if}}
+      </li>
     {{/each}}
   </ul>
 </div>
@@ -19,23 +29,23 @@
   <ul class="nav nav-boxes actionable">
     {{#if isPage}}
       {{#if isAddingMedia}}
-        <li><a href="{{addMediaHref}}" id="addMediaLink" class="current app">Add Media</a></li>
+        <li><a href="{{addMediaHref}}" id="addMediaLink" class="current app boxed">Add Media</a></li>
       {{else}}
-        <li><a href="{{addMediaHref}}" id="addMediaLink" class="app">Add Media</a></li>
+        <li><a href="{{addMediaHref}}" id="addMediaLink" class="app boxed">Add Media</a></li>
       {{/if}}
       {{#if isEditingPage}}
-        <li><a href="{{editPageHref}}" class="current app">Edit Page</a></li>
+        <li><a href="{{editPageHref}}" class="current app boxed">Edit Page</a></li>
       {{else}}
-        <li><a href="{{editPageHref}}" class="app">Edit Page</a></li>
+        <li><a href="{{editPageHref}}" class="app boxed">Edit Page</a></li>
       {{/if}}
     {{/if}}
     {{#if isCreatingPage}}
-      <li><a href="{{createHref}}" id="newPageLink" class="current app">New Page</a></li>
+      <li><a href="{{createHref}}" id="newPageLink" class="current app boxed">New Page</a></li>
     {{else}}
-      <li><a href="{{createHref}}" id="newPageLink" class="app">New Page</a></li>
+      <li><a href="{{createHref}}" id="newPageLink" class="app boxed">New Page</a></li>
     {{/if}}
     {{#if isReviewingUploads}}
-      <li><a href="{{reviewHref}}" class="current app">Review</a></li>
+      <li><a href="{{reviewHref}}" class="current app boxed">Review</a></li>
     {{/if}}
   </ul>
 </div>

@@ -34,7 +34,7 @@ img.flatIcon {
   * html .centered-boxes ul.nav-boxes { display:inline; } /* IE6 */
   *+html .centered-boxes ul.nav-boxes { display:inline; } /* IE7 */
 }
-ul.nav-boxes li a {
+ul.nav-boxes li a.boxed {
   color:#222;
   padding:10px;
   text-transform: uppercase;
@@ -44,14 +44,23 @@ ul.nav-boxes li a {
   -webkit-transition: 0.4s;
   -o-transition: 0.4s;
 }
-ul.nav-boxes li a:hover,
-ul.nav-boxes li a:active,
-ul.nav-boxes li a.current {
+ul.nav-boxes li a.boxed:hover,
+ul.nav-boxes li a.boxed:active,
+ul.nav-boxes li a.boxed.current {
   border:2px solid #222;
-  background-color: #fff;
+  background-color: transparent;
 }
-ul.nav-boxes.actionable li a {
-  color: @peter-river;
+ul.nav-boxes li a.pageStatus {
+  color: @asbestos;
+  float: none;
+  background-color: transparent;
+  font-size: 0.8em;
+  display: inline-block;
+}
+ul.nav-boxes li a.pageStatus:hover,
+ul.nav-boxes li a.pageStatus:active,
+ul.nav-boxes li a.pageStatus:current {
+  color: @belize-hole;
 }
 /* Utility class for padding profile pictures*/
 img.pull-left.padded { margin:0 20px 20px 0; }
