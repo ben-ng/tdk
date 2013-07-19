@@ -113,6 +113,9 @@
           if(proceed) {
             self.page.destroy({
               success:function() {
+                //Reload pages
+                self.app.db.fetchCollection('pages').fetch();
+
                 //Return to home
                 self.app.navigate('',{trigger:true});
               },
