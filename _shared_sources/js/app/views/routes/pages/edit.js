@@ -114,7 +114,7 @@
             self.page.destroy({
               success:function() {
                 //Reload pages
-                self.app.db.fetchCollection('pages').fetch();
+                self.app.db.fetchCollection('pages').remove(self.page);
 
                 //Return to home
                 self.app.navigate('',{trigger:true});
