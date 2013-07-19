@@ -7,6 +7,8 @@
         template: require('../../../templates/routes/pages/edit.hbs')
       , events: {
           'submit': 'performSave'
+        , 'click a.btn-danger':'performDelete'
+        , 'click a.app':'handleAppLink'
         }
       , initialize: function (options) {
           this.app = options.app;
