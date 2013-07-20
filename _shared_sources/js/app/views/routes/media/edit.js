@@ -53,6 +53,8 @@
 
           // Enhance
           this.$("input[name=attribs]").tagsInput();
+
+          this.$("label span").popover({placement:'right', trigger:'hover', html:true});
         }, this);
       }
       , context: function () {
