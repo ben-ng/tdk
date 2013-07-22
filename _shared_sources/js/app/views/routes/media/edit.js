@@ -56,6 +56,9 @@
 
           this.$("label span").popover({placement:'right', trigger:'hover', html:true});
         }, this);
+
+          this.$('#useOriginalButton').button('reset');
+          this.$('#useCaptureButton').button('reset');
       }
       , context: function () {
           return this.getContext({
@@ -131,6 +134,7 @@
           e.stopPropagation();
 
           this.app.trigger("captureThumbnail");
+          this.$('#useOriginalButton').button('loading');
         }
         //Tries to capture a frame from the video
       , performCapture: function(e) {
@@ -138,6 +142,7 @@
           e.stopPropagation();
 
           this.app.trigger("captureThumbnail");
+          this.$('#useCaptureButton').button('loading');
         }
       });
 

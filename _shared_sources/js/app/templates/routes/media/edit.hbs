@@ -32,10 +32,10 @@
           <div class="control-group">
             <div class="controls">
               {{#if isImage}}
-                <a id="useOriginalButton" href="#" class="btn btn-info crop">Use Original</a>
+                <a id="useOriginalButton" href="#" class="btn btn-info crop" data-loading-text="Processing...">Use Original</a>
               {{/if}}
               {{#if isVideo}}
-                <a id="useCaptureButton" href="#" class="btn btn-info capture">Use Current Frame</a>
+                <a id="useCaptureButton" href="#" class="btn btn-info capture" data-loading-text="Processing...">Use Current Frame</a>
               {{/if}}
               <a id="useCustomButton" href="#" class="btn btn-success upload">Upload Thumbnail</a>
             </div>
