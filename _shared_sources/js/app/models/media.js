@@ -21,6 +21,17 @@
         status: 0,
         type: 'unknown'
       }
+      , validate: function(attrs,options) {
+          var errors = [];
+
+          if(!attrs.name || attrs.name.length == 0) {
+            errors.push({attr:"name",message:"Media name cannot be empty"});
+          }
+
+          if(errors.length) {
+            return errors;
+          }
+        }
       , sync: function(method, model, options) {
         var self = this;
 

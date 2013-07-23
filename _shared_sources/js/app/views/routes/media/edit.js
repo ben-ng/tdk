@@ -23,6 +23,11 @@
 
           this.listenTo(this.app.getUser(), 'change', this.render, this);
           this.listenTo(this.media, 'change', this.render, this);
+
+          this.listenTo(this.media, 'invalid', function () {
+            this.app.error(this.media.validationError);
+          }, this);
+
           this.renderOnReady(this.media);
         }
       , afterRender: function () {

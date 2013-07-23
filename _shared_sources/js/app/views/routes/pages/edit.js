@@ -18,6 +18,9 @@
           var pages = this.app.db.fetchCollection('pages');
 
           this.listenTo(this.page, 'change', this.render, this);
+          this.listenTo(this.page, 'invalid', function () {
+            this.app.error(this.page.validationError);
+          }, this);
 
           // First make sure we can load the pages collection
           pages.once('ready', function () {
