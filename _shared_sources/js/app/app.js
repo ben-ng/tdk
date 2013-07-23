@@ -56,7 +56,7 @@ var _ = require('lodash')
           && this.getUser().attributes.token
           && this.getUser().id !== this.bootstrap.userId) {
             // Redirect to the logout page!
-            self.navigate('logout',{trigger:true});
+            this.navigate('logout',{trigger:true});
             this.setFlash('info', 'You have been logged out because this is not your portfolio.');
         }
       }, this);
