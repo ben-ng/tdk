@@ -6,7 +6,10 @@
       success:function() {
         // Re-fetch all the things
         self.db.fetchCollection('pages').fetch();
-        self.getCustomization().fetch();
+
+        if(self.getCustomization()) {
+          self.getCustomization().fetch();
+        }
 
         self.navigate('',{trigger:true});
       }
