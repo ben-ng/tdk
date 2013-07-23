@@ -50,26 +50,14 @@ var _ = require('lodash')
 
       /* Listen to user changes */
       this.listenTo(this.getUser(), 'change', function () {
-
         // If a userId is defined in the bootstrap, make sure
         // that this user matches up!
         if(this.bootstrap.userId
           && this.getUser().attributes.token
           && this.getUser().id !== this.bootstrap.userId) {
             // Redirect to the logout page!
-            this.setFlash('error', 'Sorry, you can\'t log in here!');
-
-            // Wipe it out!
-            this.getUser().set({
-              id: null
-            , username: null
-            , password: null
-            , token: false
-            , policy: null
-            , signature: null
-            , path: null
-            , customization: {}
-            });
+            self.navigate('logout',{trigger:true});
+            this.setFlash('info', 'You have been logged out because this is not your portfolio.');
         }
       }, this);
 
