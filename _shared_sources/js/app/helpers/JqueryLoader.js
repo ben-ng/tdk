@@ -9,6 +9,7 @@
   (require('./lib/bootstrap-button'))($, window);
   (require('./lib/bootstrap-tooltip'))($, window);
   (require('./lib/bootstrap-popover'))($, window);
+  (require('./lib/bootstrap-alert'))($, window);
 
   module.exports = $;
 }());

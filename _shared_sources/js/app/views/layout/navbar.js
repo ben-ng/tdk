@@ -72,6 +72,15 @@
             unprocessedPrompt:unprocessedPrompt
           });
         }
+      , afterRender: function () {
+          //Render all the subviews
+          this.eachSubview(function (subview) {
+            subview.render();
+          });
+
+          // Enable alert dismissal
+          this.$('.alert').alert();
+        }
       });
 
   module.exports = NavbarView;
