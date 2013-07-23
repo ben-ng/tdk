@@ -142,7 +142,7 @@ a.carouselControl:visited {
 }
 a.carouselControl:hover,
 a.carouselControl:active {
-  color: #FFF;
+  color: #000;
   transition: border 0.4s;
   -moz-transition: border 0.4s;
   -webkit-transition: border 0.4s;
@@ -155,13 +155,22 @@ a.carouselControl.reelToggle {
   line-height: 20px;
   font-size: 25px;
   width: 80px;
-  margin-left: -40px;
   -webkit-border-bottom-right-radius: 7px;
   -webkit-border-bottom-left-radius: 7px;
   -moz-border-radius-bottomright: 7px;
   -moz-border-radius-bottomleft: 7px;
   border-bottom-right-radius: 7px;
   border-bottom-left-radius: 7px;
+}
+.control-fix {
+  display: inline-block;
+  width: 200px;
+  margin: 0 0 0 40px;
+}
+// Pull them left because the close button pushes them right
+a.carouselControl.goLeft,
+a.carouselControl.goRight {
+  line-height: 20px;
 }
 a.carouselControl.reelToggle small {
   font-size: 10px;

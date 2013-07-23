@@ -1,5 +1,6 @@
 (function () {
   var View = require('../../base')
+    , Backbone = require('backbone')
     , Holder = require('../../../helpers/lib/holder.js')
     , CarouselView = View.extend({
         template: require('../../../templates/routes/media/carousel.hbs')
@@ -7,6 +8,8 @@
           'click a.bigClose':'exitPlayer'
         , 'click a.reelToggle':'toggleReel'
         , 'click a.app':'handleAppLink'
+        , 'click a.goLeft':'handleLeftButton'
+        , 'click a.goRight':'handleRightButton'
         }
         /* Tracks whether or not the reel is open */
       , reelOpen: null
@@ -57,18 +60,30 @@
           });
         }
       , afterRender: function () {
+          var currentMedia = this.currentMedia();
+
           //Activate carousel
           this.$('.carousel').elastislide();
 
           //Initial load
           if(this.reelOpen === null) {
-            this.toggleReel(null,false);
+            this.toggleReel(null,false, 0);
           }
 
           Holder.run();
+
+          //Selectively show arrows
+          if(currentMedia) {
+            if(this.advance(currentMedia, true)) {
+              this.$('a.goRight').removeClass('hidden');
+            }
+            if(this.reverse(currentMedia, true)) {
+              this.$('a.goLeft').removeClass('hidden');
+            }
+          }
         }
 
-      , advance: function (lastMedia) {
+      , advance: function (lastMedia, mock, delay) {
           //Find the media element after lastMedia
           var self = this
             , lastElementWasMatch = false
@@ -79,6 +94,10 @@
             , ii
             , curModel
             , media = this.page.getMedia();
+
+          if(delay == null) {
+            delay = 1000;
+          }
 
           if(this.page && media) {
             for(i=0, ii=media.models.length; i<ii; i++) {
@@ -97,15 +116,99 @@
             if(matchedElement) {
               playerUrl = matchedElement.templateVars(safeName).playerUrl;
 
-              setTimeout(function () {
-                self.app.navigate(playerUrl, {trigger:true});
-              }, 1000);
+              if(mock) {
+                return true;
+              }
+              else {
+                setTimeout(function () {
+                  self.app.navigate(playerUrl, {trigger:true});
+                }, delay);
+              }
             }
           }
+
+          return false;
         }
 
-      , toggleReel: function(e, toggle) {
+      , reverse: function (lastMedia, mock, delay) {
+          //Find the media element after lastMedia
+          var self = this
+            , lastElementWasMatch = false
+            , matchedElement = null
+            , playerUrl
+            , safeName = encodeURIComponent(self.page.attributes.name)
+            , i
+            , ii
+            , curModel
+            , media = this.page.getMedia();
+
+          if(delay == null) {
+            delay = 1000;
+          }
+
+          if(this.page && media) {
+            for(i=media.models.length-1, ii=0; i>=ii; i--) {
+              curModel = media.models[i];
+
+              if(lastMedia.id === curModel.id) {
+                lastElementWasMatch = true;
+                continue;
+              }
+              if(lastElementWasMatch) {
+                matchedElement = curModel;
+                break;
+              }
+            }
+
+            if(matchedElement) {
+              playerUrl = matchedElement.templateVars(safeName).playerUrl;
+
+              if(mock) {
+                return true;
+              }
+              else {
+                setTimeout(function () {
+                  self.app.navigate(playerUrl, {trigger:true});
+                }, delay);
+              }
+            }
+          }
+
+          return false;
+        }
+
+      , handleLeftButton: function (e) {
+          if(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+
+          this.reverse(this.currentMedia(), false, 0);
+        }
+
+      , handleRightButton: function (e) {
+          if(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+
+          this.advance(this.currentMedia(), false, 0);
+        }
+
+      , currentMedia: function () {
+          if(!this.media) {
+            return false;
+          }
+
+          return this.media.findWhere({id: Backbone.history.fragment.split('/').pop()});
+        }
+
+      , toggleReel: function (e, toggle, duration) {
           var self = this;
+
+          if(duration == null) {
+            duration = 400;
+          }
 
           if(e) {
             e.preventDefault();
@@ -118,11 +221,11 @@
 
           //Hide carousel?
           if(self.reelOpen) {
-            self.$('.sliderWrap').slideDown(400);
+            self.$('.sliderWrap').slideDown(duration);
             self.$('.symbol').html('&and;');
           }
           else {
-            self.$('.sliderWrap').slideUp(400);
+            self.$('.sliderWrap').slideUp(duration);
             self.$('.symbol').html('&or;');
           }
         }
