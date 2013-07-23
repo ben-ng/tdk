@@ -49,7 +49,9 @@
 
           self.model.save({
             userId:self.app.getUser().id,
-            name:name
+            name:name,
+            // Make last priority!
+            priority:self.app.db.fetchCollection('pages').length
           }, {
             success: function () {
               self.app.db.fetchCollection('pages').add(self.model);
