@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>{{userVars.sitetitle.value}}</title>
-    <link rel="stylesheet" href="css/styles.css?{{cachebust}}" />
+    <link rel="stylesheet" href="css/styles.css?cachebust={{cachebust}}" />
   </head>
   <body>
     <div id="app"></div>
@@ -16,6 +16,6 @@
       };
       filepicker.setKey('{{fpkey}}');
     </script>
-    <script src="js/scripts.js?{{cachebust}}"></script>
+    <script src="js/scripts.js?cachebust={{cachebust}}"></script>
   </body>
 </html>
