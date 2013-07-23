@@ -74,8 +74,8 @@
         });
 
         //Activate VJS
-        if(this.media && this.media.attributes && this.media.attributes.type === 'video') {
-          _.defer(function () {
+        _.defer(function () {
+          if(this.media && this.media.attributes && this.media.attributes.type === 'video') {
             jst.loadVideo(this.$('#vid_placeholder')[0]
               , {
                   vjs: {
@@ -94,8 +94,8 @@
                   ]
                 }
               , afterVideoLoad);
-          }, this);
-        }
+          }
+        }, this);
       }
       , context: function () {
           return this.getContext({
