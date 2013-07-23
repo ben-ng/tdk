@@ -5,7 +5,7 @@
     , Pages = Collection.extend({
         name:'page'
       , url: function () {
-          return this.app.config.baseUrl+'/pages.json?userId='+this.app.bootstrap.userId;
+          return this.app.config.baseUrl+'/pages.json'+(this.app.bootstrap.userId ? '?userId=' + this.app.bootstrap.userId : '');
         }
       , initialize: function(models, opts) {
           this.set(models);
@@ -20,6 +20,10 @@
         }
       , parse: function(data, options) {
           return _.isEmpty(data.pages) ? [] : data.pages;
+        }
+        // Sort by page priority, lowest first
+      , comparator: function (page) {
+          return page.get('priority');
         }
       });
 
