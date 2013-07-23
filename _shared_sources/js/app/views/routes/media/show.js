@@ -78,8 +78,14 @@
           _.defer(function () {
             jst.loadVideo(this.$('#vid_placeholder')[0]
               , {
-                  autoplay: true
-                , resize: true
+                  vjs: {
+                    autoplay: true
+                  }
+                  /*
+                , attributes: {
+                    resize: true
+                  }
+                  */
                 , sources: [
                     {
                       src: mediaTemplateVars.url
