@@ -10,30 +10,6 @@
 
           this.listenTo(this.user, 'change', this.render, this);
 
-          // Checks if the right user was logged in
-          this.listenTo(this.user, 'change', function () {
-            // If a userId is defined in the bootstrap, make sure
-            // that this user matches up!
-            if(this.app.bootstrap.userId
-              && this.user.attributes.token
-              && this.user.id !== this.app.bootstrap.userId) {
-                // Redirect to the logout page!
-                this.app.setFlash('error', 'Sorry, you can\'t log in here!');
-
-                // Wipe it out!
-                this.app.getUser().set({
-                  id: null
-                , username: null
-                , password: null
-                , token: false
-                , policy: null
-                , signature: null
-                , path: null
-                , customization: {}
-                });
-            }
-          }, this);
-
           this.renderOnReady(this.user);
         }
       , afterRender: function () {

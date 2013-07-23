@@ -48,6 +48,31 @@ var _ = require('lodash')
       /* Load messenger */
       this.messenger = new Messenger(null, this.config.s3prefix, 'thumbnailer');
 
+      /* Listen to user changes */
+      this.listenTo(this.getUser(), 'change', function () {
+
+        // If a userId is defined in the bootstrap, make sure
+        // that this user matches up!
+        if(this.bootstrap.userId
+          && this.getUser().attributes.token
+          && this.getUser().id !== this.bootstrap.userId) {
+            // Redirect to the logout page!
+            this.setFlash('error', 'Sorry, you can\'t log in here!');
+
+            // Wipe it out!
+            this.getUser().set({
+              id: null
+            , username: null
+            , password: null
+            , token: false
+            , policy: null
+            , signature: null
+            , path: null
+            , customization: {}
+            });
+        }
+      }, this);
+
       return this;
     }
 
