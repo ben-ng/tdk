@@ -74,7 +74,7 @@
         });
 
         //Activate VJS
-        if(this.media.attributes.type === 'video') {
+        if(this.media && this.media.attributes && this.media.attributes.type === 'video') {
           _.defer(function () {
             jst.loadVideo(this.$('#vid_placeholder')[0]
               , {
