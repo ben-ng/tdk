@@ -1,10 +1,12 @@
 <div class="centered-boxes">
   <ul id="mainnav" class="nav nav-boxes">
-    {{#if isHome}}
-      <li class="homepage"><a href="/" class="current app boxed">{{sitetitle.value}}</a></li>
-    {{else}}
-      <li class="homepage"><a href="/" class="app boxed">{{sitetitle.value}}</a></li>
-    {{/if}}
+    {{!-- No homepage for now!
+      {{#if isHome}}
+        <li class="homepage"><a href="/" class="current app boxed">{{sitetitle.value}}</a></li>
+      {{else}}
+        <li class="homepage"><a href="/" class="app boxed">{{sitetitle.value}}</a></li>
+      {{/if}}
+    --}}
     {{#each pages}}
       <li>
       {{#if active}}
