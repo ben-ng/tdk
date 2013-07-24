@@ -307,7 +307,7 @@ task('browserify', ['selectQunit'], {async:true}, function () {
     }
   }
   else {
-    bundle.add('./'+path.join(src, 'js', 'app', 'index.js'));
+    bundle.add('./'+path.join(src, 'js', 'index.js'));
   }
 
   bundle.bundle({debug: true}, function (err, src) {

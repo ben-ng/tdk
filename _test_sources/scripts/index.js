@@ -5,9 +5,9 @@
   var path = require('path')
   , _ = require('lodash')
   , Q = require('../qunit/qunit.selected.js')
-  , Backbone = require('../../_shared_sources/js/app/helpers/BackboneLoader.js')
-  , $ = require('../../_shared_sources/js/app/helpers/JqueryLoader.js')
-  , App = require('../../_shared_sources/js/app/app.js')
+  , Backbone = require('../../_shared_sources/js/helpers/BackboneLoader.js')
+  , $ = require('../../_shared_sources/js/helpers/JqueryLoader.js')
+  , App = require('../../_shared_sources/js/app.js')
   , host = window.document.location.host.replace(/:.*/, '')
   , ws = new WebSocket('ws://'+host+':8081')
 

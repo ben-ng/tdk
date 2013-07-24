@@ -4,10 +4,10 @@
 (function (){
   var path = require('path')
   , Q = require('../qunit/qunit.testling.js')
-  , Backbone = require('../../_shared_sources/js/app/helpers/BackboneLoader.js')
-  , $ = require('../../_shared_sources/js/app/helpers/JqueryLoader.js')
+  , Backbone = require('../../_shared_sources/js/helpers/BackboneLoader.js')
+  , $ = require('../../_shared_sources/js/helpers/JqueryLoader.js')
   , _ = require('lodash')
-  , App = require('../../_shared_sources/js/app/app.js')
+  , App = require('../../_shared_sources/js/app.js')
 
   //TESTS
   , tests = require('./tests')
