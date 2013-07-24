@@ -89,6 +89,8 @@
           var name = this.$('input[name=name]').val()
             , isPublished = this.$("input[name=isPublished]").parent().hasClass("switch-on");
 
+          this.app.clearFlash();
+
           this.page.save({
             userId:self.app.getUser().attributes.id,
             name:name,

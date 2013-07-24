@@ -61,6 +61,7 @@
             addMediaHref:addMediaHref,
             createHref:'/createPage',
             reviewHref:'/review',
+            reorderHref:'/reorder',
             isHome:Backbone.history.fragment === '',
             isPage:Backbone.history.fragment.match(/^(edit)?[pP]age\//)?true:false,
             isEditingPage:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
@@ -68,6 +69,7 @@
             isEditingMedia:Backbone.history.fragment.match(/^media\/(image|video)\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
             isCreatingPage:Backbone.history.fragment.match(/^createPage/)?true:false,
             isReviewingUploads:Backbone.history.fragment.match(/^review/)?true:false,
+            isReorderingPages:Backbone.history.fragment.match(/^reorder/)?true:false,
             unprocessedCount:unprocessedCount,
             unprocessedPrompt:unprocessedPrompt
           });

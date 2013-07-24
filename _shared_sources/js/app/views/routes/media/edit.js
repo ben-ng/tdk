@@ -79,6 +79,8 @@
           var name = this.$('input[name=name]').val();
           var attribs = this.$('input[name=attribs]').val().split(",");
 
+          this.app.clearFlash();
+
           this.media.save({
             userId: self.app.getUser().attributes.id,
             name: name,
@@ -131,12 +133,16 @@
           e.preventDefault();
           e.stopPropagation();
 
+          this.app.clearFlash();
+
           this.media.pickThumbnail();
         }
         //Tries to pick a new thumbnail
       , performCrop: function(e) {
           e.preventDefault();
           e.stopPropagation();
+
+          this.app.clearFlash();
 
           this.app.trigger("captureThumbnail");
           this.$('#useOriginalButton').button('loading');
@@ -145,6 +151,8 @@
       , performCapture: function(e) {
           e.preventDefault();
           e.stopPropagation();
+
+          this.app.clearFlash();
 
           this.app.trigger("captureThumbnail");
           this.$('#useCaptureButton').button('loading');

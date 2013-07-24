@@ -1,9 +1,9 @@
 <div class="centered-boxes">
   <ul id="mainnav" class="nav nav-boxes">
     {{#if isHome}}
-      <li><a href="/" class="current app boxed">{{sitetitle.value}}</a></li>
+      <li class="homepage"><a href="/" class="current app boxed">{{sitetitle.value}}</a></li>
     {{else}}
-      <li><a href="/" class="app boxed">{{sitetitle.value}}</a></li>
+      <li class="homepage"><a href="/" class="app boxed">{{sitetitle.value}}</a></li>
     {{/if}}
     {{#each pages}}
       <li>
@@ -43,6 +43,11 @@
       <li><a href="{{createHref}}" id="newPageLink" class="current app boxed">New Page</a></li>
     {{else}}
       <li><a href="{{createHref}}" id="newPageLink" class="app boxed">New Page</a></li>
+    {{/if}}
+    {{#if isReorderingPages}}
+      <li><a href="{{reorderHref}}" id="reorderPageLink" class="current app boxed">Sort Pages</a></li>
+    {{else}}
+      <li><a href="{{reorderHref}}" id="reorderPageLink" class="app boxed">Sort Pages</a></li>
     {{/if}}
     {{#if isReviewingUploads}}
       <li><a href="{{reviewHref}}" class="current app boxed">Review</a></li>

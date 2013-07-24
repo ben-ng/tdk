@@ -16,6 +16,7 @@ var _ = require('lodash')
     , 'createPage': require('./routes/pages/create')
     , 'page/:name': require('./routes/pages/show')
     , 'page/:name/edit': require('./routes/pages/edit')
+    , 'reorder': require('./routes/pages/reorder')
     , 'page/:name/addMedia': require('./routes/media/add')
     , 'review': require('./routes/review')
     , 'page/:name/:type/:id': require('./routes/media/show')
@@ -60,6 +61,8 @@ var _ = require('lodash')
             this.setFlash('info', 'You have been logged out because this is not your portfolio.');
         }
       }, this);
+
+      this.error = _.bind(this.error, this);
 
       return this;
     }
