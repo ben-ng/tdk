@@ -44,10 +44,12 @@
     {{else}}
       <li><a href="{{createHref}}" id="newPageLink" class="app boxed">New Page</a></li>
     {{/if}}
-    {{#if isReorderingPages}}
-      <li><a href="{{reorderHref}}" id="reorderPageLink" class="current app boxed">Sort Pages</a></li>
-    {{else}}
-      <li><a href="{{reorderHref}}" id="reorderPageLink" class="app boxed">Sort Pages</a></li>
+    {{#if hasAtLeastTwoPages}}
+      {{#if isReorderingPages}}
+        <li><a href="{{reorderHref}}" id="reorderPageLink" class="current app boxed">Sort Pages</a></li>
+      {{else}}
+        <li><a href="{{reorderHref}}" id="reorderPageLink" class="app boxed">Sort Pages</a></li>
+      {{/if}}
     {{/if}}
     {{#if isReviewingUploads}}
       <li><a href="{{reviewHref}}" class="current app boxed">Review</a></li>

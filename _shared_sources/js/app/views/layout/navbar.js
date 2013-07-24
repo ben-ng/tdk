@@ -62,6 +62,7 @@
             createHref:'/createPage',
             reviewHref:'/review',
             reorderHref:'/reorder',
+            hasAtLeastTwoPages: this.pages.length > 1,
             isHome:Backbone.history.fragment === '',
             isPage:Backbone.history.fragment.match(/^(edit)?[pP]age\//)?true:false,
             isEditingPage:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
