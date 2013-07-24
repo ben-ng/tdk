@@ -78,9 +78,10 @@ In a few more weeks, we will merge themes with the `_shared_sources` folder inst
 
 ## CI
 
- * `jake tests=true` will test your theme on port 8080
- * `jake tests=true phantomjs=true` will test your theme on port 8080 with the phantomjs bridge
- * `jake tests=true testling=true` will test your theme on port 8080 printing TAP output to the console
+ * `jake tests=true NODE_ENV=staging STAGING_PASS=xxx` will test your theme on port 8080 against the staging server
+   * The STAGING_PASS env var is required to test user logins, ask me if you need it
+ * `jake tests=true phantomjs=true NODE_ENV=staging` will test your theme on port 8080 with the phantomjs bridge
+ * `jake tests=true testling=true NODE_ENV=staging` will test your theme on port 8080 printing TAP output to the console
 
 All the above commands will watch the file tree and reload the page when neccessary via websockets.
 

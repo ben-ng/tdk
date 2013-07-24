@@ -245,18 +245,18 @@
         halfSizeThumbnails = (halfSizeThumbnails===true);
 
         if(attrs.s3key) {
-          attrs.url = self.app.config.s3prefix + attrs.s3key;
+          attrs.url = this.app.config.s3prefix + attrs.s3key;
         }
         else {
-          attrs.thumbnailUrl = self.app.util.placeholderThumbnail(halfSizeThumbnails);
+          attrs.thumbnailUrl = this.app.util.placeholderThumbnail(halfSizeThumbnails);
         }
 
         if(attrs.thumbnailS3key) {
-          attrs.thumbnailUrl = self.app.config.s3prefix + attrs.thumbnailS3key;
+          attrs.thumbnailUrl = this.app.config.s3prefix + attrs.thumbnailS3key;
         }
         else {
           //Halfsized with the true option
-          attrs.thumbnailUrl = self.app.util.placeholderThumbnail(halfSizeThumbnails);
+          attrs.thumbnailUrl = this.app.util.placeholderThumbnail(halfSizeThumbnails);
         }
 
         attrs.isImage = attrs.type === 'image';
