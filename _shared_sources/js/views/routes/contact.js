@@ -41,8 +41,7 @@
           e.preventDefault();
           e.stopPropagation();
 
-          var self = this
-            , user = self.app.getUser();
+          var self = this;
 
           self.nameVal = self.$('form input[name="name"]').val()
           self.emailVal = self.$('form input[name="email"]').val()
@@ -52,34 +51,32 @@
           self.app.setFlash('info', 'Sending message...');
           self.$('form button').button('loading');
 
-          user.once('ready', function () {
-            $.ajax({
-              url: self.app.config.baseUrl + '/users/contact.json'
-            , success: function (data) {
-                if(data.error) {
-                  self.app.error(data.error);
-                }
-                else {
-                  self.app.setFlash('success', 'Message sent!');
-                }
+          $.ajax({
+            url: self.app.config.baseUrl + '/users/contact.json'
+          , success: function (data) {
+              if(data.error) {
+                self.app.error(data.error);
               }
-            , error: function (jqXHR, textStatus, errorThrown) {
-                self.app.error(errorThrown);
+              else {
+                self.app.setFlash('success', 'Message sent!');
               }
-            , complete: function () {
-                self.$('form button').button('reset');
-                self.render(); // FIXME: Stupid flash messages won't render
-              }
-            , data: {
-                name: self.nameVal
-              , email: self.emailVal
-              , message: self.messageVal
-              , id: user.id
-              }
-            , dataType: 'json'
-            , timeout: 20000
-            , type: 'POST'
-            });
+            }
+          , error: function (jqXHR, textStatus, errorThrown) {
+              self.app.error(errorThrown);
+            }
+          , complete: function () {
+              self.$('form button').button('reset');
+              self.render(); // FIXME: Stupid flash messages won't render
+            }
+          , data: {
+              name: self.nameVal
+            , email: self.emailVal
+            , message: self.messageVal
+            , id: self.app.bootstrap.userId
+            }
+          , dataType: 'json'
+          , timeout: 20000
+          , type: 'POST'
           });
         }
       });
