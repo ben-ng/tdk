@@ -21,6 +21,7 @@ var _ = require('lodash')
     , 'review': require('./routes/review')
     , 'page/:name/:type/:id': require('./routes/media/show')
     , 'media/:type/:id/edit': require('./routes/media/edit')
+    , 'contact': require('./routes/contact')
     }
   , App = Backbone.Router.extend({
     /**
@@ -63,6 +64,8 @@ var _ = require('lodash')
       }, this);
 
       this.error = _.bind(this.error, this);
+      this.setFlash = _.bind(this.setFlash, this);
+      this.clearFlash = _.bind(this.clearFlash, this);
 
       return this;
     }
