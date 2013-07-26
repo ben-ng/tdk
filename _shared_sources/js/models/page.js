@@ -2,7 +2,7 @@
   var Model = require('./base')
     , Video = require('./video')
     , Image = require('./image')
-    , Backbone = require('backbone')
+    , Backbone = require('../helpers/BackboneLoader')
     , _ = require('lodash')
     , Page = Model.extend(
       {

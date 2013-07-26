@@ -6,5 +6,6 @@
   , image: require('./image.js')
   , video: require('./video.js')
   , pages: require('./pages.js')
+  , customization: require('./customization.js')
   };
 }());
