@@ -21,6 +21,12 @@
             var noPagesView = new NoPagesView({app:self})
               , lowestPriorityPage;
 
+            // Testing mode?
+            if(process.env.tests) {
+              // Do nothing
+              return;
+            }
+
             // Are we logged in?
             if(self.isLoggedIn()) {
               lowestPriorityPage = pages.sort().at(0);

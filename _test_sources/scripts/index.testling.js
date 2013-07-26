@@ -21,8 +21,10 @@
   , testRunnerSize = 50 //% of screen the test runner should occupy
   , delay = 0;    //milliseconds between each test?
 
-  /* Force the environment variable! */
+  /* Force the environment variables! */
   process.env.NODE_ENV = 'staging';
+  process.env.CI = true;
+  process.env.tests = true;
 
   /* Hook up jquery to backbone */
   Backbone.$ = $;
