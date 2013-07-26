@@ -4,17 +4,17 @@ exports.defaults = {
   , "name": "Site Title"
   , "default": "{{first_name}} {{last_name}}"
   }
-  "firstName": {
+, "firstName": {
     "type": "text"
   , "name": "First Name"
   , "default": "{{first_name}}"
   }
-  "lastName": {
+, "lastName": {
     "type": "text"
   , "name": "Last Name"
   , "default": "{{last_name}}"
   }
-  "showContact": {
+, "showContact": {
     "type": "boolean"
   , "name": "Show Contact Page"
   , "default": false
