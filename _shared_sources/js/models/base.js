@@ -7,14 +7,14 @@
         }
       , methodUrl: function(method) {
           var root;
-          
+
           if(typeof this.urlRoot === 'function') {
             root = this.urlRoot();
           }
           else if(this.urlRoot) {
             root = this.urlRoot;
           }
-          
+
           if(method == "delete"){
             return root + "/" +this.attributes.id+".json";
           }
@@ -26,10 +26,10 @@
           }
           else if(method == "create"){
             return root + ".json";
-          } 
+          }
           return false;
         }
-        });
-  
+      });
+
   module.exports = BaseModel;
 }());
