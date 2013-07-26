@@ -2,15 +2,32 @@
   <div id="header">
   </div>
   <div id="content" class="row">
-    <div class="span12 centered">
+    <div class="span6 centered">
       <form>
         <fieldset>
-          <legend>Create A New Page</legend>
-          <label class="control-label" for="name">Page Title</label>
-          <input type="text" id="name" name="name" placeholder="Untitled Page" value="{{page.name}}">
+          <legend>New Media Page</legend>
+          <div class="control-group">
+            <label class="control-label" for="name">Page Title</label>
+            <input type="text" id="name" name="name" placeholder="Untitled Page" value="{{page.name}}">
+          </div>
           <div class="control-group">
             <div class="controls">
               <button type="submit" class="btn btn-success">Create</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="span6 centered">
+      <form>
+        <fieldset>
+          <legend>Custom Pages</legend>
+          <div class="control-group">
+            <label class="control-label" for="showContact">Show Contact Page?</label>
+            <div class="switch switch-large"
+              data-on-label="Yes"
+              data-off-label="No">
+              <input name="showContact" {{#if showContact}}checked="checked"{{/if}} type="checkbox" />
             </div>
           </div>
         </fieldset>

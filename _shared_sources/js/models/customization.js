@@ -23,7 +23,8 @@
             data.diffs = JSON.parse(data.diffs);
           }
           catch(e) {
-            data.config = {error:'Could not parse the JSON'};
+            data.config = {};
+            data.diffs = {}
           }
 
           return data;

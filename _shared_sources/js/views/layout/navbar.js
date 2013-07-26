@@ -24,7 +24,15 @@
             , unprocessedCount = this.unprocessed.length
             , pluralS = (this.unprocessed.length===1?"":"s")
             , antiPluralS = (this.unprocessed.length!==1?"":"s")
-            , unprocessedPrompt = "Choose thumbnail" + antiPluralS + " for " + this.unprocessed.length + " upload" + pluralS;
+            , unprocessedPrompt = "Choose thumbnail" + antiPluralS + " for " + this.unprocessed.length + " upload" + pluralS
+            , customization = this.app.getCustomization()
+            , config
+            , showContact;
+
+          if(customization && customization.attributes && customization.attributes.config) {
+            config = customization.attributes.config;
+            showContact = config.showContact ? config.showContact.value : false;
+          }
 
 
           //Load page attrs etc
@@ -41,6 +49,7 @@
                   addHref: '/page/'+safename+'/addMedia',
                   active: false
                 });
+
             if(
               //Exact match
               Backbone.history.fragment === attrs.href.replace(/^\//,'') ||
@@ -59,11 +68,13 @@
             pages:modelAttrs,
             editPageHref:editPageHref,
             addMediaHref:addMediaHref,
+            showContact:showContact,
             createHref:'/createPage',
             reviewHref:'/review',
             reorderHref:'/reorder',
             hasAtLeastTwoPages: this.pages.length > 1,
             isHome:Backbone.history.fragment === '',
+            isContact:Backbone.history.fragment.match(/^contact/)?true:false,
             isPage:Backbone.history.fragment.match(/^(edit)?[pP]age\//)?true:false,
             isEditingPage:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
             isAddingMedia:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/addMedia$/)?true:false,

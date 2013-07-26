@@ -24,6 +24,13 @@
       {{/if}}
       </li>
     {{/each}}
+    {{#if showContact}}
+      {{#if isContact}}
+        <li class="contact"><a href="/contact" class="current app boxed">Contact</a></li>
+      {{else}}
+        <li class="contact"><a href="/contact" class="app boxed">Contact</a></li>
+      {{/if}}
+    {{/if}}
   </ul>
 </div>
 {{#if isLoggedIn}}

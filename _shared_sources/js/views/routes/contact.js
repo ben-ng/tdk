@@ -10,6 +10,7 @@
         }
       , events: {
           'submit': 'send'
+        , 'click a.app': 'handleAppLink'
         }
       , afterRender: function () {
         var navbar = new NavbarView({app:this.app})
