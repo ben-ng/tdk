@@ -14,6 +14,10 @@
           this.listenTo(this.app.getUser(), 'change', this.render, this);
           this.listenTo(this.app, 'flash', this.render, this);
 
+          if(this.app.getCustomization()) {
+            this.listenTo(this.app.getCustomization(), 'change ready', this.render, this);
+          }
+
           this.renderOnReady(this.pages, this.unprocessed, this.app.getUser());
         }
       , context: function () {

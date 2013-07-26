@@ -216,8 +216,27 @@ var _ = require('lodash')
   , getUser: function () { return this.db.fetchModel('user'); }
 
   , getCustomization: function () {
-      if(this.isLoggedIn()) {
-        return this.db.createModel('customization').set(this.getUser().attributes.customization);
+      var custId
+        , model;
+
+      // If there is a bootstrapped customization ID, use that
+      if(this.bootstrap && this.bootstrap.customizationId) {
+        custId = this.bootstrap.customizationId;
+
+        model = this.db.fetchModel('customization', custId);
+      }
+      // Otherwise, try for a logged in user's customization ID
+      else if (this.isLoggedIn()) {
+        custId = this.getUser().attributes.customization.id
+
+        model = this.db.fetchModel('customization', custId);
+
+        // We can bootstrap the cust model with stuff from the user
+        model.set(this.getUser().attributes.customization);
+      }
+
+      if(custId) {
+        return model;
       }
       else {
         return false;
