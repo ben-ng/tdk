@@ -6,7 +6,7 @@
   Backbone.sync = function(method, model, options) {
     options = options || {};
 
-    options.attrs = options.attrs || _.clone(model.attributes);
+    options.attrs = options.attrs || _.clone(model.toJSON());
     options.timeout = options.timeout || 20000;
     options.parse = options.parse || true;
 

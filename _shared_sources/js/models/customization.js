@@ -1,18 +1,23 @@
 (function () {
   var Model = require('./base')
+    , _ = require('lodash')
     , Backbone = require('../helpers/BackboneLoader')
     , Customization = Model.extend({
         name:'customization'
-      , urlRoot:function () {
+      , urlRoot: function () {
         return this.app.config.baseUrl + '/customizations';
         }
-      , sync: function(method, model, options) {
-          if(method === 'create' || method === 'update') {
-            //For the create method we should stringify the items before sending to the server
-            model.set("config",JSON.stringify(model.get("config")));
-            model.set("diffs",JSON.stringify(model.get("diffs")));
+      , toJSON: function () {
+          incoming = _.clone(this.attributes);
+
+          if(incoming.config) {
+            incoming.config = JSON.stringify(incoming.config);
           }
-          Backbone.sync(method, model, options);
+          if(incoming.diffs) {
+            incoming.diffs = JSON.stringify(incoming.diffs);
+          }
+
+          return incoming;
         }
       , parse: function(data, options) {
           data = data.customization;

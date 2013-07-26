@@ -42,12 +42,14 @@
             return errors;
           }
         }
-      , sync: function(method, model, options) {
-          if(method === 'create' || method === 'update') {
-            //For the create method we should stringify the items before sending to the server
-            model.set("itemList",JSON.stringify(model.get("items")));
+      , toJSON: function () {
+          incoming = _.clone(this.attributes);
+
+          if(incoming.items) {
+            incoming.itemList = JSON.stringify(incoming.items);
           }
-          Backbone.sync(method, model, options);
+
+          return incoming;
         }
       , parse: function(data, options) {
           data = data.page;

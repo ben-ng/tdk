@@ -32,13 +32,17 @@
             return errors;
           }
         }
+      , toJSON: function () {
+          incoming = _.clone(this.attributes);
+
+          if(incoming.attribs) {
+            incoming.userAttributes = JSON.stringify(incoming.attribs);
+          }
+
+          return incoming;
+        }
       , sync: function(method, model, options) {
         var self = this;
-
-        if(method === 'create' || method === 'update') {
-          //For the create method we should stringify the items before sending to the server
-          model.set("userAttributes",JSON.stringify(model.get("attribs")));
-        }
 
         var afterCheckingMedia = function() {
           //Now check the thumbnail
