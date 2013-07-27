@@ -15,6 +15,7 @@ var user = db.createModel('user').set({id:'test'});
 */
 (function () {
   var Model = require('./base')
+    , _ = require('lodash')
     , Customization = require('./customization')
     , User = Model.extend({
         name:'user'
@@ -22,12 +23,19 @@ var user = db.createModel('user').set({id:'test'});
           return this.app.config.baseUrl+'/users/auth.json';
         }
       , parse: function(data, options) {
-          data = data.user;
+          var dataCopy = _.clone(data);
+
           try {
-            data.customization =  (new Customization({},{app:this.app})).parse({customization: data.customization});
+            dataCopy = dataCopy.user;
+
+            dataCopy.customization =  (new Customization({},{app:this.app})).parse({customization: dataCopy.customization});
+
+            data = dataCopy;
           }
           catch(e) {
-            data.customization = null;
+            data = {
+              error: data.error
+            };
           }
 
           return data;
