@@ -21,6 +21,8 @@
       'pagemedia': require('../collections/pageMedia')
     , 'pages': require('../collections/pages')
     , 'unprocesseduploads': require('../collections/unprocessedUploads')
+    , 'images': require('../collections/images')
+    , 'videos': require('../collections/videos')
     }
 
   /**
