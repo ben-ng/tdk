@@ -35,14 +35,26 @@
       var proxiedSuccess = options.success;
 
       options.success = function(data, textStatus, jqXHR) {
+        var errors;
+
         if(data[model.name] && data[model.name].errors) {
+          errors = data[model.name].errors;
+        }
+        else if(data.error) {
+          errors = data.error;
+        }
+        else if(data.errors) {
+          errors = data.errors;
+        }
+
+        if(errors) {
 
           /**
           * Delegates to the error handler if one is defined
           */
           if(options.error) {
             var sendToErrorhandler = function() {
-              options.error({responseText:JSON.stringify({errors:data[model.name].errors})});
+              options.error({responseText:JSON.stringify({errors:errors})});
             };
 
             //If there was an error, we need to restore the last known "good" state of the model

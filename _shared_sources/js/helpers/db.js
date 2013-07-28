@@ -115,6 +115,14 @@
               modelObj.isFetched = true;
               modelObj.trigger('ready');
             }
+          , error: function () {
+              // Trigger the `ready` event after data has loaded
+              modelObj.isFetched = true;
+              modelObj.trigger('ready');
+
+              // Call the error handler
+              App.error.apply(App, arguments);
+            }
           });
         }, delay);
       }

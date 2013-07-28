@@ -3,11 +3,7 @@
   </div>
   <div id="content" class="row">
     {{#if page.id}}
-    <div class="span2 offset5 centered">
-
-  <!--
-      <div class="tooltip-trigger" data-title="Upload a new file from your computer or elsewhere" data-placement="left">
-  -->
+    <div class="span2 offset4 centered">
       <div id="uploadFileLink">
         <p>
           <a href="#" class="filepicker">
@@ -19,20 +15,18 @@
         </p>
       </div>
     </div>
-  <!--
     <div class="span2 centered">
-      <div class="tooltip-trigger" data-title="Use a file on another page" data-placement="right">
+      <div id="pickFileLink">
         <p>
-          <a href="#" class="useExisting">
-            <img class="flatIcon" src="/img/folder.png" alt="upload-file" />
+          <a href="{{pickMediaUrl}}" class="app">
+            <img class="flatIcon" src="/img/folder.png" alt="pick-file" />
           </a>
         </p>
         <p>
-          <a href="#" class="useExisting btn btn-info">Use Existing</a>
+          <a href="{{pickMediaUrl}}" class="useExisting btn btn-info app">Use Existing</a>
         </p>
       </div>
     </div>
-  -->
     {{/if}}
   </div>
 </div>

@@ -77,7 +77,7 @@
             isContact:Backbone.history.fragment.match(/^contact/)?true:false,
             isPage:Backbone.history.fragment.match(/^(edit)?[pP]age\//)?true:false,
             isEditingPage:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
-            isAddingMedia:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/addMedia$/)?true:false,
+            isAddingMedia:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/(addMedia|pickMedia)$/)?true:false,
             isEditingMedia:Backbone.history.fragment.match(/^media\/(image|video)\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
             isCreatingPage:Backbone.history.fragment.match(/^createPage/)?true:false,
             isReviewingUploads:Backbone.history.fragment.match(/^review/)?true:false,

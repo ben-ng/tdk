@@ -18,6 +18,7 @@ var _ = require('lodash')
     , 'page/:name/edit': require('./routes/pages/edit')
     , 'reorder': require('./routes/pages/reorder')
     , 'page/:name/addMedia': require('./routes/media/add')
+    , 'page/:name/pickMedia': require('./routes/media/pick')
     , 'review': require('./routes/review')
     , 'page/:name/:type/:id': require('./routes/media/show')
     , 'media/:type/:id/edit': require('./routes/media/edit')
@@ -154,9 +155,23 @@ var _ = require('lodash')
 
       return this;
     }
+    /*
+    * The error function has to handle three possible scenarios:
+    *   error(model, err)
+    *   error(jqXHR, textStatus, errorThrown)
+    *   error(err)
+    */
   , error: function (model, err) {
-      if(!err) {
+      // Third Scenario
+      if (!err) {
         err = model;
+      }
+      // Second scenario(s)?
+      else if (model.responseText) {
+        err = model.responseText;
+      }
+      else if (err.responseText) {
+        err = err.responseText;
       }
 
       var self = this

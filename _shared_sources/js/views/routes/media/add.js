@@ -49,8 +49,11 @@
         });
       }
       , context: function () {
+          var safeName = encodeURIComponent(this.page.attributes.name);
+
           return this.getContext({
             page: this.page.attributes
+          , pickMediaUrl: 'page/'+safeName+'/pickMedia'
           });
         }
       , startFilepicker: function(e, debug_cb) {

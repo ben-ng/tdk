@@ -52,17 +52,18 @@
           return incoming;
         }
       , parse: function(data, options) {
-          data = data.page;
-          delete data.page;
           try {
+            data = data.page;
+            delete data.page;
             data.items = JSON.parse(data.itemList);
-          }
-          catch(e) {
-            data.items = [];
-          }
-          finally {
             delete data.itemList;
           }
+          catch(e) {
+            data = {
+              error: 'Bad response from server: ' + e
+            };
+          }
+
           return data;
         }
       , getMedia: function () {
