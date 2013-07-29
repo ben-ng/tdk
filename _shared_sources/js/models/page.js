@@ -53,14 +53,12 @@
         }
       , parse: function(data, options) {
           try {
-            data = data.page;
-            delete data.page;
             data.items = JSON.parse(data.itemList);
             delete data.itemList;
           }
           catch(e) {
             data = {
-              error: 'Bad response from server: ' + e
+              errors: 'Bad response from server: ' + e
             };
           }
 

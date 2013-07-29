@@ -11,7 +11,7 @@
           // FIXME: This awful situation is because `this` inside
           // the model function refers to a model, not the collection
           this.model = function(attrs, options) {
-            if (attrs.type === 'image') {
+            if (attrs.type.toLowerCase() === 'image') {
               return opts.app.db.createModel('image', attrs);
             } else {
               return opts.app.db.createModel('video', attrs);

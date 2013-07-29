@@ -32,7 +32,7 @@
 
           this.unprocessed.forEach(function(model) {
             var attrs = model.attributes;
-            attrs.editHref = '/media/'+attrs.type+'/'+model.id+'/edit';
+            attrs.editHref = '/media/'+attrs.type.toLowerCase()+'/'+model.id+'/edit';
             unprocessedAttrs.push(attrs);
           });
 

@@ -149,7 +149,7 @@
             pageItems.push({
               ID:fModel.attributes.id,
               NAME:fModel.attributes.name,
-              TYPE:fModel.attributes.type,
+              TYPE:fModel.attributes.type.toLowerCase(),
               THUMB:fModel.attributes.thumbnailS3key
             });
           });

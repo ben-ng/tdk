@@ -99,14 +99,6 @@
         Backbone.sync('delete',this,options);
       }
       , parse: function(data, options) {
-        if(data.image) {
-          data = data.image;
-          delete data.image;
-        }
-        if(data.video) {
-          data = data.video;
-          delete data.video;
-        }
         try {
           data.attribs = JSON.parse(data.userAttributes);
         }
@@ -263,19 +255,19 @@
           attrs.thumbnailUrl = this.app.util.placeholderThumbnail(halfSizeThumbnails);
         }
 
-        attrs.isImage = attrs.type === 'image';
-        attrs.isVideo = attrs.type === 'video';
+        attrs.isImage = attrs.type.toLowerCase() === 'image';
+        attrs.isVideo = attrs.type.toLowerCase() === 'video';
 
         attrs.attribs = _.map(attrs.attribs, function (attrib) {
           return attrib.replace(/^(.*:)/, '<strong>$1</strong>');
         });
 
         if(this.app.isLoggedIn()) {
-          attrs.editHref = '/media/'+attrs.type+'/'+attrs.id+'/edit';
+          attrs.editHref = '/media/'+attrs.type.toLowerCase()+'/'+attrs.id+'/edit';
         }
 
         if(safePageName) {
-          attrs.playerUrl = 'page/'+safePageName+'/'+attrs.type+'/'+attrs.id;
+          attrs.playerUrl = 'page/'+safePageName+'/'+attrs.type.toLowerCase()+'/'+attrs.id;
         }
 
         return attrs;

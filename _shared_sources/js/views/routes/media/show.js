@@ -78,7 +78,7 @@
 
         //Activate VJS
         _.defer(function () {
-          if(self.media && self.media.attributes && self.media.attributes.type === 'video') {
+          if(self.media && self.media.attributes && self.media.attributes.type.toLowerCase() === 'video') {
             jst.loadVideo(self.$('#vid_placeholder')[0]
               , {
                   vjs: {

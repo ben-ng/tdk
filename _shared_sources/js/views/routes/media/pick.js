@@ -102,7 +102,7 @@
               newItems.push({
                   ID: media.id
                 , NAME: media.attributes.name
-                , TYPE: media.attributes.type
+                , TYPE: media.attributes.type.toLowerCase()
                 , THUMB: media.templateVars().thumbnailUrl
               });
 
