@@ -18,9 +18,6 @@
             return opts.app.db.createModel('page', p.parse(attrs));
           };
         }
-      , parse: function(data, options) {
-          return _.isEmpty(data.pages) ? [] : data.pages;
-        }
         // Sort by page priority, lowest first
       , comparator: function (page) {
           return page.get('priority');

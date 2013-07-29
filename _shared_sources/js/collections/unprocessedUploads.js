@@ -9,7 +9,7 @@
       , initialize: function(models, opts) {
           this.set(models);
           this.app = opts.app || {};
-          
+
           // FIXME: This awful situation is because `this` inside
           // the model function refers to a model, not the collection
           this.model = function(attrs, options) {
@@ -20,10 +20,7 @@
             }
           };
         }
-      , parse: function(data, options) {
-          return _.isEmpty(data.media) ? [] : data.media;
-        }
       });
-  
+
   module.exports = UnprocessedUploads;
 }());

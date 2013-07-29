@@ -18,9 +18,6 @@
             return opts.app.db.createModel('video', p.parse(attrs));
           };
         }
-      , parse: function(data, options) {
-          return _.isEmpty(data.videos) ? [] : data.videos;
-        }
       });
 
   module.exports = Videos;

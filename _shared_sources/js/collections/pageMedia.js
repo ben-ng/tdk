@@ -21,9 +21,6 @@
       , url: function() {
           return this.app.config.baseUrl+'/pages/'+this.pageId+'/media.json'
         }
-      , parse: function(data, options) {
-          return _.isEmpty(data.media) ? [] : data.media;
-        }
       });
 
   module.exports = PageMedia;

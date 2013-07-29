@@ -18,9 +18,6 @@
             return opts.app.db.createModel('image', p.parse(attrs));
           };
         }
-      , parse: function(data, options) {
-          return _.isEmpty(data.images) ? [] : data.images;
-        }
       });
 
   module.exports = Images;

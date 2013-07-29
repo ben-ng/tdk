@@ -2,7 +2,7 @@
   module.exports = function (App, Q, Backbone, fixture, delay) {
     var db = App.db
       , _page_user;
-    
+
     Q.module("Pages", {
       setup: function() {
         if(!_page_user) {
@@ -19,7 +19,7 @@
             }
           });
         }
-        else {      
+        else {
           //Dummy assert
           Q.ok(true);
         }
@@ -38,6 +38,7 @@
         },
         error:function(collection, response, options) {
           Q.ok(false, "Failed to perform fetch");
+          console.log(arguments);
           Q.start();
         }
       });
@@ -52,7 +53,7 @@
       page.save(null,{
         success:function() {
           Q.equal(page.attributes.errors, null, "Save errors: "+JSON.stringify(page.attributes.errors));
-          
+
           pages.fetch({
             success:function(collection, response, options) {
               Q.strictEqual(collection.length, 1, "Collection should have one page");
@@ -95,11 +96,11 @@
       page.save(null,{
         success:function() {
           Q.equal(page.attributes.errors, null, "Save errors: "+JSON.stringify(page.attributes.errors));
-          
+
           page2.save(null,{
             success:function() {
               Q.equal(page2.attributes.errors, null, "Save errors: "+JSON.stringify(page2.attributes.errors));
-              
+
               pages.fetch({
                 success:function(collection, response, options) {
                   Q.strictEqual(collection.length, 2, "Collection should have two pages");
