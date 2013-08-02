@@ -89,8 +89,8 @@
                   }
                 , sources: [
                     {
-                      src: mediaTemplateVars.url
-                    , type: self.app.util.mime(self.media.attributes.mimeType)
+                      src: mediaTemplateVars.hdUrl
+                    , type: self.app.util.mime('video/mp4')
                     }
                   ]
                 }

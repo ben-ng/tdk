@@ -20,8 +20,8 @@
                 media: {
                   sources: [
                     {
-                      src: attrs.url
-                    , type: this.app.util.mime(attrs.mimeType)
+                      src: attrs.hdUrl
+                    , type: this.app.util.mime('video/mp4')
                     }
                   ]
                 , attributes: {

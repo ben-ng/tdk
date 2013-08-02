@@ -23,8 +23,8 @@
             //Count unprocessed files etc
             , unprocessedCount = this.unprocessed.length
             , pluralS = (this.unprocessed.length===1?"":"s")
-            , antiPluralS = (this.unprocessed.length!==1?"":"s")
-            , unprocessedPrompt = "Choose thumbnail" + antiPluralS + " for " + this.unprocessed.length + " upload" + pluralS
+            , isAre = (this.unprocessed.length===1?"is":"are")
+            , unprocessedPrompt = this.unprocessed.length + ' upload' + pluralS + ' ' + isAre + ' being encoded'
             , customization = this.app.getCustomization()
             , config
             , showContact;

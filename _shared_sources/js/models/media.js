@@ -270,6 +270,21 @@
           attrs.playerUrl = 'page/'+safePageName+'/'+attrs.type.toLowerCase()+'/'+attrs.id;
         }
 
+        switch(attrs.status) {
+          case 1:
+            attrs.reviewIssue = 'Encoding in progress';
+          break;
+          case 2:
+            attrs.reviewIssue = 'Encoding completed';
+
+            attrs.hdUrl = attrs.url + '/hd.mp4';
+            attrs.sdUrl = attrs.url + '/sd.mp4';
+          break;
+          case 3:
+            attrs.reviewIssue = 'Encoding failed';
+          break;
+        }
+
         return attrs;
       }
     });

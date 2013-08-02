@@ -29,6 +29,9 @@ var _ = require('lodash')
     * Constructs a new app
     */
     initialize: function (el, config) {
+      var unprocessed
+        , unprocessedTimeout;
+
       /* Routes */
       _.each(Routes, function (func, route) {
         this.route(route, _.bind(func, this));
@@ -63,6 +66,21 @@ var _ = require('lodash')
             this.setFlash('info', 'You have been logged out because this is not your portfolio.');
         }
       }, this);
+
+      /* Listen to unprocessed upload changes */
+      unprocessed = this.db.fetchCollection('unprocessedUploads');
+
+      this.listenTo(unprocessed, 'ready add change remove sync reset', function () {
+        if(unprocessed.length > 0) {
+          unprocessedTimeout = setTimeout(function () {
+            clearTimeout(unprocessedTimeout);
+            unprocessed.fetch();
+          }, 3000);
+        }
+        else {
+          clearTimeout(unprocessedTimeout);
+        }
+      });
 
       this.error = _.bind(this.error, this);
       this.setFlash = _.bind(this.setFlash, this);

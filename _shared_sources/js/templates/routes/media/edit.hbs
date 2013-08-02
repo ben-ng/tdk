@@ -18,6 +18,7 @@
             </div>
           </div>
         </fieldset>
+        {{#if isEncoded}}
         <fieldset>
           <legend>Set A Thumbnail</legend>
           {{#if thumbnailS3key}}
@@ -42,6 +43,7 @@
           </div>
           <input type="hidden" id="thumbnail" name="thumbnail" value="{{thumbnail}}">
         </fieldset>
+        {{/if}}
       </form>
     </div>
     <div id="thumber" class="span6">

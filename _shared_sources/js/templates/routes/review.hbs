@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th>File</th>
-            <th colspan="2">Problem</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -15,12 +15,11 @@
             <tr>
               <td><big>{{name}}</big></td>
               <td><big>{{reviewIssue}}</big></td>
-              <td><a {{#unless @index}}id="firstFixButton"{{/unless}} href="{{editHref}}" class="app btn btn-info btn-mini">Fix It!</a></td>
             </tr>
           {{/each}}
           {{#if nothingToReview}}
             <tr>
-              <td colspan="3">Nothing to review, good job!</td>
+              <td colspan="2">All uploads processed!</td>
             </tr>
           {{/if}}
         </tbody>

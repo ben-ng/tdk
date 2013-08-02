@@ -42,7 +42,11 @@
           , footer = new FooterView({app:this.app});
 
         this.appendSubview(navbar, this.$('#header'));
-        this.appendSubview(thumber, this.$('#thumber'));
+
+        if(this.media.attributes && this.media.attributes.status === 2) {
+          this.appendSubview(thumber, this.$('#thumber'));
+        }
+
         this.appendSubview(footer, this.$('#footer'));
 
         //Render all the subviews
@@ -68,6 +72,7 @@
       , context: function () {
           return this.getContext({
             media: this.media.templateVars()
+          , isEncoded: this.media.status === 2
           });
         }
         //Tries to save the edited media
