@@ -72,7 +72,7 @@
       , context: function () {
           return this.getContext({
             media: this.media.templateVars()
-          , isEncoded: this.media.status === 2
+          , isEncoded: this.media.attributes.status === 2
           });
         }
         //Tries to save the edited media
