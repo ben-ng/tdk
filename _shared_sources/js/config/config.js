@@ -27,8 +27,8 @@
     , half: 'http://toolkitt.s3.amazonaws.com/addmedia-half.png'
     }
   , encoding: {
-      full: 'http://toolkitt.s3.amazonaws.com/encoding.png'
-    , half: 'http://toolkitt.s3.amazonaws.com/encoding-half.png'
+      full: 'http://toolkitt.s3.amazonaws.com/encoding.gif'
+    , half: 'http://toolkitt.s3.amazonaws.com/encoding-half.gif'
     }
   };
 
