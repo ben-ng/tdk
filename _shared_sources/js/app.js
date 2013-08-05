@@ -196,11 +196,34 @@ var _ = require('lodash')
         , errToShow = err
         , buff = "";
 
+      if(typeof errToShow == 'string') {
+        try {
+          errToShow = JSON.parse(errToShow);
+        }
+        catch (e) {
+          // Well, guess it isn't JSON then!
+        }
+      }
+
+      // Handle errors thrown through respondWith
+      if(errToShow.message) {
+        errToShow = errToShow.message;
+      }
+
       if(errToShow == null) {
         errToShow = "Unknown (Null) Error";
       }
 
-      if(typeof errToShow === 'object') {
+      // If it's an error 403, treat it specially
+      if(parseInt(errToShow, 10) === 403) {
+        this.navigate('logout', {trigger: true});
+
+        // Need to defer as logout will redirect to homepage
+        setTimeout(function () {
+          self.setFlash('info', 'You were logged out due to inactivity');
+        }, 1000);
+      }
+      else if(typeof errToShow === 'object') {
         buff = [];
 
         /*
