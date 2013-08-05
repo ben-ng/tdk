@@ -75,6 +75,9 @@
               self.app.error(err);
             }
             else if(FPFiles) {
+              // No point staying on the upload page, huh..
+              self.app.navigate('review', {trigger: true});
+
               self.app.setFlash('success', FPFiles.length + ' files uploaded!');
             }
           },debug_cb);
