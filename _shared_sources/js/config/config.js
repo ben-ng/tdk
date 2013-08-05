@@ -21,5 +21,16 @@
   config.videoPlayerId = "media_video";
   config.imageViewerId = "media_image";
 
+  config.placeholders = {
+    addMedia: {
+      full: 'http://toolkitt.s3.amazonaws.com/addmedia.png'
+    , half: 'http://toolkitt.s3.amazonaws.com/addmedia-half.png'
+    }
+  , encoding: {
+      full: 'http://toolkitt.s3.amazonaws.com/encoding.png'
+    , half: 'http://toolkitt.s3.amazonaws.com/encoding-half.png'
+    }
+  };
+
   module.exports = config;
 }());

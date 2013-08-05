@@ -258,6 +258,15 @@
         attrs.isImage = attrs.type.toLowerCase() === 'image';
         attrs.isVideo = attrs.type.toLowerCase() === 'video';
 
+        if(attrs.isVideo && attrs.status === 1) {
+          if(halfSizeThumbnails) {
+            attrs.thumbnailUrl = this.app.config.placeholders.encoding.half;
+          }
+          else {
+            attrs.thumbnailUrl = this.app.config.placeholders.encoding.full;
+          }
+        }
+
         attrs.attribs = _.map(attrs.attribs, function (attrib) {
           return attrib.replace(/^(.*:)/, '<strong>$1</strong>');
         });
