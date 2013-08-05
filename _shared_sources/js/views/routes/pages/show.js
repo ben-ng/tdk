@@ -35,8 +35,11 @@
             }
 
             // Resets the thumbnails if something changes
-            this.listenTo(unprocessed, 'add change remove reset', function () {
-              this.page.fetch();
+            this.listenTo(unprocessed, 'add change remove reset sync', function () {
+              this.page.fetch({
+                success: this.render
+              , error: this.app.error
+              });
             }, this);
           }, this);
         }
