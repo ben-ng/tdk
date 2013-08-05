@@ -85,18 +85,25 @@
       , destroy: function(options) {
         var self = this;
 
-        if(options.success) {
-          var oldcb = options.success;
-          options.success = function() {
-            //Reload unprocessed files
-            self.app.db.fetchCollection('unprocessedUploads').fetch();
-
-            if(oldcb) {
-              oldcb();
-            }
-          };
+        if(this.attributes.status === 1) {
+          self.app.setFlash('error', 'Please wait until encoding is finished to delete this');
         }
-        Backbone.sync('delete',this,options);
+        else {
+          if(options.success) {
+            var oldcb = options.success;
+            options.success = function() {
+              //Reload unprocessed files
+              self.app.db.fetchCollection('unprocessedUploads').fetch();
+              self.app.db.fetchCollection('images').fetch();
+              self.app.db.fetchCollection('videos').fetch();
+
+              if(oldcb) {
+                oldcb();
+              }
+            };
+          }
+          Backbone.sync('delete',this,options);
+        }
       }
       , parse: function(data, options) {
         try {
