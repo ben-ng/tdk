@@ -216,12 +216,7 @@ var _ = require('lodash')
 
       // If it's an error 403, treat it specially
       if(parseInt(errToShow, 10) === 403) {
-        this.navigate('logout', {trigger: true});
-
-        // Need to defer as logout will redirect to homepage
-        setTimeout(function () {
-          self.setFlash('info', 'You were logged out due to inactivity');
-        }, 1000);
+        this.logoutFromInactivity();
       }
       else if(typeof errToShow === 'object') {
         buff = [];
@@ -308,6 +303,15 @@ var _ = require('lodash')
       else {
         return customization.attributes.config;
       }
+    }
+
+  , logoutFromInactivity: function () {
+      this.navigate('logout', {trigger: true});
+
+      // Need to defer as logout will redirect to homepage
+      setTimeout(function () {
+        self.setFlash('info', 'You were logged out due to inactivity');
+      }, 1000);
     }
   });
 

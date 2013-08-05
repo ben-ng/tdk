@@ -71,8 +71,13 @@
           }
 
           this.page.addMedia(function(err, FPFiles) {
-            if(err && err.code!==101) {
-              self.app.error(err);
+            if(err) {
+              if(err.code === 304) {
+                self.app.logoutFromInactivity();
+              }
+              else if(err.code!==101) {
+                self.app.error(err);
+              }
             }
             else if(FPFiles) {
               // No point staying on the upload page, huh..
