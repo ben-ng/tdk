@@ -8,7 +8,9 @@
           this.page = this.app.db.createModel('page').set({
             name: 'Loading...'
           });
-          var pages = this.app.db.fetchCollection('pages');
+
+          var pages = this.app.db.fetchCollection('pages')
+            , unprocessed = this.app.db.fetchCollection('unprocessedUploads');
 
           this.listenTo(this.page, 'change', this.render, this);
 
@@ -34,6 +36,11 @@
 
             this.listenTo(this.media, 'change add remove sort', this.render, this);
             this.media.once('ready', this.render, this);
+
+            // Resets the thumbnails if something changes
+            this.listenTo(unprocessed, 'add change remove reset sync', function () {
+              this.media.fetch();
+            }, this);
           }, this);
         }
       , context: function () {

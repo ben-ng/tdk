@@ -13,8 +13,7 @@
 
           this.pageName = options.pageName;
 
-          var pages = this.app.db.fetchCollection('pages')
-            , unprocessed = this.app.db.fetchCollection('unprocessedUploads');
+          var pages = this.app.db.fetchCollection('pages');
 
           this.listenTo(this.app.getUser(), 'change', this.render, this);
           this.listenTo(this.page, 'change', this.render, this);
@@ -33,14 +32,6 @@
               this.page.set({name:'404'});
               this.app.error('Error 404: The page could not be found');
             }
-
-            // Resets the thumbnails if something changes
-            this.listenTo(unprocessed, 'add change remove reset sync', function () {
-              this.page.fetch({
-                success: this.render
-              , error: this.app.error
-              });
-            }, this);
           }, this);
         }
       , afterRender: function () {
