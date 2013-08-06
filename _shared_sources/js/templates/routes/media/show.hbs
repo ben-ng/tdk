@@ -5,7 +5,11 @@
     <div id="preview" class="span12 centered previewPadding">
     {{#with media}}
       {{#if isVideo}}
-        <div id="vid_placeholder" />
+        {{#if isEncoding}}
+          <img id="media_image" class="pickerHolder" alt="{{name}}" src="{{thumbnailUrl}}" />
+        {{else}}
+          <div id="vid_placeholder" />
+        {{/if}}
       {{else}}
         <img id="media_image" class="pickerHolder" alt="{{name}}" src="{{url}}" />
       {{/if}}

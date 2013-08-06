@@ -301,6 +301,8 @@
           break;
         }
 
+        attrs.isEncoding = (attrs.status === 1);
+
         return attrs;
       }
     });
