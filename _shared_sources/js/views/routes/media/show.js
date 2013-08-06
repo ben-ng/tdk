@@ -86,6 +86,8 @@
                 , attributes: {
                     center: true
                   , resize: {maxWidth: 960}
+                  , width: 960
+                  , height: 540
                   }
                 , sources: [
                     {
