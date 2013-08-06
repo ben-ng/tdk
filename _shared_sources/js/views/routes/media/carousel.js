@@ -1,6 +1,6 @@
 (function () {
   var View = require('../../base')
-    , Backbone = require('backbone')
+    , Backbone = require('../../../helpers/BackboneLoader.js')
     , Holder = require('../../../helpers/lib/holder.js')
     , CarouselView = View.extend({
         template: require('../../../templates/routes/media/carousel.hbs')

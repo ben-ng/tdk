@@ -1,6 +1,6 @@
 (function () {
   var View = require('../base')
-    , Backbone = require('backbone')
+    , Backbone = require('../../helpers/BackboneLoader.js')
     , _ = require('lodash')
     , NavbarView = View.extend({
         template: require('../../templates/layout/navbar.hbs')

@@ -1,6 +1,6 @@
 (function () {
   var Model = require('./base')
-    , Backbone = require('backbone')
+    , Backbone = require('../helpers/BackboneLoader.js')
     , _ = require('lodash')
     , Media = Model.extend({
         name:'media'

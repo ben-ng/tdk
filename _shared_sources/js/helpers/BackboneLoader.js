@@ -1,7 +1,10 @@
 (function() {
   var Backbone = require('backbone')
     , _ = require('lodash')
+    , $ = require('./JqueryLoader.js')
     , proxiedSync = Backbone.sync;
+
+  Backbone.$ = $;
 
   Backbone.sync = function(method, model, options) {
     options = options || {};

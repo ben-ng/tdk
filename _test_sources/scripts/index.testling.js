@@ -26,9 +26,6 @@
   process.env.CI = true;
   process.env.tests = true;
 
-  /* Hook up jquery to backbone */
-  Backbone.$ = $;
-
   window.onload = function () {
     var fixtureElem = document.createElement("div")
       , testListElem = document.createElement("div")

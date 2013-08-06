@@ -25,9 +25,6 @@
   process.env.CI = true;
   process.env.tests = true;
 
-  /* Hook up jquery to backbone */
-  Backbone.$ = $;
-
   window.onload = function () {
     var fixture = $('#qunit-fixture')
       , testList = $("#qunit");
