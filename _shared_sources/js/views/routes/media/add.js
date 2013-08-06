@@ -57,7 +57,8 @@
           });
         }
       , startFilepicker: function(e, debug_cb) {
-          var self = this;
+          var self = this
+            , safeName = encodeURIComponent(this.page.attributes.name);
 
           if(e) {
             e.preventDefault();
