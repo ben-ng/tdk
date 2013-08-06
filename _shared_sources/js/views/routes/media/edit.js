@@ -13,6 +13,7 @@
         , 'click a.crop':'performCrop'
         , 'click a.capture':'performCapture'
         , 'click a.app': 'handleAppLink'
+        , 'change input[type=text]': 'readInput'
         }
       , initialize: function (options) {
           this.app = options.app;
@@ -74,6 +75,15 @@
             media: this.media.templateVars()
           , isEncoded: this.media.attributes.status === 2
           });
+        }
+        // Just sets the properties immediately
+      , readInput : function (e) {
+          var self = this;
+
+          e.preventDefault();
+
+          this.media.set('name', this.$('input[name=name]').val());
+          this.media.set('attribs', this.$('input[name=attribs]').val().split(","));
         }
         //Tries to save the edited media
       , performSave: function(e) {
