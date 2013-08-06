@@ -278,6 +278,8 @@
           return attrib.replace(/^(.*:)/, '<strong>$1</strong>');
         });
 
+        attrs.attributeList = attrs.attribs.join(',');
+
         if(this.app.isLoggedIn()) {
           attrs.editHref = '/media/'+attrs.type.toLowerCase()+'/'+attrs.id+'/edit';
         }
