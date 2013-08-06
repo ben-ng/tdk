@@ -31,10 +31,6 @@
           this.listenTo(this.page, 'change', this.render, this);
           this.listenTo(this.media, 'change', this.render, this);
 
-          // Listen to resize event
-          window.onresize = function () {jst.resizeVideos();};
-
-
           // First make sure we can load the pages collection
           pages.once('ready', function () {
             var foundPage = pages.find(function (page) {
@@ -88,7 +84,8 @@
                     autoplay: true
                   }
                 , attributes: {
-                    resize: true
+                    center: true
+                  , resize: {maxWidth: 960}
                   }
                 , sources: [
                     {
