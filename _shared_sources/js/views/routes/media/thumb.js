@@ -18,12 +18,7 @@
           var attrs = this.media.templateVars()
             , opts = {
                 media: {
-                  sources: [
-                    {
-                      src: attrs.hdUrl
-                    , type: this.app.util.mime('video/mp4')
-                    }
-                  ]
+                  sources: []
                 , attributes: {
                     id: "media_" + this.app.util.uuid(10)
                   , resize: true
@@ -32,6 +27,23 @@
               , dimensions: this.app.config.thumbnailDims
               , domain: document.domain + (window.location.port===80?'':':'+window.location.port)
               };
+
+          if(this.media.attributes.type.toLowerCase() === 'video') {
+            opts.media.sources = [
+              {
+                src: attrs.hdUrl
+              , type: this.app.util.mime('video/mp4')
+              }
+            ];
+          }
+          else {
+            opts.media.sources = [
+              {
+                src: attrs.url
+              , type: this.app.util.mime(attrs.mimeType)
+              }
+            ];
+          }
 
           return this.getContext({
             media: attrs
