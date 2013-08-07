@@ -78,6 +78,9 @@
             && self.media.attributes
             && self.media.attributes.type.toLowerCase() === 'video'
             && self.media.attributes.status === 2) {
+
+            self.$('#vid_placeholder').empty();
+
             jst.loadVideo(self.$('#vid_placeholder')[0]
               , {
                   vjs: {
