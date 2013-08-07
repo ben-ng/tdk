@@ -85,7 +85,10 @@
                   }
                 , attributes: {
                     center: true
-                  , resize: {maxWidth: 960}
+                  , resize: {
+                      maxWidth: 960
+                    , upscale: false
+                    }
                   , width: 960
                   , height: 540
                   }

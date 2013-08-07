@@ -16,9 +16,6 @@
           var navbar = new NavbarView({app:this.app})
             , footer = new FooterView({app:this.app});
 
-          navbar.remove();
-          footer.remove();
-
           this.appendSubview(navbar, this.$('#header'));
           this.appendSubview(footer, this.$('#footer'));
 
