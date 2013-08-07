@@ -77,14 +77,20 @@
         }
         // Just sets the properties immediately
       , readInput : function (e) {
-          var self = this;
+          var self = this
+            , attrs = this.readAttributes();
 
           if(e) {
             e.preventDefault();
           }
 
-          this.media.set('name', this.$('input[name=name]').val());
-          this.media.set('attribs', this.$('input[name=attribs]').val().split(","));
+          this.media.set(attrs);
+        }
+      , readAttributes: function () {
+          return {
+            name: this.$('input[name=name]').val()
+          , attribs: this.$('input[name=attribs]').val().split(",")
+          };
         }
         //Tries to save the edited media
       , performSave: function(e) {
@@ -160,7 +166,7 @@
 
           this.app.clearFlash();
 
-          this.app.trigger("captureThumbnail");
+          this.app.trigger("captureThumbnail", this.mediaId, this.readAttributes());
           this.$('#useOriginalButton').button('loading');
         }
         //Tries to capture a frame from the video
@@ -170,7 +176,7 @@
 
           this.app.clearFlash();
 
-          this.app.trigger("captureThumbnail", this.mediaId);
+          this.app.trigger("captureThumbnail", this.mediaId, this.readAttributes());
           this.$('#useCaptureButton').button('loading');
         }
       });
