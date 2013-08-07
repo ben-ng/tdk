@@ -188,6 +188,9 @@ var _ = require('lodash')
       if (!err) {
         err = model;
       }
+      else if (err.statusText === 'timeout') {
+        err = 'The request timed out';
+      }
       // Second scenario(s)?
       else if (model.responseText) {
         err = model.responseText;
