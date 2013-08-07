@@ -306,6 +306,7 @@
 
         if(this.app.isLoggedIn()) {
           attrs.editHref = '/media/'+attrs.type.toLowerCase()+'/'+attrs.id+'/edit';
+          attrs.removeHref = '/media/'+attrs.type.toLowerCase()+'/'+attrs.id+'/remove/'+safePageName;
         }
 
         if(safePageName) {

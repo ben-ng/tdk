@@ -23,6 +23,7 @@ var _ = require('lodash')
     , 'review': require('./routes/review')
     , 'page/:name/:type/:id': require('./routes/media/show')
     , 'media/:type/:id/edit': require('./routes/media/edit')
+    , 'media/:type/:id/remove/:page': require('./routes/media/remove')
     , 'contact': require('./routes/contact')
     }
   , App = Backbone.Router.extend({

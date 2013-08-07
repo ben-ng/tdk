@@ -67,6 +67,27 @@
       , getMedia: function () {
           return this.app.db.fetchCollection('pageMedia', {app:this.app, pageId: this.id});
         }
+      , removeMedia: function(mediaId, cb) {
+          var self = this
+            , newItems = _.clone(self.attributes.items);
+
+          newItems = _.reject(newItems, function (item) {
+            return item.ID === mediaId;
+          });
+
+          self.set("items",newItems);
+          self.save(null,{
+            success:function() {
+              self.app.db.fetchCollection('unprocessedUploads').fetch();
+              self.app.db.fetchCollection('pages').fetch();
+
+              cb(null);
+            },
+            error: function (model, response) {
+              cb(response.responseText);
+            }
+          });
+        }
       , addMedia: function(cb) {
           var self = this;
 
@@ -118,7 +139,7 @@
 
                         cb(null, FPFiles);
                       },
-                      error: cb
+                      error: self.app.error
                     });
                   }
                 };
