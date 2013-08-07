@@ -59,12 +59,15 @@
       , saveThumbnail: function (base64data) {
           this.app.setFlash('info', 'Please Wait, Saving Image...');
         }
-      , captureThumbnail: function () {
+      , captureThumbnail: function (mediaId) {
           var self = this;
 
           //Send a message
-          self.app.messenger.send("capture",[],function (data) {
-            self.media.useThumbnail(data.substring(data.indexOf(",")+1));
+          self.app.messenger.send("capture",[mediaId],function (respMediaId, data) {
+            // Make sure we don't leak into other media objects
+            if(respMediaId === mediaId) {
+              self.media.useThumbnail(data.substring(data.indexOf(",")+1));
+            }
           });
         }
       });

@@ -13,7 +13,6 @@
         , 'click a.crop':'performCrop'
         , 'click a.capture':'performCapture'
         , 'click a.app': 'handleAppLink'
-        , 'change input[type=text]': 'readInput'
         }
       , initialize: function (options) {
           this.app = options.app;
@@ -80,7 +79,9 @@
       , readInput : function (e) {
           var self = this;
 
-          e.preventDefault();
+          if(e) {
+            e.preventDefault();
+          }
 
           this.media.set('name', this.$('input[name=name]').val());
           this.media.set('attribs', this.$('input[name=attribs]').val().split(","));
@@ -169,7 +170,7 @@
 
           this.app.clearFlash();
 
-          this.app.trigger("captureThumbnail");
+          this.app.trigger("captureThumbnail", this.mediaId);
           this.$('#useCaptureButton').button('loading');
         }
       });

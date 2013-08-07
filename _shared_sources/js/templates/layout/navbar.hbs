@@ -60,19 +60,9 @@
         <li><a href="{{reorderHref}}" id="reorderPageLink" class="app boxed">Sort Pages</a></li>
       {{/if}}
     {{/if}}
-    {{#if isReviewingUploads}}
-      <li><a href="{{reviewHref}}" class="current app boxed">Encoding</a></li>
-    {{/if}}
   </ul>
 </div>
 {{/if}}
-{{#unless isReviewingUploads}}
-  {{#if unprocessedCount}}
-  <div id="unprocessedPrompt" class="alert alert-info centered">
-    <a href="/review" class="btn btn-info btn-wide app">{{unprocessedPrompt}}</a>
-  </div>
-  {{/if}}
-{{/unless}}
 {{#flash}}
 <div class="alert alert-{{type}}">
   <button type="button" class="close fui-cross" data-dismiss="alert"></button>

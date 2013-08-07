@@ -17,7 +17,7 @@
   config.thumbnailDims = {width:340,height:192};
   config.flashMessage = null;
   config.s3prefix = 'https://toolkitt.s3.amazonaws.com/';
-  config.thumberUrl = 'https://toolkitt.s3.amazonaws.com/thumber.html';
+  config.thumberUrl = 'http://s3-us-west-1.amazonaws.com/toolkitt/thumber.html';
   config.videoPlayerId = "media_video";
   config.imageViewerId = "media_image";
 
