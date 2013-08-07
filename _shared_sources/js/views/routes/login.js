@@ -40,7 +40,14 @@
           var username = this.$('input[name=username]').val();
           var password = this.$('input[name=password]').val();
 
-          this.user.set({username:username,password:password}).save();
+          this.user.set({
+            username: username
+          , password: password
+          , id: null
+          , path: null
+          , policy: null
+          , token: null
+          }).save();
         }
         //Tries to provision a testing account
       , provisionTestAccount: function(e) {
