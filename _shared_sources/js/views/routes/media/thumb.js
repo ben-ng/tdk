@@ -21,7 +21,11 @@
                   sources: []
                 , attributes: {
                     id: "media_" + this.app.util.uuid(10)
-                  , resize: true
+                  , resize: {
+                      upscale: false
+                    }
+                  , width: this.media.attributes.width || 960
+                  , height: this.media.attributes.height || 540
                   }
                 }
               , dimensions: this.app.config.thumbnailDims
