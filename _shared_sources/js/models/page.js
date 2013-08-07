@@ -67,7 +67,7 @@
       , getMedia: function () {
           return this.app.db.fetchCollection('pageMedia', {app:this.app, pageId: this.id});
         }
-      , addMedia: function(cb, debug_cb) {
+      , addMedia: function(cb) {
           var self = this;
 
         //Start filepicker
@@ -82,8 +82,7 @@
               'FLICKR',
               'GOOGLE_DRIVE',
               'FTP'
-            ],
-            debug:debug_cb?true:false
+            ]
           }
         //Filepicker Options
         , {
@@ -92,6 +91,8 @@
             access:'public'
           }
         , function(FPFiles) {
+            self.app.setFlash('info', 'Just a second while we process your uploads...');
+
             if(Object.prototype.toString.call( FPFiles ) !== '[object Array]') {
               FPFiles = [FPFiles]; //wrap in an array.
             }
@@ -99,18 +100,21 @@
             var newItems = _.clone(self.attributes.items)
               , itemsToGo = FPFiles.length
 
-              //Called after all files have been saved
-              , afterItemComplete = function(new_id, new_name, type, after_save_cb) {
-                  newItems.push({ID:new_id,NAME:new_name,TYPE:type,THUMB:"http://placehold.it/320x180"});
+              //Called after a file has been saved
+              , afterItemComplete = function(savedModel) {
+                  var new_id = savedModel.id
+                    , new_name = savedModel.attributes.name
+                    , type = savedModel.attributes.type.toLowerCase();
+
+                  newItems.push({ID:new_id,NAME:new_name,TYPE:type,THUMB:savedModel.templateVars().thumbnailUrl});
                   itemsToGo--;
+
                   if(itemsToGo===0) {
                     self.set("items",newItems);
                     self.save(null,{
                       success:function() {
                         self.app.db.fetchCollection('unprocessedUploads').fetch();
                         self.app.db.fetchCollection('pages').fetch();
-
-                        after_save_cb();
 
                         cb(null, FPFiles);
                       },
@@ -147,28 +151,26 @@
                 //Set the attributes
                 model.set(opts);
 
-                //If this is a testfile, mark it as so
-                if(debug_cb) {
-                  model.set('debug',true);
-                }
-
                 //Save the model to the server
-                model.save(null,{
-                  success:function(savedModel, resp) {
-                    //Pass in a no-op callback if there was no debug callback given
-                    var after_cb;
-                    if(debug_cb) {
-                      after_cb = debug_cb;
+                if(type === 'image') {
+                  model.cropThumbnail(null, function (err) {
+                    if(err) {
+                      self.app.error(err);
                     }
                     else {
-                      after_cb=function(){};
+                      afterItemComplete(model);
                     }
-
-                    //Call the completion function
-                    afterItemComplete(savedModel.attributes.id, savedModel.attributes.name, type, after_cb);
-                  },
-                  error: self.app.error
-                });
+                  });
+                }
+                else {
+                  model.save(null, {
+                    success:function(savedModel, resp) {
+                      //Call the completion function
+                      afterItemComplete(savedModel);
+                    },
+                    error: self.app.error
+                  });
+                }
               })(FPFiles[i]);
             }
           },

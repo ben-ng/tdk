@@ -146,15 +146,22 @@
           }
         });
       }
-      /* Crops a thumbnail with filepicker.io */
-      , cropThumbnail: function(FPFile) {
+      /*
+       * Crops a thumbnail with filepicker.io
+       * set a callback if you want to use this
+       * like an API call (no flash msgs)
+       */
+      , cropThumbnail: function(FPFile, cb) {
         var self = this;
 
         if(!FPFile) {
           FPFile = self.fpfile();
         }
 
-        self.app.setFlash('info', 'Please wait while we process the image...');
+        if(!cb) {
+          self.app.setFlash('info', 'Please wait while we process the image...');
+        }
+
         filepicker.convert(FPFile,
           //Convert options
           {
@@ -172,12 +179,29 @@
           },
           function(FPFileThumb) {
             //Set s3key to null to force a re-stat
-            self.save({thumbnailFpkey:FPFileThumb.url, thumbnailS3key:null},{
+            self.save({
+                thumbnailFpkey: FPFileThumb.url
+              , thumbnailS3key: null
+              , status: 2
+              },{
               success:function() {
-                self.app.setFlash('success', 'Thumbnail saved!');
                 self.app.db.fetchCollection('unprocessedUploads').fetch();
+
+                if(!cb) {
+                  self.app.setFlash('success', 'Thumbnail saved!');
+                }
+                else {
+                  cb();
+                }
               },
-              error: self.app.error
+              error: function (model, response) {
+                if(cb) {
+                  cb(response.responseText);
+                }
+                else {
+                  self.app.error.apply(this, arguments);
+                }
+              }
             });
           },
           function(FPError) {

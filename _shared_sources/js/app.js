@@ -309,6 +309,8 @@ var _ = require('lodash')
     }
 
   , logoutFromInactivity: function () {
+      var self = this;
+
       this.navigate('logout', {trigger: true});
 
       // Need to defer as logout will redirect to homepage
