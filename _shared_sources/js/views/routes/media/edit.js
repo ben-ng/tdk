@@ -166,7 +166,7 @@
 
           this.app.clearFlash();
 
-          this.app.trigger("captureThumbnail", this.mediaId, this.readAttributes());
+          this.app.trigger("captureThumbnail", this.mediaType, this.mediaId, this.readAttributes());
           this.$('#useOriginalButton').button('loading');
         }
         //Tries to capture a frame from the video
@@ -176,7 +176,7 @@
 
           this.app.clearFlash();
 
-          this.app.trigger("captureThumbnail", this.mediaId, this.readAttributes());
+          this.app.trigger("captureThumbnail", this.mediaType, this.mediaId, this.readAttributes());
           this.$('#useCaptureButton').button('loading');
         }
       });

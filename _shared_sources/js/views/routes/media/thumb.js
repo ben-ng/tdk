@@ -59,15 +59,19 @@
       , saveThumbnail: function (base64data) {
           this.app.setFlash('info', 'Please Wait, Saving Image...');
         }
-      , captureThumbnail: function (mediaId, attributes) {
+      , captureThumbnail: function (type, mediaId, attributes) {
           var self = this;
 
           //Send a message
           self.app.messenger.send("capture",[mediaId],function (respMediaId, data) {
             // Make sure we don't leak into other media objects
             if(respMediaId === mediaId) {
-              self.media.set(attributes);
-              self.media.useThumbnail(data.substring(data.indexOf(",")+1));
+              var model = self.app.db.loadModel(type, mediaId);
+
+              model.once('ready', function () {
+                model.set(attributes);
+                model.useThumbnail(data.substring(data.indexOf(",")+1));
+              });
             }
           });
         }
