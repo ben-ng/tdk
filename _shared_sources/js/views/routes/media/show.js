@@ -92,8 +92,8 @@
                       maxWidth: 960
                     , upscale: false
                     }
-                  , width: 960
-                  , height: 540
+                  , width: self.media.attributes.width || 960
+                  , height: self.media.attributes.height || 540
                   }
                 , sources: [
                     {

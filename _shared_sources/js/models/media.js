@@ -16,6 +16,8 @@
         userId: null,
         thumbnailS3key: null,
         thumbnailFpkey: null,
+        width: 1280,
+        height: 720,
         attribs: [],
         reviewIssue: null,
         status: 0,
