@@ -66,7 +66,7 @@
           self.app.messenger.send("capture",[mediaId],function (respMediaId, data) {
             // Make sure we don't leak into other media objects
             if(respMediaId === mediaId) {
-              var model = self.app.db.loadModel(type, mediaId);
+              var model = self.app.db.fetchModel(type, mediaId);
 
               model.once('ready', function () {
                 model.set(attributes);
