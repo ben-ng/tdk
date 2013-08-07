@@ -1,6 +1,7 @@
 (function () {
 var _ = require('lodash')
   , $ = require('./helpers/JqueryLoader')
+  , jst = require('js-thumb')
   , path = require('path')
   , Backbone = require('./helpers/BackboneLoader.js')
   , Messenger = require('./helpers/lib/messenger.js')
@@ -85,6 +86,8 @@ var _ = require('lodash')
       this.error = _.bind(this.error, this);
       this.setFlash = _.bind(this.setFlash, this);
       this.clearFlash = _.bind(this.clearFlash, this);
+
+      window.onresize = jst.resizeVideos;
 
       return this;
     }
