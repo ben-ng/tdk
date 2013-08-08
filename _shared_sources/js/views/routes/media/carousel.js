@@ -20,7 +20,6 @@
           });
           var pages = this.app.db.fetchCollection('pages');
 
-          this.listenTo(this.page, 'change', this.render, this);
           this.listenTo(this.app,'videoEnded',this.advance,this);
 
           // First make sure we can load the pages collection
@@ -30,8 +29,8 @@
             });
 
             if(foundPage) {
-              // This weirdness so that bound events get called
-              this.page.set(foundPage.attributes);
+              this.page = foundPage;
+              this.listenTo(this.page, 'change', this.render, this);
             }
             else {
               this.page.set({name:'404'});
@@ -42,6 +41,8 @@
 
             this.listenTo(this.media, 'change add remove sort', this.render, this);
             this.media.once('ready', this.render, this);
+
+            this.render();
           }, this);
         }
       , context: function () {

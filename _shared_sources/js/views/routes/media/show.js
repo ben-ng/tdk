@@ -28,7 +28,6 @@
           }
 
           this.listenTo(this.app.getUser(), 'change', this.render, this);
-          this.listenTo(this.page, 'change', this.render, this);
           this.listenTo(this.media, 'change', this.render, this);
 
           // First make sure we can load the pages collection
@@ -38,13 +37,15 @@
             });
 
             if(foundPage) {
-              // This weirdness so that bound events get called
-              this.page.set(foundPage.attributes);
+              this.page = foundPage;
+              this.listenTo(this.page, 'change', this.render, this);
             }
             else {
               this.page.set({name:'404'});
               this.app.error('Error 404: The page could not be found');
             }
+
+            this.render();
           }, this);
         }
       , afterRender: function () {

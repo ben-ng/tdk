@@ -76,8 +76,9 @@
     * Under the surface, this will try to use the local cache if possible
     * @param {string} modelName - The name of the model you want (e.g. 'posts')
     * @param {string} [id] - The id of the model you want
+    * @param {Array} [attributes] - The attributes to set (will skip fetch if defined)
     */
-    this.fetchModel = function (modelName, id) {
+    this.fetchModel = function (modelName, id, attributes) {
       modelName = modelName.toLowerCase();
 
       var cacheKey = 'uuid://models/' + modelName + (id ? '/' + id : '')
@@ -102,6 +103,9 @@
         modelObj = this.createModel(modelName);
         self.cache[cacheKey] = modelObj;
 
+        if(attributes) {
+          modelObj.set(attributes);
+        }
         if(id) {
           modelObj.set({id:id});
         }
@@ -109,21 +113,27 @@
         // Trigger the fetch event on the next cycle
         // Which will give our user time to .listenTo() etc
         setTimeout(function () {
-          modelObj.fetch({
-            success: function () {
-              // Trigger the `ready` event after data has loaded
-              modelObj.isFetched = true;
-              modelObj.trigger('ready');
-            }
-          , error: function () {
-              // Trigger the `ready` event after data has loaded
-              modelObj.isFetched = true;
-              modelObj.trigger('ready');
+          if(attributes) {
+            modelObj.isFetched = true;
+            modelObj.trigger('ready');
+          }
+          else {
+            modelObj.fetch({
+              success: function () {
+                // Trigger the `ready` event after data has loaded
+                modelObj.isFetched = true;
+                modelObj.trigger('ready');
+              }
+            , error: function () {
+                // Trigger the `ready` event after data has loaded
+                modelObj.isFetched = true;
+                modelObj.trigger('ready');
 
-              // Call the error handler
-              App.error.apply(App, arguments);
-            }
-          });
+                // Call the error handler
+                App.error.apply(App, arguments);
+              }
+            });
+          }
         }, delay);
       }
 

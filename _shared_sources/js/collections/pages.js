@@ -14,8 +14,10 @@
           // FIXME: This awful situation is because `this` inside
           // the model function refers to a model, not the collection
           this.model = function(attrs, options) {
-            var p = opts.app.db.createModel('page');
-            return opts.app.db.createModel('page', p.parse(attrs));
+            var p = opts.app.db.createModel('page')
+              , parsedAttrs = p.parse(attrs);
+
+            return opts.app.db.fetchModel('page', parsedAttrs.id, parsedAttrs);
           };
         }
         // Sort by page priority, lowest first

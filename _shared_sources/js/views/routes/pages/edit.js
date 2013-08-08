@@ -17,7 +17,6 @@
           });
           var pages = this.app.db.fetchCollection('pages');
 
-          this.listenTo(this.page, 'change', this.render, this);
           this.listenTo(this.page, 'invalid', function () {
             this.app.error(this.page.validationError);
           }, this);
@@ -29,8 +28,8 @@
             });
 
             if(foundPage) {
-              // This weirdness so that bound events get called
-              this.page.set(foundPage.attributes);
+              this.page = foundPage;
+              this.listenTo(this.page, 'change', this.render, this);
             }
             else {
               this.page.set({name:'404'});
@@ -41,6 +40,8 @@
 
             this.listenTo(this.media, 'change add remove sort', this.render, this);
             this.media.once('ready', this.render, this);
+
+            this.render();
           }, this);
         }
       , context: function () {

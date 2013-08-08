@@ -12,8 +12,6 @@
           var pages = this.app.db.fetchCollection('pages')
             , unprocessed = this.app.db.fetchCollection('unprocessedUploads');
 
-          this.listenTo(this.page, 'change', this.render, this);
-
           // First make sure we can load the pages collection
           pages.once('ready', function () {
             var foundPage = pages.find(function (page) {
@@ -21,8 +19,8 @@
             });
 
             if(foundPage) {
-              // This weirdness so that bound events get called
-              this.page.set(foundPage.attributes);
+              this.page = foundPage;
+              this.listenTo(this.page, 'change', this.render, this);
             }
             else {
               this.page.set({name:'404'});
@@ -41,6 +39,8 @@
             this.listenTo(unprocessed, 'add change remove reset sync', function () {
               this.media.fetch();
             }, this);
+
+            this.render();
           }, this);
         }
       , context: function () {

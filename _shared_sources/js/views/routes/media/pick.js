@@ -18,8 +18,6 @@
           this.videos = this.app.db.fetchCollection('videos');
 
           var pages = this.app.db.fetchCollection('pages');
-
-          this.listenTo(this.page, 'change', this.render, this);
           this.listenTo(this.images, 'add remove change sort', this.render, this);
           this.listenTo(this.videos, 'add remove change sort', this.render, this);
           this.listenTo(this.app.getUser(), 'change', this.render, this);
@@ -31,8 +29,9 @@
             });
 
             if(foundPage) {
-              // This weirdness so that bound events get called
-              this.page.set(foundPage.attributes);
+              this.page = foundPage;
+
+              this.listenTo(this.page, 'change ready', this.render, this);
             }
             else {
               this.page.set({name:'404'});
@@ -96,7 +95,7 @@
           media = this.app.db.fetchModel(target.attr('data-media-type'), target.attr('data-media-id'));
 
           media.once('ready', function () {
-            if(self.page) {
+            if(self.page.attributes.name !== 'Loading...') {
               // TODO: Find the item, and append it after ready
               newItems = _.clone(self.page.attributes.items);
               newItems.push({
