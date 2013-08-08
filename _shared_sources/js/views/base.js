@@ -29,6 +29,43 @@
           next();
         }
 
+        /*
+        * Fetches a page, assigns it to this.page, listens to it and renders on change
+        * query [String] - Page name
+        * cb [Function] - function (err, page)
+        */
+      , fetchPage: function (query, cb) {
+          var self = this
+            , errmsg = 'Error 404: The page could not be found';
+
+          query = query.toLowerCase();
+
+          self.page = this.app.db.createModel('page').set({
+              name: 'Loading...'
+            });
+          self.pages = this.app.db.fetchCollection('pages');
+
+          // First make sure we can load the pages collection
+          self.pages.once('ready', function () {
+            var err
+              , foundPage = self.pages.find(function (page) {
+                return page.attributes.name.toLowerCase() === query.toLowerCase();
+              });
+
+            if(foundPage) {
+              self.page = foundPage;
+              self.listenTo(self.page, 'change', self.render, self);
+            }
+            else {
+              self.page.set({name:'404'});
+              self.app.error(errmsg);
+              err = new Error(errmsg);
+            }
+
+            cb.call(self, err, self.page);
+          });
+        }
+
       // Nice function that mixes in custom attrs to the standard context
       , getContext: function (additions) {
           var userAdditions = additions || {}

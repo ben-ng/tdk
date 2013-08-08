@@ -26,9 +26,9 @@
     }
 
   /**
-  * db (database, but not really)
+  * db: database, but not really, just an interface (:
   *
-  * Makes models and collections managable.
+  * Makes models and collections not stupid
   */
   , db = function (App) {
     var self = this;

@@ -5,28 +5,10 @@
         template: require('../../../templates/routes/media/grid.hbs')
       , initialize: function (options) {
           this.app = options.app;
-          this.page = this.app.db.createModel('page').set({
-            name: 'Loading...'
-          });
 
-          var pages = this.app.db.fetchCollection('pages')
-            , unprocessed = this.app.db.fetchCollection('unprocessedUploads');
+          var unprocessed = this.app.db.fetchCollection('unprocessedUploads');
 
-          // First make sure we can load the pages collection
-          pages.once('ready', function () {
-            var foundPage = pages.find(function (page) {
-              return page.attributes.name.toLowerCase() === options.pageName.toLowerCase();
-            });
-
-            if(foundPage) {
-              this.page = foundPage;
-              this.listenTo(this.page, 'change', this.render, this);
-            }
-            else {
-              this.page.set({name:'404'});
-              this.app.error('Error 404: The page could not be found');
-            }
-
+          this.fetchPage(options.pageName, function () {
             this.media = this.page.getMedia();
 
             // Re-fetch, things might have been updated.
@@ -41,7 +23,7 @@
             }, this);
 
             this.render();
-          }, this);
+          });
         }
       , context: function () {
           var media = [];

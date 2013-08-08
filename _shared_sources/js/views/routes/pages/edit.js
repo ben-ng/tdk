@@ -12,29 +12,11 @@
         }
       , initialize: function (options) {
           this.app = options.app;
-          this.page = this.app.db.createModel('page').set({
-            name: 'Loading...'
-          });
-          var pages = this.app.db.fetchCollection('pages');
 
-          this.listenTo(this.page, 'invalid', function () {
-            this.app.error(this.page.validationError);
-          }, this);
-
-          // First make sure we can load the pages collection
-          pages.once('ready', function () {
-            var foundPage = pages.find(function (page) {
-              return page.attributes.name.toLowerCase() === options.pageName.toLowerCase();
-            });
-
-            if(foundPage) {
-              this.page = foundPage;
-              this.listenTo(this.page, 'change', this.render, this);
-            }
-            else {
-              this.page.set({name:'404'});
-              this.app.error('Error 404: The page could not be found');
-            }
+          this.fetchPage(options.pageName, function () {
+            this.listenTo(this.page, 'invalid', function () {
+              this.app.error(this.page.validationError);
+            }, this);
 
             this.media = this.page.getMedia();
 
@@ -42,7 +24,7 @@
             this.media.once('ready', this.render, this);
 
             this.render();
-          }, this);
+          });
         }
       , context: function () {
           var media = [];
