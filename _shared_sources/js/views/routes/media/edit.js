@@ -7,17 +7,20 @@
     , EditView = View.extend({
         template: require('../../../templates/routes/media/edit.hbs')
       , events: {
-          'submit':'performSave'
+          'submit': 'performSave'
         , 'click a.btn-danger':'performDelete'
         , 'click a.upload':'performPick'
-        , 'click a.crop':'performCrop'
+        , 'click a.crop':'performCapture'
         , 'click a.capture':'performCapture'
         , 'click a.app': 'handleAppLink'
+        , 'click a.choose':'performChoose'
         }
       , initialize: function (options) {
           this.app = options.app;
           this.mediaType = options.mediaType;
           this.mediaId = options.mediaId;
+
+          this.showThumbnailPicker = false;
 
           this.media = this.app.db.fetchModel(options.mediaType, options.mediaId);
 
@@ -73,6 +76,7 @@
           return this.getContext({
             media: this.media.templateVars()
           , isEncoded: this.media.attributes.status === 2
+          , showThumbnailPicker: this.showThumbnailPicker
           });
         }
         // Just sets the properties immediately
@@ -159,16 +163,6 @@
 
           this.media.pickThumbnail();
         }
-        //Tries to pick a new thumbnail
-      , performCrop: function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-
-          this.app.clearFlash();
-
-          this.app.trigger("captureThumbnail", this.mediaType, this.mediaId, this.readAttributes());
-          this.$('#useOriginalButton').button('loading');
-        }
         //Tries to capture a frame from the video
       , performCapture: function(e) {
           e.preventDefault();
@@ -178,6 +172,13 @@
 
           this.app.trigger("captureThumbnail", this.mediaType, this.mediaId, this.readAttributes());
           this.$('#useCaptureButton').button('loading');
+        }
+      , performChoose: function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          this.showThumbnailPicker = true;
+          this.render();
         }
       });
 

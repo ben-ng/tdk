@@ -26,6 +26,15 @@
           </div>
         {{/if}}
         <input type="hidden" id="thumbnail" name="thumbnail" value="{{thumbnail}}">
+        {{#unless ../../showThumbnailPicker}}
+          {{#if isVideo}}
+            <a id="chooseFrameButton" href="#" class="btn btn-info btn-mini choose">Choose A Frame</a>
+          {{/if}}
+        {{/unless}}
+        {{#if isImage}}
+          <a id="useOriginalButton" href="#" class="btn btn-info btn-mini crop" data-loading-text="Processing...">Use Original</a>
+        {{/if}}
+        <a id="useCustomButton" href="#" class="btn btn-inverse btn-mini upload">Upload Thumbnail</a>
       </fieldset>
       {{/if}}
       <fieldset>
@@ -37,27 +46,18 @@
         </div>
       </fieldset>
     </div>
+    {{#if ../showThumbnailPicker}}
     <div class="span6">
-      <div class="row">
+      <div class="row centered">
         <div id="thumber">
         </div>
-      </div>
-      <div class="row centered">
-        <fieldset>
-          <div class="control-group">
-            <div class="controls">
-              <a id="useCustomButton" href="#" class="btn btn-inverse btn-mini upload">Upload Thumbnail</a>
-              {{#if isImage}}
-                <a id="useOriginalButton" href="#" class="btn btn-info btn-mini crop" data-loading-text="Processing...">Use Original</a>
-              {{/if}}
-              {{#if isVideo}}
-                <a id="useCaptureButton" href="#" class="btn btn-info btn-mini capture" data-loading-text="Processing...">Use Current Frame</a>
-              {{/if}}
-            </div>
-          </div>
-        </fieldset>
+        <div class="controls">
+          {{#if isVideo}}
+            <a id="useCaptureButton" href="#" class="btn btn-info btn-mini capture" data-loading-text="Processing...">Use Current Frame</a>
+          {{/if}}
       </div>
     </div>
+    {{/if}}
     </form>
   </div>
 </div>
