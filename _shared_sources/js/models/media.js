@@ -2,6 +2,7 @@
   var Model = require('./base')
     , Backbone = require('../helpers/BackboneLoader.js')
     , _ = require('lodash')
+    , stringUtils = require('utilities/lib/string')
     , Media = Model.extend({
         name:'media'
       , urlRoot: function () {
@@ -125,7 +126,7 @@
 
         filepicker.pick({
           extensions:self.app.config.imageExts,
-          path:self.app.db.fetchModel('user').attributes.path,
+          path:self.app.db.fetchModel('user').attributes.path + stringUtils.uuid(10),
           signature:self.app.db.fetchModel('user').attributes.signature,
           policy:self.app.db.fetchModel('user').attributes.policy,
           services:[
@@ -175,7 +176,7 @@
           },
           //Store options
           {
-            path:self.app.getUser().attributes.path,
+            path:self.app.getUser().attributes.path + stringUtils.uuid(10),
             location:'s3',
             access:'public'
           },
@@ -226,7 +227,7 @@
             policy: self.app.getUser().attributes.policy,
             mimetype: 'image/png',
             base64decode: true,
-            path: self.app.getUser().attributes.path,
+            path: self.app.getUser().attributes.path + stringUtils.uuid(10),
             location: 's3',
             access: 'public'
           },

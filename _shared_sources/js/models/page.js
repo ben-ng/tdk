@@ -4,6 +4,7 @@
     , Image = require('./image')
     , Backbone = require('../helpers/BackboneLoader')
     , _ = require('lodash')
+    , stringUtils = require('utilities/lib/string')
     , Page = Model.extend(
       {
         name:'page'
@@ -94,7 +95,7 @@
         //Start filepicker
           filepicker.pickAndStore({
             extensions:self.app.config.videoExts.concat(self.app.config.imageExts),
-            multiple:true,
+            multiple:false,
             signature:self.app.getUser().attributes.signature,
             policy:self.app.getUser().attributes.policy,
             services:[
@@ -108,7 +109,7 @@
         //Filepicker Options
         , {
             location:'s3',
-            path:self.app.getUser().attributes.path,
+            path:self.app.getUser().attributes.path + stringUtils.uuid(10),
             access:'public'
           }
         , function(FPFiles) {
