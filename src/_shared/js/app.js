@@ -293,7 +293,9 @@ var _ = require('lodash')
         model = this.db.fetchModel('customization', custId);
 
         // We can bootstrap the cust model with stuff from the user
-        model.set(this.getUser().attributes.customization);
+        if(this.getUser().attributes.customization) {
+          model.set(this.getUser().attributes.customization);
+        }
       }
 
       if(custId) {
@@ -307,7 +309,10 @@ var _ = require('lodash')
   , getUserVars: function () {
       var customization = this.getCustomization();
 
-      if(!customization) {
+      if(!this.isLoggedIn()) {
+        return this.bootstrap.userVars;
+      }
+      else if(!customization) {
         return this.bootstrap.userVars;
       }
       else {
