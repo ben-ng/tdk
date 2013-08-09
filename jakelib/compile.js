@@ -46,6 +46,10 @@ lessify = function (input, output, cb) {
         outBuff = tree.toCSS({ compress: true });
 
         utils.file.mkdirP(path.dirname(OUTPUT_FILE));
+
+        // Delete the LESS dir, no need for it anymore!
+        utils.file.rmRf( LESS_DIR , {silent:true});
+
         fs.writeFileSync(OUTPUT_FILE, outBuff);
 
         cb();
@@ -83,6 +87,7 @@ enhanceSourcemapWithContent = function (inputmap, outputmap) {
   return JSON.stringify(output);
 };
 
+// Separates code from sourcemap
 decoupleBundle = function (src) {
   var marker = '//@ sourceMappingURL=data:application/json;base64,'
     , offset = src.indexOf(marker)
@@ -94,14 +99,6 @@ decoupleBundle = function (src) {
   catch(e) {
     throw e;
   }
-
-  /*
-  map.sources = _.map(map.sources, function (val) {
-    return val.replace(/^.*src\/_shared\/js\//, '/js/').replace(/^.*node_modules/,'/js/node_modules');
-  });
-  */
-
-  //map.file = '/js/scripts.js';
 
   return {
     code: src
@@ -149,10 +146,13 @@ browserify = function (inputFile, output, cb) {
 
     minBuff.map = enhanceSourcemapWithContent(outBuff.map, minBuff.map);
 
+    // Remove JS dir, no need for it anymore!
+    utils.file.rmRf( path.dirname(OUTPUT_FILE) , {silent:true});
+
     fs.writeFileSync(OUTPUT_FILE, minBuff.code  + ';;;\n/*\n//@ sourceMappingURL=/js/scripts.map\n*/\n');
     fs.writeFileSync(OUTPUT_MAP, minBuff.map);
 
-    complete();
+    cb();
   }));
 }
 
@@ -218,7 +218,7 @@ compile = function (base, input, output, opts, cb) {
       }
 
       // Delete temp dir
-      utils.file.rmRf(TEMP_DIR);
+      utils.file.rmRf(TEMP_DIR, {silent:true});
 
       cb();
     });
