@@ -148,6 +148,7 @@ browserify = function (inputFile, output, cb) {
 
     // Remove JS dir, no need for it anymore!
     utils.file.rmRf( path.dirname(OUTPUT_FILE) , {silent:true});
+    utils.file.mkdirP(path.dirname(OUTPUT_FILE));
 
     fs.writeFileSync(OUTPUT_FILE, minBuff.code  + ';;;\n/*\n//@ sourceMappingURL=/js/scripts.map\n*/\n');
     fs.writeFileSync(OUTPUT_MAP, minBuff.map);
