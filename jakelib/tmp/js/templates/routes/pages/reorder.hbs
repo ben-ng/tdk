@@ -1,0 +1,25 @@
+<div class="container">
+  <div id="header">
+  </div>
+  <div id="content" class="row">
+    <div class="span4 offset4 centered">
+    <form>
+      <fieldset>
+        <legend>Drag To Sort</legend>
+        <ul class="sortable pageSortable">
+        {{#each pages}}
+          <li data-uuid="{{id}}">{{name}}</li>
+        {{/each}}
+        </ul>
+      </fieldset>
+      <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success" data-loading-text="Saving...">Save</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+<div id="footer" class="bottom-menu">
+</div>

@@ -1,0 +1,28 @@
+<div class="container">
+  <div id="header">
+  </div>
+  <div id="content" class="row">
+    <div class="alert alert-block">
+      <h3>This Is All Your Media</h3>
+      <p>
+        Select a file to add it to {{page.name}}, or <a href="{{uploadUrl}}" class="app">Upload A New File</a>.
+      </p>
+    </div>
+    <ul class="reelgrid">
+    {{#each media}}
+      <li>
+        <div class="relfix">
+          <a href="#" data-media-id="{{id}}" data-media-type="{{type}}">
+            <img src="{{thumbnailUrl}}" alt="{{name}}" />
+            <div class="captions centered">
+              <h2>{{name}}</h2>
+            </div>
+          </a>
+        </div>
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</div>
+<div id="footer" class="bottom-menu">
+</div>

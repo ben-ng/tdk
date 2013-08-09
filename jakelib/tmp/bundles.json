@@ -1,0 +1,14 @@
+{
+  "css/styles.css": [
+    "css/video-js.css",
+    "css/elastislide.css",
+    "css/jquery.fancybox.css",
+    "css/jquery.fancybox-buttons.css",
+    "css/jquery.fancybox-thumbs.css",
+    "css/bootstrap.css",
+    "css/bootstrap-responsive.css",
+    "less/flat-ui.less",
+    "css/qunit.css",
+    "css/guiders.css"
+  ]
+}

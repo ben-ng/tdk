@@ -1,0 +1,42 @@
+<div class="container">
+  <div id="header">
+  </div>
+  <div id="content" class="row">
+    <div class="span6 offset3">
+      {{#if isLoggedIn}}
+        <div class="alert alert-info">
+          <h3>Welcome Back, {{user.username}}</h3>
+          <p>You're now able to edit your website.</p>
+          <a href="/" class="btn btn-info btn-wide app">Go to homepage</a>
+          <a href="/logout" class="btn btn-danger btn-wide app">Log Out</a>
+        </div>
+      {{else}}
+        {{#if debug}}
+          <div class="alert alert-info">
+            <h3>Test Account Available</h3>
+            <p>This app is running in debug mode. Click the button below to provision a temporary account.</p>
+            <a class="provisionTestAccount btn btn-info btn-block">Create Test Account</a>
+          </div>
+        {{/if}}
+        {{#if user.error}}
+          <div class="alert alert-error">
+            {{user.error}}
+          </div>
+        {{/if}}
+        <form>
+          <div class="control-group">
+            <input type="text" name="username" value="{{user.username}}" class="span6" placeholder="Username" />
+          </div>
+          <div class="control-group">
+            <input type="password" name="password" value="" class="span6" placeholder="Password" />
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+          </div>
+        </form>
+      {{/if}}
+    </div>
+  </div>
+</div>
+<div id="footer" class="bottom-menu">
+</div>

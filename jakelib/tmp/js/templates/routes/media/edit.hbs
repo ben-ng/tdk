@@ -1,0 +1,66 @@
+{{#with media}}
+<div class="container">
+  <div id="header">
+  </div>
+  <div id="content" class="row">
+    <form>
+    <div class="span6">
+      <fieldset>
+        <legend>Title</legend>
+        <input type="text" id="fileNameField" name="name" placeholder="Untitled {{type}}" value="{{name}}">
+      </fieldset>
+      <fieldset>
+        <legend>Labels <span data-toggle="tooltip" data-title="Example Labels" data-content="These appear on your website. You can use single words like &quot;&lt;strong&gt;Superbowl&lt;/strong&gt;&quot; or &quot;&lt;strong&gt;Director:&lt;/strong&gt; Michael Bay&quot; to bold the first word.&lt;/p&gt;" class="fui-question"></span></legend>
+        <input name="attribs" class="tagsinput tagsinput-primary" value="{{attributeList}}" id="tags1371235017630" style="display: none;" />
+      </fieldset>
+      {{#if ../isEncoded}}
+      <fieldset>
+        <legend>Thumbnail</legend>
+        {{#if thumbnailS3key}}
+          <p>
+            <img src="{{thumbnailUrl}}" class="thumbHolder img-polaroid" alt="{{name}} Thumbnail" />
+          </p>
+        {{else}}
+          <div class="alert alert-warning">
+            <big>No thumbnail yet! Select or upload one.</big>
+          </div>
+        {{/if}}
+        <input type="hidden" id="thumbnail" name="thumbnail" value="{{thumbnail}}">
+        {{#unless ../../showThumbnailPicker}}
+          {{#if isVideo}}
+            <a id="chooseFrameButton" href="#" class="btn btn-info btn-mini choose">Choose A Frame</a>
+          {{/if}}
+        {{/unless}}
+        {{#if isImage}}
+          <a id="useOriginalButton" href="#" class="btn btn-info btn-mini crop" data-loading-text="Processing...">Use Original</a>
+        {{/if}}
+        <a id="useCustomButton" href="#" class="btn btn-inverse btn-mini upload">Upload Thumbnail</a>
+      </fieldset>
+      {{/if}}
+      <fieldset>
+        <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-success">Save</button>
+            <!-- <a class="btn btn-danger">Delete</a> -->
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    {{#if ../showThumbnailPicker}}
+    <div class="span6">
+      <div class="row centered">
+        <div id="thumber">
+        </div>
+        <div class="controls">
+          {{#if isVideo}}
+            <a id="useCaptureButton" href="#" class="btn btn-info btn-mini capture" data-loading-text="Processing...">Use Current Frame</a>
+          {{/if}}
+      </div>
+    </div>
+    {{/if}}
+    </form>
+  </div>
+</div>
+<div id="footer" class="bottom-menu">
+</div>
+{{/with}}

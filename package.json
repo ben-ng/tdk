@@ -22,7 +22,6 @@
     "cli-color": "0.2.x",
     "lodash": "1.3.x",
     "async": "0.2.x",
-    "node-minify": "0.7.x",
     "less": "1.4.x",
     "node-static": "0.6.x",
     "backbone": "1.0.x",
@@ -34,9 +33,13 @@
     "qunit-tap": "1.3.x",
     "uglifyify": "0.0.x",
     "envify": "0.0.x",
-    "uglifyify": "0.0.x",
+    "atob": "1.1.x",
     "js-thumb": "0.0.x",
-    "videojs": "0.0.x"
+    "videojs": "0.0.x",
+    "uglify-js": "2.3.x",
+    "mold-source-map": "0.2.x",
+    "concat-stream": "1.0.x",
+    "source-map": "0.1.x"
   },
   "devDependencies": {
     "qunit": "~0.5.15",

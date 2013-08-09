@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{userVars.sitetitle.value}}</title>
+    <link rel="stylesheet" href="css/styles.css?cachebust={{cachebust}}" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/javascript" src="//api.filepicker.io/v1/filepicker.js"></script>
+    <script>
+      // Bootstrapped vars get mixed into app.bootstrap on app start
+      window.bootstrap = {
+        userVars: JSON.parse(decodeURIComponent('{{userVarsSerialized}}'))
+      , debug: false
+      , userId: '{{userId}}'
+      , themeId: '{{themeId}}'
+      , customizationId: '{{customizationId}}'
+      };
+      filepicker.setKey('{{fpkey}}');
+    </script>
+    <script src="js/scripts.js?cachebust={{cachebust}}"></script>
+  </body>
+</html>

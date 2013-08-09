@@ -29,34 +29,30 @@
 
 ## Overview
 
-The backbone app in `_shared_sources` forms the core of every Toolkitt portfolio. On every deploy we browserify the Javascript, compile the LESS, and place the results into `_shared`.
-
-Custom themes go in folders in the root. As of right now, the only theme is `basic`. Themes must minimally contain two files, `index.html` and `info.js`. Take a look at the `basic` folder to see minimal implementations of these two files.
-
-When a portfolio is deployed, Toolkitt will merge the theme folder with the `_shared` folder, giving custom theme files priority. This means that at this point of time, only CSS and image replacements are possible.
-
-In a few more weeks, we will merge themes with the `_shared_sources` folder instead, so that themes can override files before the packaging process starts. The main issue here is that packaging up a custom site for every user is computationally expensive.
+The backbone app in `src/_shared` forms the core of every Toolkitt portfolio. On every deploy we browserify the Javascript, compile the LESS, and place the results into `build`. Themes work by overriding the files in the base theme.
 
 ## Project Structure
 
 ```
-|-  _shared          // Where the portfolio app is built
-|-  _shared_sources  // The actual portfolio code is here
-  |- css             // CSS code from libraries
-  |- less            // LESS code from libraries
-    |- custom.less   // Where all our customizations are
-  |- js              // Where the Backbone app is
-    |- collections   // Backbone Collections
-    |- config        // Config vars
-    |- helpers       // Database, jQuery, Backbone, utility helpers
-      |- lib         // jQuery plugins and other libraries
-    |- models        // Backbone Models
-    |- routes        // Routes handle naviagation events, usually loading up a view
-    |- templates     // Handlebars templates that views use
-    |- views         // Views handle things like responding to events and rendering templates
+|-  build          // Where the built themes go
+|-  src            // The actual portfolio themes are here
+  |- _shared       // The base that all another themes inherit from
+    |- css             // CSS code from libraries etc
+    |- less            // LESS code from libraries etc
+      |- custom.less   // Where Toolkitt's customizations are
+    |- js              // Where the Backbone app is
+      |- collections   // Backbone Collections
+      |- config        // Config vars
+      |- helpers       // Database, jQuery, Backbone, utility helpers
+        |- lib         // jQuery plugins and other libraries
+      |- models        // Backbone Models
+      |- routes        // Routes handle naviagation events, usually loading up a view
+      |- templates     // Handlebars templates that views use
+      |- views         // Views handle things like responding to events and rendering templates
 |
-|-  _test            // The test app is built here
-|-  _test_sources    // Where the test app sources are kept
+|-  test
+  |-  src    // Where the test app sources are kept
+  |- build   // Where the test app is built
 ```
 
 ## How To Develop
