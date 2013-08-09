@@ -1859,14 +1859,17 @@ input.search-query{padding-right:6px;padding-left:6px;margin-bottom:0;-webkit-bo
 #qunit-testresult .module-name{font-weight:bold}
 #qunit-fixture{position:absolute;top:-10000px;left:-10000px;width:1000px;height:1000px}
 body.dark{background-color:#000;padding:0}
-#header{margin:20px 0 0 0}
+#header{margin:0}#header h1{font-size:38px;color:#000}#header h1 a{color:#000}
+#header h1 a:hover,#header h1 a:active{color:#2980b9}
+#header .topbar{background-color:#000;margin-bottom:20px}#header .topbar .nav{margin:0}
+@media (min-width:480px){#header .topbar{}#header .topbar ul.nav-boxes li{margin:0 10px;display:inline-block} #header .topbar .rightaligned-boxes ul.nav-boxes{display:block} #header .topbar .rightaligned-boxes a{float:left} #header .topbar * html .rightaligned-boxes ul.nav-boxes{display:inline} #header .topbar *+html .rightaligned-boxes ul.nav-boxes{display:inline}}#header .topbar ul.nav-boxes li a.boxed{color:#FFF;padding:10px;text-transform:uppercase;transition:0.4s;-moz-transition:0.4s;-webkit-transition:0.4s;-o-transition:0.4s}
+#header .topbar ul.nav-boxes li a.boxed:hover,#header .topbar ul.nav-boxes li a.boxed:active,#header .topbar ul.nav-boxes li a.boxed.current{color:#2980b9;background:#fff -webkit-linear-gradient(#eaeaea 0, #fff 14.9%, #f4f4f4 100%)}
+#header .pagebar{}@media (min-width:480px){#header .pagebar{}#header .pagebar ul.nav-boxes li{margin:0 10px;display:inline-block} #header .pagebar .rightaligned-boxes ul.nav-boxes{display:block} #header .pagebar .rightaligned-boxes a{float:left} #header .pagebar * html .rightaligned-boxes ul.nav-boxes{display:inline} #header .pagebar *+html .rightaligned-boxes ul.nav-boxes{display:inline}}#header .pagebar ul.nav-boxes li a.boxed{color:#222;padding:10px;text-transform:uppercase;border:2px solid transparent;transition:0.4s;-moz-transition:0.4s;-webkit-transition:0.4s;-o-transition:0.4s}
+#header .pagebar ul.nav-boxes li a.boxed:hover,#header .pagebar ul.nav-boxes li a.boxed:active,#header .pagebar ul.nav-boxes li a.boxed.current{border:2px solid #222;background-color:transparent}
 h1.title{font-size:100px;color:#000}
-.centered,.centered-boxes{text-align:center}
+.centered{text-align:center}
+.rightaligned-boxes{text-align:right}
 img.flatIcon{width:128px;height:128px}
-@media (min-width:480px){ul.nav-boxes li{margin:0 10px;display:inline-block} .centered-boxes ul.nav-boxes{display:block} .centered-boxes a{float:left} * html .centered-boxes ul.nav-boxes{display:inline} *+html .centered-boxes ul.nav-boxes{display:inline}}ul.nav-boxes li a.boxed{color:#222;padding:10px;text-transform:uppercase;border:2px solid transparent;transition:0.4s;-moz-transition:0.4s;-webkit-transition:0.4s;-o-transition:0.4s}
-ul.nav-boxes li a.boxed:hover,ul.nav-boxes li a.boxed:active,ul.nav-boxes li a.boxed.current{border:2px solid #222;background-color:transparent}
-ul.nav-boxes li a.pageStatus{color:#7f8c8d;float:none;background-color:transparent;font-size:0.8em;display:inline-block}
-ul.nav-boxes li a.pageStatus:hover,ul.nav-boxes li a.pageStatus:active,ul.nav-boxes li a.pageStatus:current{color:#2980b9}
 img.pull-left.padded{margin:0 20px 20px 0}
 ul.mediagrid li{display:inline-block;list-style-type:none;width:360px;height:203px;margin:0}
 ul.carousel .relfix,ul.mediagrid .relfix,ul.reelgrid .relfix{position:relative;z-index:1}

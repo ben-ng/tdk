@@ -143,6 +143,7 @@ task('compile', {async: true}, function () {
           else {
             console.log('built ' + val.name);
           }
+          complete();
         }
       };
     });

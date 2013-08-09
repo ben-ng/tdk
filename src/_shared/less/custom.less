@@ -5,7 +5,86 @@ body.dark {
 }
 /* Navbar (Header) */
 #header {
-  margin: 20px 0 0 0;
+  margin: 0;
+
+  h1 {
+    font-size: 38px;
+    color: #000;
+
+    a {
+      color: #000;
+    }
+
+    a:hover,
+    a:active {
+      color: @belize-hole;
+    }
+  }
+
+  .topbar {
+    background-color: #000;
+    margin-bottom: 20px;
+
+    .nav {
+      margin: 0;
+    }
+
+    @media (min-width: 480px) {
+      ul.nav-boxes li {
+        margin: 0 10px;
+        display:inline-block;
+      }
+      .rightaligned-boxes ul.nav-boxes { display:block; }
+      .rightaligned-boxes a { float:left; }
+      * html .rightaligned-boxes ul.nav-boxes { display:inline; } /* IE6 */
+      *+html .rightaligned-boxes ul.nav-boxes { display:inline; } /* IE7 */
+    }
+    ul.nav-boxes li a.boxed {
+      color:#FFF;
+      padding:10px;
+      text-transform: uppercase;
+      transition: 0.4s;
+      -moz-transition: 0.4s;
+      -webkit-transition: 0.4s;
+      -o-transition: 0.4s;
+    }
+    ul.nav-boxes li a.boxed:hover,
+    ul.nav-boxes li a.boxed:active,
+    ul.nav-boxes li a.boxed.current {
+      color: @belize-hole;
+      background: #FFF -webkit-linear-gradient(#eaeaea 0%, #ffffff 14.9%, #f4f4f4 100%);
+    }
+  }
+
+  .pagebar {
+    /* Center pills */
+    @media (min-width: 480px) {
+      ul.nav-boxes li {
+        margin: 0 10px;
+        display:inline-block;
+      }
+      .rightaligned-boxes ul.nav-boxes { display:block; }
+      .rightaligned-boxes a { float:left; }
+      * html .rightaligned-boxes ul.nav-boxes { display:inline; } /* IE6 */
+      *+html .rightaligned-boxes ul.nav-boxes { display:inline; } /* IE7 */
+    }
+    ul.nav-boxes li a.boxed {
+      color:#222;
+      padding:10px;
+      text-transform: uppercase;
+      border:2px solid transparent;
+      transition: 0.4s;
+      -moz-transition: 0.4s;
+      -webkit-transition: 0.4s;
+      -o-transition: 0.4s;
+    }
+    ul.nav-boxes li a.boxed:hover,
+    ul.nav-boxes li a.boxed:active,
+    ul.nav-boxes li a.boxed.current {
+      border:2px solid #222;
+      background-color: transparent;
+    }
+  }
 }
 /*Ginormous h1*/
 h1.title {
@@ -13,7 +92,12 @@ h1.title {
   color: #000;
 }
 /* Center text */
-.centered,.centered-boxes { text-align:center; }
+.centered {
+  text-align: center;
+}
+.rightaligned-boxes {
+  text-align:right;
+}
 /*
 * Flat-UI Icons are 128x128px
 * We set them explicitly so that guiders can be
@@ -22,45 +106,6 @@ h1.title {
 img.flatIcon {
   width:128px;
   height:128px;
-}
-/* Center pills */
-@media (min-width: 480px) {
-  ul.nav-boxes li {
-    margin: 0 10px;
-    display:inline-block;
-  }
-  .centered-boxes ul.nav-boxes { display:block; }
-  .centered-boxes a { float:left; }
-  * html .centered-boxes ul.nav-boxes { display:inline; } /* IE6 */
-  *+html .centered-boxes ul.nav-boxes { display:inline; } /* IE7 */
-}
-ul.nav-boxes li a.boxed {
-  color:#222;
-  padding:10px;
-  text-transform: uppercase;
-  border:2px solid transparent;
-  transition: 0.4s;
-  -moz-transition: 0.4s;
-  -webkit-transition: 0.4s;
-  -o-transition: 0.4s;
-}
-ul.nav-boxes li a.boxed:hover,
-ul.nav-boxes li a.boxed:active,
-ul.nav-boxes li a.boxed.current {
-  border:2px solid #222;
-  background-color: transparent;
-}
-ul.nav-boxes li a.pageStatus {
-  color: @asbestos;
-  float: none;
-  background-color: transparent;
-  font-size: 0.8em;
-  display: inline-block;
-}
-ul.nav-boxes li a.pageStatus:hover,
-ul.nav-boxes li a.pageStatus:active,
-ul.nav-boxes li a.pageStatus:current {
-  color: @belize-hole;
 }
 /* Utility class for padding profile pictures*/
 img.pull-left.padded { margin:0 20px 20px 0; }
