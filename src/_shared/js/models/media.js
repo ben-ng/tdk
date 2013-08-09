@@ -303,9 +303,11 @@
 
         attrs.attributeList = attrs.attribs.join(',');
 
+        /*
         attrs.attribs = _.map(attrs.attribs, function (attrib) {
           return attrib.replace(/^(.*:)/, '<strong>$1</strong>');
         });
+        */
 
         if(this.app.isLoggedIn()) {
           attrs.editHref = '/media/'+attrs.type.toLowerCase()+'/'+attrs.id+'/edit';
