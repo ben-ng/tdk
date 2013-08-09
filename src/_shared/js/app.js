@@ -17,6 +17,7 @@ var _ = require('lodash')
     , 'createPage': require('./routes/pages/create')
     , 'page/:name': require('./routes/pages/show')
     , 'page/:name/edit': require('./routes/pages/edit')
+    , 'page/:name/edit/:action/immediately': require('./routes/pages/quickEdit')
     , 'reorder': require('./routes/pages/reorder')
     , 'page/:name/addMedia': require('./routes/media/add')
     , 'page/:name/pickMedia': require('./routes/media/pick')
@@ -184,6 +185,8 @@ var _ = require('lodash')
     *   error(err)
     */
   , error: function (model, err) {
+      console.log(arguments);
+
       // Third Scenario
       if (!err) {
         err = model;

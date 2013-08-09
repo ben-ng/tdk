@@ -1,45 +1,46 @@
 {{#if isLoggedIn}}
 <div class="row topbar">
-  <div class="span12">
-    <div class="rightaligned-boxes">
-      <ul class="nav nav-boxes actionable">
-        {{#if isPage}}
-          {{#if isAddingMedia}}
-            <li><a href="{{addMediaHref}}" id="addMediaLink" class="current app boxed">Add Media</a></li>
-          {{else}}
-            <li><a href="{{addMediaHref}}" id="addMediaLink" class="app boxed">Add Media</a></li>
-          {{/if}}
-          {{#if isEditingPage}}
-            <li><a href="{{editPageHref}}" class="current app boxed">Edit Page</a></li>
-          {{else}}
-            <li><a href="{{editPageHref}}" class="app boxed">Edit Page</a></li>
-          {{/if}}
-        {{/if}}
-        {{#if isCreatingPage}}
-          <li><a href="{{createHref}}" id="newPageLink" class="current app boxed">New Page</a></li>
-        {{else}}
-          <li><a href="{{createHref}}" id="newPageLink" class="app boxed">New Page</a></li>
-        {{/if}}
-        {{#if hasAtLeastTwoPages}}
-          {{#if isReorderingPages}}
-            <li><a href="{{reorderHref}}" id="reorderPageLink" class="current app boxed">Sort Pages</a></li>
-          {{else}}
-            <li><a href="{{reorderHref}}" id="reorderPageLink" class="app boxed">Sort Pages</a></li>
-          {{/if}}
-        {{/if}}
-        <!--
-        {{#if ../isLoggedIn}}
-          <br />
-          {{#if isPublished}}
-            <a href="{{editHref}}" class="app pageStatus">Public</a>
-          {{else}}
-            <a href="{{editHref}}" class="app pageStatus">Private</a>
-          {{/if}}
-        {{/if}}
-        -->
-      </ul>
-    </div>
-  </div>
+  <ul class="nav nav-boxes actionable">
+    {{#if isPage}}
+      {{#if isPublished}}
+        <li class="privacy"><a href="{{editPageMakePrivateHref}}" class="current app boxed public">Public</a></li>
+      {{else}}
+        <li class="privacy"><a href="{{editPageMakePublicHref}}" class="current app boxed private">Private</a></li>
+      {{/if}}
+      {{#if isAddingMedia}}
+        <li><a href="{{addMediaHref}}" id="addMediaLink" class="current app boxed">Add Media</a></li>
+      {{else}}
+        <li><a href="{{addMediaHref}}" id="addMediaLink" class="app boxed">Add Media</a></li>
+      {{/if}}
+      {{#if isEditingPage}}
+        <li><a href="{{editPageHref}}" class="current app boxed">Edit Page</a></li>
+      {{else}}
+        <li><a href="{{editPageHref}}" class="app boxed">Edit Page</a></li>
+      {{/if}}
+    {{/if}}
+    {{#if isCreatingPage}}
+      <li><a href="{{createHref}}" id="newPageLink" class="current app boxed">New Page</a></li>
+    {{else}}
+      <li><a href="{{createHref}}" id="newPageLink" class="app boxed">New Page</a></li>
+    {{/if}}
+    {{#if hasAtLeastTwoPages}}
+      {{#if isReorderingPages}}
+        <li><a href="{{reorderHref}}" id="reorderPageLink" class="current app boxed">Sort Pages</a></li>
+      {{else}}
+        <li><a href="{{reorderHref}}" id="reorderPageLink" class="app boxed">Sort Pages</a></li>
+      {{/if}}
+    {{/if}}
+    <!--
+    {{#if ../isLoggedIn}}
+      <br />
+      {{#if isPublished}}
+        <a href="{{editHref}}" class="app pageStatus">Public</a>
+      {{else}}
+        <a href="{{editHref}}" class="app pageStatus">Private</a>
+      {{/if}}
+    {{/if}}
+    -->
+  </ul>
 </div>
 {{/if}}
 <div class="row pagebar">

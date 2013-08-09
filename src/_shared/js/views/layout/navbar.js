@@ -19,6 +19,9 @@
       , context: function () {
           var addMediaHref = null
             , editPageHref = null
+            , editPageMakePublicHref = null
+            , editPageMakePrivateHref = null
+            , isPublished = null
             , modelAttrs = []
             //Count unprocessed files etc
             , unprocessedCount = this.unprocessed.length
@@ -58,7 +61,10 @@
             ) {
               attrs.active = true;
               editPageHref = attrs.editHref;
+              editPageMakePublicHref = attrs.editHref + '/makePublic/immediately';
+              editPageMakePrivateHref = attrs.editHref + '/makePrivate/immediately';
               addMediaHref = attrs.addHref;
+              isPublished = attrs.isPublished;
             }
             modelAttrs.push(attrs);
           }, this);
@@ -67,6 +73,8 @@
           return this.getContext({
             pages:modelAttrs,
             editPageHref:editPageHref,
+            editPageMakePublicHref:editPageMakePublicHref,
+            editPageMakePrivateHref:editPageMakePrivateHref,
             addMediaHref:addMediaHref,
             showContact:showContact,
             createHref:'/createPage',
@@ -74,6 +82,7 @@
             reorderHref:'/reorder',
             hasAtLeastTwoPages: this.pages.length > 1,
             isHome:Backbone.history.fragment === '',
+            isPublished:isPublished,
             isContact:Backbone.history.fragment.match(/^contact/)?true:false,
             isPage:Backbone.history.fragment.match(/^(edit)?[pP]age\//)?true:false,
             isEditingPage:Backbone.history.fragment.match(/^page\/[a-zA-Z0-9\-]+\/edit$/)?true:false,
