@@ -27,6 +27,12 @@
             this.render();
           });
         }
+      , beforeRender: function () {
+          $('body').addClass('dark');
+        }
+      , beforeClose: function () {
+          $('body').removeClass('dark');
+        }
       , afterRender: function () {
         var self = this
           , mediaTemplateVars = this.media.templateVars()

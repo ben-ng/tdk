@@ -1897,7 +1897,7 @@ a.carouselControl.reelToggle small{font-size:10px;line-height:14px;text-transfor
 .elastislide-carousel ul li a img{border:none}
 .elastislide-horizontal.elastislide-loading{background-image:url(/img/loading_dark.gif)}
 @media screen and (max-width:460px){.elastislide-horizontal{padding:10px 40px}}.btn.btn-micro{padding:4px 6px}
-.media_meta{color:#000;margin-top:40px;text-transform:uppercase}
+.media_meta{color:#FFF;margin-top:40px;text-transform:uppercase}
 .media_meta ul{list-style-type:none;margin:0}
 .media_meta li{color:#CCC;font-size:20px}
 .has-switch span{font-size:11.994px}
