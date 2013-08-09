@@ -25,11 +25,16 @@
 
           try {
             data.config = JSON.parse(data.config);
-            data.diffs = JSON.parse(data.diffs);
           }
           catch(e) {
             data.config = {};
-            data.diffs = {}
+          }
+
+          try {
+            data.diffs = JSON.parse(data.diffs);
+          }
+          catch(e) {
+            data.diffs = {};
           }
 
           return data;
