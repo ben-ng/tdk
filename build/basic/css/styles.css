@@ -1905,5 +1905,6 @@ ul.sortable.pageSortable{-webkit-user-select:none;-moz-user-select:none;-ms-user
 ul.sortable.pageSortable li.disabled{opacity:0.5}
 ul.sortable.pageSortable li.highlight{background:#FEE25F}
 ul.sortable.pageSortable li.sortable-placeholder{border:1px dashed #CCC;background:none}
+#contact{text-transform:uppercase}
 .bottom-menu{background:transparent}
 .control-group .controls{padding-top:25px}

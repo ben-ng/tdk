@@ -2,10 +2,10 @@
   <div id="header">
   </div>
   <div id="content" class="row">
-    <div class="span6 offset3 centered">
-      <form>
+    <div class="span6">
+      <form id="contact">
         <fieldset>
-          <legend>Send {{sitetitle.value}} A Message</legend>
+          <legend>Send Me A Message</legend>
           <label class="control-label" for="name">Your Name</label>
           <input type="text" id="name" name="name" placeholder="John Doe" class="span6" value="{{nameVal}}">
           <label class="control-label" for="email">Your Email</label>
@@ -14,7 +14,7 @@
           <textarea id="message" name="message" placeholder="Your Message" rows="5" class="span6">{{messageVal}}</textarea>
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn btn-success" data-loading-text="Sending...">Send</button>
+              <button type="submit" class="btn btn-inverse" data-loading-text="Sending...">Send</button>
             </div>
           </div>
         </fieldset>
