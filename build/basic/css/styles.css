@@ -1869,6 +1869,7 @@ body.dark{background-color:#000;padding:0}
 #header .topbar ul.nav-boxes li.privacy a.hover{color:#2980b9;border-bottom:4px solid #2980b9}
 #header .pagebar{}@media (min-width:480px){#header .pagebar{}#header .pagebar ul.nav-boxes li{margin:0 10px;display:inline-block} #header .pagebar .rightaligned-boxes ul.nav-boxes{display:block} #header .pagebar .rightaligned-boxes a{float:left} #header .pagebar * html .rightaligned-boxes ul.nav-boxes{display:inline} #header .pagebar *+html .rightaligned-boxes ul.nav-boxes{display:inline}}#header .pagebar ul.nav-boxes li a.boxed{color:#222;padding:10px;text-transform:uppercase;border:2px solid transparent;transition:0.4s;-moz-transition:0.4s;-webkit-transition:0.4s;-o-transition:0.4s}
 #header .pagebar ul.nav-boxes li a.boxed:hover,#header .pagebar ul.nav-boxes li a.boxed:active,#header .pagebar ul.nav-boxes li a.boxed.current{border:2px solid #222;background-color:transparent}
+#header .pagebar .nav{margin:10px 0}
 h1.title{font-size:100px;color:#000}
 .centered{text-align:center}
 .rightaligned-boxes{text-align:right}
