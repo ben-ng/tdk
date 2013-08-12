@@ -4,8 +4,7 @@ var utils = require('utilities')
   , less  = require('less')
   , brwsify = require('browserify')
   , envify = require('envify/custom')
-  , minifyify = require('minifyify')
-  , mold = require('mold-source-map')
+  , minifyify = require('../../minifyify')
   , _ = require('lodash')
   , TEMP_DIR = path.join(__dirname, 'tmp')
   , lessify
@@ -51,79 +50,17 @@ lessify = function (input, output, cb) {
     });
 };
 
-// Fixes warnings from the browserify prelude
-fixSourcemapForPrelude = function (sourcemap) {
-  var BROWSER_PACK_FILE = path.join(__dirname, '..', 'node_modules', 'browserify', 'node_modules', 'browser-pack', 'prelude.js')
-    , preludeData = fs.readFileSync(BROWSER_PACK_FILE).toString()
-    , consumer = new SMConsumer(sourcemap)
-    , preludeConsumer
-    , generator = SMGenerator.fromSourceMap(consumer)
-    , srcFile = '/node_modules/browserify/node_modules/browser-pack/prelude.js'
-    , preludeMap;
-
-  // Otherwise uglifyjs will remove everything ):
-  // compression options `unused` and `dead_code` don't seem to work
-  preludeData = preludeData + '();'
-
-  // Create a sourcemap using uglify (which browserify also uses)
-  preludeMap = uglify.minify(preludeData, {
-    outSourceMap: 'js/prelude.map'
-  , fromString: true
-  , compress: {
-      unused: false
-    , dead_code: false
-    }
-  }).map;
-
-  // Add these mappings to our sourcemap
-  preludeConsumer = new SMConsumer(preludeMap);
-  preludeConsumer.eachMapping(function (mapping) {
-    generator.addMapping({
-      generated: {line:mapping.generatedLine, column: mapping.generatedColumn}
-    , original: {line:mapping.originalLine, column: mapping.originalColumn}
-    , source: srcFile
-    });
-  });
-
-  generator.setSourceContent(srcFile, preludeData)
-
-  return generator.toString();
-}
-
-// Adds sourcecontent to sourcemap
-enhanceSourcemapWithContent = function (inputmap, outputmap) {
-  var output = JSON.parse(outputmap);
-
-  output.sourcesContent = JSON.parse(inputmap).sourcesContent;
-
-  return JSON.stringify(output);
-};
-
-// Separates code from sourcemap
-decoupleBundle = function (src) {
-  var marker = '//@ sourceMappingURL=data:application/json;base64,'
-    , offset = src.indexOf(marker)
-    , map = atob(src.substring(offset + marker.length));
-
-  try {
-    map = JSON.parse(map);
-  }
-  catch(e) {
-    throw e;
-  }
-
-  return {
-    code: src
-  , map: JSON.stringify(map)
-  };
-};
-
 /*
 * Give it an input file and output dir, poof, JS!
 */
 browserify = function (inputFile, output, cb) {
   var bundle = brwsify()
     , minified
+    , opts = {
+        file: '/js/scripts.js'
+      , map: '/js/scripts.map'
+      , compressPaths: function (p) { return path.relative(path.dirname(inputFile), p); }
+      }
     , OUTPUT_FILE = path.join(output, 'js', 'scripts.js')
     , OUTPUT_MAP = path.join(output, 'js', 'scripts.map');
 
@@ -138,19 +75,22 @@ browserify = function (inputFile, output, cb) {
 
   bundle.bundle({debug: true})
   .on('error', function (err) { console.error(err); })
-
-  .pipe(mold.transformSourcesRelativeTo(path.dirname(inputFile)))
-
-  .pipe(minifyify(function (src, map) {
+  .pipe(minifyify(function (code, map) {
     // Remove JS dir, no need for it anymore!
-    utils.file.rmRf( path.dirname(OUTPUT_FILE) , {silent:true});
+    //utils.file.rmRf( path.dirname(OUTPUT_FILE) , {silent:true});
     utils.file.mkdirP(path.dirname(OUTPUT_FILE));
 
-    fs.writeFileSync(OUTPUT_FILE, src  + ';;;\n/*\n//@ sourceMappingURL=/js/scripts.map\n*/\n');
+    fs.writeFileSync(OUTPUT_FILE, code);
     fs.writeFileSync(OUTPUT_MAP, map);
 
     cb();
+  }, opts));
+  /*
+  .pipe(require('concat-stream')(function (data) {
+    fs.writeFileSync(OUTPUT_FILE, data);
+    cb();
   }));
+  */
 }
 
 /**
