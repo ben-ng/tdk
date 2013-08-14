@@ -4,7 +4,7 @@ var utils = require('utilities')
   , less  = require('less')
   , brwsify = require('browserify')
   , envify = require('envify/custom')
-  , minifyify = require('../../minifyify')
+  , minifyify = require('minifyify')
   , _ = require('lodash')
   , TEMP_DIR = path.join(__dirname, 'tmp')
   , lessify
@@ -60,22 +60,25 @@ browserify = function (inputFile, output, cb) {
         file: '/js/scripts.js'
       , map: '/js/scripts.map'
       , compressPaths: function (p) { return path.relative(path.dirname(inputFile), p); }
+      , transforms: []
       }
     , OUTPUT_FILE = path.join(output, 'js', 'scripts.js')
     , OUTPUT_MAP = path.join(output, 'js', 'scripts.map');
 
-  bundle.transform(require('hbsfy'));
-  bundle.transform(envify({
+  opts.transforms.push(require('hbsfy'));
+  opts.transforms.push(envify({
     NODE_ENV: process.env.NODE_ENV
   , STAGING_PASS: process.env.STAGING_PASS
   , CI: process.env.CI
   }));
 
+  _.each(opts.transforms, function (transform) {
+    bundle.transform(transform);
+  });
+
   bundle.add(inputFile);
 
-  bundle.bundle({debug: true})
-  .on('error', function (err) { console.error(err); })
-  .pipe(minifyify(function (code, map) {
+  minifyify(bundle, opts, function (code, map) {
     // Remove JS dir, no need for it anymore!
     //utils.file.rmRf( path.dirname(OUTPUT_FILE) , {silent:true});
     utils.file.mkdirP(path.dirname(OUTPUT_FILE));
@@ -84,7 +87,7 @@ browserify = function (inputFile, output, cb) {
     fs.writeFileSync(OUTPUT_MAP, map);
 
     cb();
-  }, opts));
+  });
   /*
   .pipe(require('concat-stream')(function (data) {
     fs.writeFileSync(OUTPUT_FILE, data);

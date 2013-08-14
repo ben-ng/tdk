@@ -18,7 +18,7 @@
   "dependencies": {
     "jake": "0.5.x",
     "utilities": "0.0.x",
-    "browserify": "2.22.x",
+    "browserify": "https://github.com/ben-ng/node-browserify/archive/master.tar.gz",
     "cli-color": "0.2.x",
     "lodash": "1.3.x",
     "async": "0.2.x",
@@ -34,7 +34,7 @@
     "envify": "0.0.x",
     "js-thumb": "0.0.x",
     "videojs": "0.0.x",
-    "minifyify": "http://github.com/ben-ng/minifyify/archive/master.tar.gz"
+    "minifyify": "0.3.x"
   },
   "devDependencies": {
     "qunit": "~0.5.15",
